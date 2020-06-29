@@ -1,0 +1,31 @@
+*.class
+*.iml
+.classpath
+.externalNativeBuild
+.gradle
+.metadata/
+.project
+.idea/
+.DS_Store
+app/build
+build
+gradle.properties
+local.properties
+private
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.aar
+*.apk
+*.dex
+*.ear
+*.jar
+*.war
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Include gradle wrapper jar
+!/gradle/wrapper/gradle-wrapper.jar

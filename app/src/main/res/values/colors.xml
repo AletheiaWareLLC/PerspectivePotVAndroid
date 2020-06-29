@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2020 Aletheia Ware LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+    <color name="icon_launcher_background">@color/blue</color>
+    <color name="background">@color/blue</color>
+    <color name="foreground">@color/black</color>
+    <color name="primary">@color/light_blue</color>
+    <color name="primary_dark">@color/dark_blue</color>
+    <color name="accent">@color/orange</color>
+    <color name="text_primary">@color/dark_grey</color>
+    <color name="text_secondary">@color/light_grey</color>
+    <color name="text">@color/white</color>
+    <color name="warning">@color/red</color>
+
+    <color name="black">#FF000000</color>
+    <color name="blue">#FF2582E3</color>
+    <color name="dark_blue">#FF2175CC</color>
+    <color name="dark_green">#FF22964A</color>
+    <color name="dark_grey">#FF333333</color>
+    <color name="dark_orange">#FFE46803</color>
+    <color name="dark_red">#FFD02D2D</color>
+    <color name="dark_yellow">#FFE3BB0F</color>
+    <color name="green">#FF26A753</color>
+    <color name="grey">#FF7F7F7F</color>
+    <color name="light_blue">#FF3A8EE5</color>
+    <color name="light_green">#FF3BAF64</color>
+    <color name="light_grey">#FFCCCCCC</color>
+    <color name="light_orange">#FFFE811D</color>
+    <color name="light_red">#FFEA4647</color>
+    <color name="light_yellow">#FFFDD428</color>
+    <color name="orange">#FFFE7404</color>
+    <color name="red">#FFE83233</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="yellow">#FFFDD011</color>
+</resources>

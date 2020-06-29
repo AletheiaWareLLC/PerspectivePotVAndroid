@@ -1,0 +1,4 @@
+configurations.maybeCreate("debug")
+artifacts.add("debug", file('../../JoyAndroid/app/build/outputs/aar/app-debug.aar'))
+configurations.maybeCreate("release")
+artifacts.add("release", file('../../JoyAndroid/app/build/outputs/aar/app-release.aar'))

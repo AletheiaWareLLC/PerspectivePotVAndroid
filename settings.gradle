@@ -1,0 +1,1 @@
+include ':app', ':aletheiaware-common-android', ':joy-android'
