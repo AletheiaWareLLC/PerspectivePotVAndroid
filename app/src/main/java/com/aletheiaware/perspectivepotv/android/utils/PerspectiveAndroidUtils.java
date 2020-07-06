@@ -24,6 +24,7 @@ import com.aletheiaware.joy.JoyProto.Mesh;
 import com.aletheiaware.joy.JoyProto.Shader;
 import com.aletheiaware.joy.android.scene.GLCameraNode;
 import com.aletheiaware.joy.android.scene.GLColourAttribute;
+import com.aletheiaware.joy.android.scene.GLFogNode;
 import com.aletheiaware.joy.android.scene.GLLightNode;
 import com.aletheiaware.joy.android.scene.GLMaterialAttribute;
 import com.aletheiaware.joy.android.scene.GLProgram;
@@ -76,8 +77,11 @@ public class PerspectiveAndroidUtils {
             GLCameraNode camera = new GLCameraNode(shader);
             light.addChild(camera);
 
+            GLFogNode fog = new GLFogNode(shader);
+            camera.addChild(fog);
+
             MatrixTransformationNode rotation = new MatrixTransformationNode("main-rotation");
-            camera.addChild(rotation);
+            fog.addChild(rotation);
 
             graphs.put(shader, rotation);
         }

@@ -237,12 +237,15 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     perspective = new Perspective(GameActivity.this, glScene, world.getSize());
                     perspective.scenegraphs.putAll(PerspectiveAndroidUtils.createSceneGraphs(glScene, world));
                     perspective.outlineEnabled = outlineEnabled;
+                    // Background
                     float[] background = PerspectiveUtils.BLACK;
                     String colour = world.getBackgroundColour();
                     if (colour != null && !colour.isEmpty()) {
                         background = glScene.getFloatArray(colour);
                     }
                     glScene.putFloatArray(GLScene.BACKGROUND, background);
+                    // Fog
+                    glScene.putFloatArray("fog-colour", PerspectiveUtils.PURPLE);
 
                     // Create Game View in UI Thread
                     runOnUiThread(new Runnable() {
