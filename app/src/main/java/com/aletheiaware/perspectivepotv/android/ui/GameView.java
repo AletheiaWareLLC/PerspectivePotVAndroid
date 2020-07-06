@@ -17,6 +17,7 @@
 package com.aletheiaware.perspectivepotv.android.ui;
 
 import android.content.Context;
+import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -49,6 +50,7 @@ public class GameView extends GLSurfaceView implements OnTouchListener, GLSurfac
         setEGLConfigChooser(new GLAntiAliasConfigChooser());
         setOnTouchListener(this);
         setRenderer(this);
+        getHolder().setFormat(PixelFormat.RGBA_8888);
 
         handlerThread = new HandlerThread("MotionEventHandlerThread");
         handlerThread.start();

@@ -114,6 +114,7 @@ public class PerspectiveAndroidUtils {
             case "block":
             case "goal":
             case "portal":
+            case "sky":
             case "sphere":
                 if (scene.getVertexNormalTextureMesh(mesh) == null) {
                     new MeshLoader(assets.open("mesh/" + mesh)) {
