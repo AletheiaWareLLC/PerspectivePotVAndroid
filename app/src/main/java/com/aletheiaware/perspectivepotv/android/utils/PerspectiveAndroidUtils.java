@@ -127,15 +127,11 @@ public class PerspectiveAndroidUtils {
         return new GLVertexNormalTextureMeshNode(program, mesh);
     }
 
-    public static AttributeNode getAttributeNode(final GLScene scene, final AssetManager assets, String program, String type, String colour, String material, final String texture) {
+    public static AttributeNode getAttributeNode(final GLScene scene, final AssetManager assets, String program, String type, String colour, final String texture, String material) {
         List<Attribute> attributes = new ArrayList<>();
         if (colour != null && !colour.isEmpty()) {
             System.out.println("Creating Colour Attribute: " + colour);
             attributes.add(new GLColourAttribute(program, colour));
-        }
-        if (material != null && !material.isEmpty()) {
-            System.out.println("Creating Material Attribute: " + material);
-            attributes.add(new GLMaterialAttribute(program, material));
         }
         if (texture != null && !texture.isEmpty()) {
             System.out.println("Creating Texture Attribute: " + texture);
@@ -151,6 +147,10 @@ public class PerspectiveAndroidUtils {
                     }
                 }
             });
+        }
+        if (material != null && !material.isEmpty()) {
+            System.out.println("Creating Material Attribute: " + material);
+            attributes.add(new GLMaterialAttribute(program, material));
         }
         return new AttributeNode(attributes.toArray(new Attribute[0]));
     }
