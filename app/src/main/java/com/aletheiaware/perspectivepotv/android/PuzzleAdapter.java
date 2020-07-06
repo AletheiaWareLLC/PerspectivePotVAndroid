@@ -76,6 +76,8 @@ public class PuzzleAdapter extends Adapter<PuzzleAdapter.PuzzleViewHolder> {
             boolean locked = true;
             if (position == 0) {// First puzzle always unlocked
                 locked = false;
+            } else if (stars[position] >= 0) {// Puzzle is unlocked if already solved
+                locked = false;
             } else if (stars[position - 1] >= 0) {// Puzzle is unlocked if previous is solved
                 locked = false;
             }
