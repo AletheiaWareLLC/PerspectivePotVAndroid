@@ -9,7 +9,7 @@ android {
         targetSdkVersion 29
         vectorDrawables.useSupportLibrary = true
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -17,14 +17,14 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue "string", "app_name", "\"Perspective\""
+            resValue "string", "app_name", "\"Perspective: Perils of the Void\""
             resValue "string", "app_public_key", "\"MIIBITODO\""
         }
         debug {
             minifyEnabled false
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
-            resValue "string", "app_name", "\"PerspectiveD\""
+            resValue "string", "app_name", "\"PerspectivePotVD\""
             resValue "string", "app_public_key", "\"TODO\""
         }
     }

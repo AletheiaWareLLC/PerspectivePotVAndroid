@@ -39,7 +39,7 @@ limitations under the License.
             android:scaleType="centerInside"
             />
             <!-- TODO
-                app:srcCompat="@drawable/app_logo" />
+                app:srcCompat="@drawable/banner" />
             -->
 
         <LinearLayout

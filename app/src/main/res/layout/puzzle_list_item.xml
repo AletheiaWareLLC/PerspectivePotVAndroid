@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2020 Aletheia Ware LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/view_margin"
+    android:padding="@dimen/card_view_padding"
+    tools:cardCornerRadius="@dimen/card_corner_radius">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/puzzle_list_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_secondary_size"
+            android:paddingTop="@dimen/view_padding" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/puzzle_list_locked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingBottom="@dimen/view_padding"
+                android:paddingEnd="@dimen/view_padding"
+                android:paddingStart="@dimen/view_padding"
+                android:src="@drawable/lock"
+                android:tint="@color/dark_grey"
+                android:contentDescription="@string/puzzle_locked" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/view_padding"
+                android:paddingEnd="@dimen/view_padding"
+                android:paddingStart="@dimen/view_padding">
+
+                <ImageView
+                    android:id="@+id/puzzle_list_star1"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star"
+                    android:tint="@color/yellow"
+                    android:contentDescription="@string/star_one" />
+
+                <ImageView
+                    android:id="@+id/puzzle_list_star2"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star"
+                    android:tint="@color/yellow"
+                    android:contentDescription="@string/star_two" />
+
+                <ImageView
+                    android:id="@+id/puzzle_list_star3"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star"
+                    android:tint="@color/yellow"
+                    android:contentDescription="@string/star_three" />
+
+                <ImageView
+                    android:id="@+id/puzzle_list_star4"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star"
+                    android:tint="@color/yellow"
+                    android:contentDescription="@string/star_four" />
+
+                <ImageView
+                    android:id="@+id/puzzle_list_star5"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star"
+                    android:tint="@color/yellow"
+                    android:contentDescription="@string/star_five" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

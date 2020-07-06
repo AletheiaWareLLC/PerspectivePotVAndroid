@@ -54,6 +54,27 @@ limitations under the License.
         <item name="android:textColor">@color/yellow</item>
     </style>
 
+    <style name="GameMenuDialogTheme" parent="AlertDialogTheme">
+        <item name="android:background">@color/background</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="buttonBarPositiveButtonStyle">@style/GameMenuDialogContinueButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/GameMenuDialogMenuButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/GameMenuDialogResetButtonStyle</item>
+    </style>
+
+    <style name="GameMenuDialogContinueButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <style name="GameMenuDialogResetButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/warning</item>
+    </style>
+
+    <style name="GameMenuDialogMenuButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="GameOverDialogTheme" parent="AlertDialogTheme">
         <item name="android:background">@color/background</item>
         <item name="android:textColor">@color/text</item>
