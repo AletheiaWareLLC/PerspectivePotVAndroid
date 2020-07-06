@@ -156,6 +156,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 || data.getBoolean(PerspectiveAndroidUtils.OUTLINE_EXTRA)
                 || preferences.getBoolean(getString(R.string.preference_puzzle_outline_key), true);
 
+        Log.d(PerspectiveUtils.TAG, "Creating Scene");
+        glScene = new GLScene();
+
         final AssetManager assets = getAssets();
         // List Assets
         new Thread() {
@@ -232,8 +235,6 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 try {
                     Log.d(PerspectiveUtils.TAG, "Loading World");
                     world = PerspectiveAndroidUtils.getWorld(assets, worldName);
-                    Log.d(PerspectiveUtils.TAG, "Creating Scene");
-                    glScene = new GLScene();
                     perspective = new Perspective(GameActivity.this, glScene, world.getSize());
                     perspective.scenegraphs.putAll(PerspectiveAndroidUtils.createSceneGraphs(glScene, world));
                     perspective.outlineEnabled = outlineEnabled;
