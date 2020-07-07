@@ -264,35 +264,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                             menuButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    sound(BUTTON_SOUND, 0);
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.GameMenuDialogTheme);
-                                    View layout = getLayoutInflater().inflate(R.layout.dialog_game_menu, null);
-                                    builder.setView(layout);
-                                    builder.setNegativeButton(R.string.game_reset, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                            perspective.clearAllLocations();
-                                            loadPuzzle();
-                                        }
-                                    });
-                                    builder.setPositiveButton(R.string.game_continue, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                                    builder.setNeutralButton(R.string.game_menu, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                            setResult(RESULT_CANCELED);
-                                            finish();
-                                        }
-                                    });
-                                    builder.setCancelable(false);
-                                    gameMenuDialog = builder.create();
-                                    gameMenuDialog.show();
+                                    onGameMenu();
                                 }
                             });
                             gameMoveCountCard = findViewById(R.id.game_move_count_card);
@@ -658,6 +630,43 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 builder.setCancelable(false);
                 gameOverDialog = builder.create();
                 gameOverDialog.show();
+            }
+        });
+    }
+
+    public void onGameMenu() {
+        sound(BUTTON_SOUND, 0);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.GameMenuDialogTheme);
+                View layout = getLayoutInflater().inflate(R.layout.dialog_game_menu, null);
+                builder.setView(layout);
+                builder.setNegativeButton(R.string.game_reset, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        perspective.clearAllLocations();
+                        loadPuzzle();
+                    }
+                });
+                builder.setPositiveButton(R.string.game_continue, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setNeutralButton(R.string.game_menu, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        setResult(RESULT_CANCELED);
+                        finish();
+                    }
+                });
+                builder.setCancelable(false);
+                gameMenuDialog = builder.create();
+                gameMenuDialog.show();
             }
         });
     }

@@ -18,14 +18,9 @@ package com.aletheiaware.perspectivepotv.android.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
 
 import com.aletheiaware.common.android.utils.CommonAndroidUtils;
 import com.aletheiaware.perspectivepotv.android.BuildConfig;
@@ -33,6 +28,13 @@ import com.aletheiaware.perspectivepotv.android.R;
 import com.aletheiaware.perspectivepotv.android.utils.PerspectiveAndroidUtils;
 
 import java.io.IOException;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -62,22 +64,20 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle bundle, String s) {
             addPreferencesFromResource(R.xml.fragment_preference);
 
-            int white = getResources().getColor(R.color.white);
-
             Preference outlinePreference = findPreference(getString(R.string.preference_puzzle_outline_key));
-            outlinePreference.getIcon().setTint(white);
+            setTint(outlinePreference);
 
             Preference musicPreference = findPreference(getString(R.string.preference_puzzle_music_key));
-            musicPreference.getIcon().setTint(white);
+            setTint(musicPreference);
 
             Preference soundPreference = findPreference(getString(R.string.preference_puzzle_sound_key));
-            soundPreference.getIcon().setTint(white);
+            setTint(soundPreference);
 
             Preference vibrationPreference = findPreference(getString(R.string.preference_puzzle_vibration_key));
-            vibrationPreference.getIcon().setTint(white);
+            setTint(vibrationPreference);
 
             clearProgressPreference = findPreference(getString(R.string.preference_clear_progress_key));
-            clearProgressPreference.getIcon().setTint(white);
+            setTint(clearProgressPreference);
             clearProgressPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -91,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             versionPreference = findPreference(getString(R.string.preference_version_key));
-            versionPreference.getIcon().setTint(white);
+            setTint(versionPreference);
             versionPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -102,7 +102,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             supportPreference = findPreference(getString(R.string.preference_support_key));
-            supportPreference.getIcon().setTint(white);
+            setTint(supportPreference);
             supportPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -116,7 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             morePreference = findPreference(getString(R.string.preference_more_key));
-            morePreference.getIcon().setTint(white);
+            setTint(morePreference);
             morePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -127,6 +127,15 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             update();
+        }
+
+        public void setTint(Preference preference) {
+            if (preference != null) {
+                Drawable icon = preference.getIcon();
+                if (icon != null) {
+                    icon.setTint(getResources().getColor(R.color.white));
+                }
+            }
         }
 
         public void clearProgress(final FragmentActivity activity) {

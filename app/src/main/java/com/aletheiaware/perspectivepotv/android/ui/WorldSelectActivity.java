@@ -165,7 +165,7 @@ public class WorldSelectActivity extends AppCompatActivity implements WorldAdapt
         Log.d(PerspectiveUtils.TAG, "Buying: " + world);
         SkuDetails details = skuDetails.get(world);
         Log.d(PerspectiveUtils.TAG, "SKU: " + details);
-        manager.initiatePurchaseFlow(details, null);
+        manager.initiatePurchaseFlow(details);
     }
 
     @Override

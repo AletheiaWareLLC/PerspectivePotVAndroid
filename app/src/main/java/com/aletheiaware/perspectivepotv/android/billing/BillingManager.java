@@ -149,17 +149,13 @@ public class BillingManager implements PurchasesUpdatedListener {
         }
     }
 
-    public void initiatePurchaseFlow(final SkuDetails skuDetails, final String oldSku) {
+    public void initiatePurchaseFlow(final SkuDetails skuDetails) {
         executeServiceRequest(new Runnable() {
             @Override
             public void run() {
                 Log.d(PerspectiveUtils.TAG, "Launching in-app purchase flow for: " + skuDetails);
                 BillingFlowParams.Builder purchaseParamsBuilder = BillingFlowParams.newBuilder()
                         .setSkuDetails(skuDetails);
-                if (oldSku != null && !oldSku.isEmpty()) {
-                    Log.d(PerspectiveUtils.TAG, "Replacing old SKU: " + oldSku);
-                    purchaseParamsBuilder.setOldSku(oldSku);
-                }
                 client.launchBillingFlow(activity, purchaseParamsBuilder.build());
             }
         });
@@ -179,7 +175,7 @@ public class BillingManager implements PurchasesUpdatedListener {
         });
     }
 
-    public void consumeAsync(String purchaseToken, String developerPayload) {
+    public void consumeAsync(String purchaseToken) {
         if (consumedTokens.contains(purchaseToken)) {
             Log.i(PerspectiveUtils.TAG, "Token was already scheduled to be consumed");
             return;
@@ -188,7 +184,6 @@ public class BillingManager implements PurchasesUpdatedListener {
 
         final ConsumeParams consumeParams = ConsumeParams.newBuilder()
                 .setPurchaseToken(purchaseToken)
-                .setDeveloperPayload(developerPayload)
                 .build();
         executeServiceRequest(new Runnable() {
             @Override
