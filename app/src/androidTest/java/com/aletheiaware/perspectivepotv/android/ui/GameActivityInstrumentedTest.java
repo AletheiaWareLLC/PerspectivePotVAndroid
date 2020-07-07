@@ -112,6 +112,17 @@ public class GameActivityInstrumentedTest {
     }
 
     @Test
+    public void screenshotGameHUD() throws Exception {
+        Intent intent = new Intent();
+        intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, PerspectiveUtils.WORLD_TUTORIAL);
+        intent.putExtra(PerspectiveAndroidUtils.PUZZLE_EXTRA, 1);
+        GameActivity activity = intentsTestRule.launchActivity(intent);
+        Thread.sleep(1000);
+        CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud.png");
+        activity.finish();
+    }
+
+    @Test
     public void screenshotGameMenu() throws Exception {
         Intent intent = new Intent();
         intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, PerspectiveUtils.WORLD_TUTORIAL);
