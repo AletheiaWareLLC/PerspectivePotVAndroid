@@ -55,6 +55,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 public class GameActivity extends AppCompatActivity implements Perspective.Callback, BillingManager.Callback {
@@ -88,7 +90,8 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     private World world;
     private Button launchButton;
     private GameView gameView;
-    private TextView gameMoveCount;
+    private CardView gameMoveCountCard;
+    private TextView gameMoveCountText;
     private GLScene glScene;
     private Perspective perspective;
     private SharedPreferences preferences;
@@ -292,7 +295,8 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                                     gameMenuDialog.show();
                                 }
                             });
-                            gameMoveCount = findViewById(R.id.game_move_count);
+                            gameMoveCountCard = findViewById(R.id.game_move_count_card);
+                            gameMoveCountText = findViewById(R.id.game_move_count_text);
                             launchButton = findViewById(R.id.game_launch_button);
                             launchButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -461,14 +465,18 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
 
     @UiThread
     public void updateMoveCount(int moves, int target) {
-        gameMoveCount.setText(getString(R.string.game_move_format, moves, target));
-        if (moves <= target) {
-            gameMoveCount.setTextColor(colourStringToInt("green"));
+        gameMoveCountText.setText(getString(R.string.game_move_format, moves, target));
+        int background;
+        if (moves < target) {
+            background = android.R.color.transparent;
+        } else if (moves == target) {
+            background = R.color.green;
         } else if (moves <= target+PerspectiveUtils.MAX_STARS) {
-            gameMoveCount.setTextColor(colourStringToInt("yellow"));
+            background = R.color.yellow;
         } else {
-            gameMoveCount.setTextColor(colourStringToInt("red"));
+            background = R.color.red;
         }
+        gameMoveCountCard.setCardBackgroundColor(ContextCompat.getColor(this, background));
     }
 
     @Override
