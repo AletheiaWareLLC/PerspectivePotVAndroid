@@ -153,11 +153,7 @@ public class WorldAdapter extends Adapter<ViewHolder> {
                     s = stars;
                 }
                 int puzzles = world.getPuzzleCount();
-                int worldStars = 0;
-                if (puzzles > 0) {
-                    worldStars = s / puzzles;
-                }
-                wvh.set(world, worldStars);
+                wvh.set(world, s, puzzles*PerspectiveUtils.MAX_STARS);
             }
         }
     }
@@ -195,18 +191,18 @@ public class WorldAdapter extends Adapter<ViewHolder> {
             itemBuy = view.findViewById(R.id.world_item_buy);
         }
 
-        void set(World world, int stars) {
+        void set(World world, int earnedStars, int maxStars) {
             setWorld(world);
             setName(world.getName());
             setTitle(world.getTitle());
             itemBuy.setVisibility(View.GONE);
-            if (stars <= 0) {
+            if (earnedStars <= 0) {
                 itemStarImage.setVisibility(View.GONE);
                 itemStarText.setVisibility(View.GONE);
             } else{
                 itemStarImage.setVisibility(View.VISIBLE);
                 itemStarText.setVisibility(View.VISIBLE);
-                itemStarText.setText(itemStarText.getContext().getString(R.string.star_count_format, stars, PerspectiveUtils.MAX_STARS));
+                itemStarText.setText(itemStarText.getContext().getString(R.string.star_count_format, earnedStars, maxStars));
             }
         }
 
