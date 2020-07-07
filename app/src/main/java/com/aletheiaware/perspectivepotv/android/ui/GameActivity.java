@@ -521,7 +521,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         loadPuzzle();
                     }
                 });
-                builder.setNeutralButton(R.string.game_menu, new DialogInterface.OnClickListener() {
+                builder.setNeutralButton(R.string.main_menu, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -619,7 +619,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         }
                     });
                 }
-                builder.setNeutralButton(R.string.game_menu, new DialogInterface.OnClickListener() {
+                builder.setNeutralButton(R.string.main_menu, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -656,7 +656,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         dialog.cancel();
                     }
                 });
-                builder.setNeutralButton(R.string.game_menu, new DialogInterface.OnClickListener() {
+                builder.setNeutralButton(R.string.main_menu, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

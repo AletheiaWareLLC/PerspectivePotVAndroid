@@ -56,7 +56,7 @@ limitations under the License.
                 android:padding="@dimen/view_padding"
                 android:gravity="center"
                 android:src="@drawable/menu"
-                android:contentDescription="@string/main_menu"
+                android:contentDescription="@string/game_menu"
                 android:tint="@color/white" />
 
             <TextView
