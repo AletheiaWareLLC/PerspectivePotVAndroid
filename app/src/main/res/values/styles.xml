@@ -47,7 +47,7 @@ limitations under the License.
     </style>
 
     <style name="ErrorDialogOkButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/orange</item>
+        <item name="android:textColor">@color/accent</item>
     </style>
 
     <style name="ErrorDialogReportButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
@@ -91,7 +91,7 @@ limitations under the License.
     </style>
 
     <style name="GameLostDialogRetryButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/orange</item>
+        <item name="android:textColor">@color/accent</item>
     </style>
 
     <style name="GameWonDialogTheme" parent="GameOverDialogTheme">
@@ -101,11 +101,11 @@ limitations under the License.
     </style>
 
     <style name="GameWonDialogNextButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/yellow</item>
+        <item name="android:textColor">@color/accent</item>
     </style>
 
     <style name="GameWonDialogRetryButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/orange</item>
+        <item name="android:textColor">@color/warning</item>
     </style>
 
     <style name="LegaleseDialogTheme" parent="AlertDialogTheme">
@@ -129,7 +129,7 @@ limitations under the License.
     </style>
 
     <style name="WarningDialogPositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">@color/warning</item>
     </style>
 
     <style name="WorldSelectDialogTheme" parent="AlertDialogTheme">
