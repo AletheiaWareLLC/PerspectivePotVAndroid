@@ -76,7 +76,8 @@ limitations under the License.
                 android:id="@+id/game_move_count_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:cardCornerRadius="@dimen/card_corner_radius">
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp">
 
                 <TextView
                     android:id="@+id/game_move_count_text"
@@ -135,7 +136,7 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:cardBackgroundColor="@color/white"
-            tools:cardCornerRadius="@dimen/card_corner_radius">
+            app:cardCornerRadius="@dimen/card_corner_radius">
 
             <Button
                 android:id="@+id/game_launch_button"
