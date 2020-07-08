@@ -15,18 +15,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.GameActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="@string/game_won"
+        android:text="@string/game_won_title"
         android:textColor="@color/text"
         android:textSize="@dimen/text_primary_size" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/game_won_message"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/text_secondary_size" />
 
     <LinearLayout
         android:layout_width="wrap_content"
