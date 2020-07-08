@@ -36,7 +36,6 @@ import android.widget.TextView;
 import com.aletheiaware.common.android.utils.CommonAndroidUtils;
 import com.aletheiaware.common.utils.CommonUtils;
 import com.aletheiaware.joy.android.scene.GLScene;
-import com.aletheiaware.joy.scene.AttributeNode;
 import com.aletheiaware.joy.scene.SceneGraphNode;
 import com.aletheiaware.perspective.Perspective;
 import com.aletheiaware.perspective.PerspectiveProto.Puzzle;
@@ -452,19 +451,14 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     }
 
     @Override
-    public SceneGraphNode getSceneGraphNode(String program, String name, String type, String mesh) {
+    public SceneGraphNode getSceneGraphNode(String shader, String name, String type, String mesh, String colour, String texture, String material) {
         try {
-            return PerspectiveAndroidUtils.getSceneGraphNode(glScene, getAssets(), program, name, type, mesh);
+            return PerspectiveAndroidUtils.getSceneGraphNode(glScene, getAssets(), shader, name, type, mesh, colour, texture, material);
         } catch (IOException e) {
             CommonAndroidUtils.showErrorDialog(this, R.style.ErrorDialogTheme, R.string.error_get_scene_graph_node, e);
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public AttributeNode getAttributeNode(String program, String name, String type, String colour, String material, String texture) {
-        return PerspectiveAndroidUtils.getAttributeNode(glScene, getAssets(), program, type, colour, material, texture);
     }
 
     @Override

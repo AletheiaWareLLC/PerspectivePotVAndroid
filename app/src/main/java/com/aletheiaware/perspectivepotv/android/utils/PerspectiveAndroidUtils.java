@@ -18,10 +18,8 @@ package com.aletheiaware.perspectivepotv.android.utils;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.util.Log;
 
 import com.aletheiaware.joy.JoyProto.Mesh;
-import com.aletheiaware.joy.JoyProto.Shader;
 import com.aletheiaware.joy.android.scene.GLCameraNode;
 import com.aletheiaware.joy.android.scene.GLColourAttribute;
 import com.aletheiaware.joy.android.scene.GLFogNode;
@@ -108,39 +106,55 @@ public class PerspectiveAndroidUtils {
         PerspectiveUtils.clearSolutions(context.getFilesDir());
     }
 
-    public static SceneGraphNode getSceneGraphNode(final GLScene scene, AssetManager assets, String program, String name, String type, final String mesh) throws IOException {
+    public static SceneGraphNode getSceneGraphNode(GLScene scene, AssetManager assets, String shader, String name, String type, String mesh, String colour, String texture, String material) throws IOException {
         switch (type) {
+            case "sphere":
+                // Ensure space ship always points up
+                MatrixTransformationNode rotationNode = new MatrixTransformationNode("inverse-rotation");
+
+                // Split by semi-colon for different parts of ship (Ship-body;Ship-canopy;Ship-blast)
+                String[] meshes = mesh.split(";");
+                String[] colours = colour.split(";");
+                String[] textures = texture.split(";");
+                String[] materials = material.split(";");
+
+                // Add each part to rotationNode
+                for (int i = 0; i < meshes.length && i < colours.length && i < textures.length && i < materials.length; i++) {
+                    ensureMeshLoaded(scene, assets, meshes[i]);
+
+                    List<Attribute> attributes = createAttributes(scene, assets, shader, colours[i], textures[i], materials[i]);
+                    AttributeNode attributeNode = new AttributeNode(attributes.toArray(new Attribute[0]));
+                    attributeNode.addChild(new GLVertexNormalTextureMeshNode(shader, meshes[i]));
+                    rotationNode.addChild(attributeNode);
+                }
+
+                return rotationNode;
             case "outline":
             case "block":
             case "goal":
             case "portal":
             case "sky":
-            case "sphere":
-                if (scene.getVertexNormalTextureMesh(mesh) == null) {
-                    new MeshLoader(assets.open("mesh/" + mesh)) {
-                        @Override
-                        public void onMesh(Mesh m) throws IOException {
-                            System.out.println("Loaded Mesh: " + mesh);
-                            scene.putVertexNormalTextureMesh(mesh, new GLVertexNormalTextureMesh(m));
-                        }
-                    }.start();
-                }
-                break;
+                ensureMeshLoaded(scene, assets, mesh);
+
+                List<Attribute> attributes = createAttributes(scene, assets, shader, colour, texture, material);
+                AttributeNode attributeNode = new AttributeNode(attributes.toArray(new Attribute[0]));
+                attributeNode.addChild(new GLVertexNormalTextureMeshNode(shader, mesh));
+                return attributeNode;
             default:
-                System.err.println("Unrecognized: " + program + " " + name + " " + type + " " + mesh);
+                System.err.println("Unrecognized: " + shader + " " + name + " " + type + " " + mesh + " " + colour + " " + texture + " " + material);
         }
-        return new GLVertexNormalTextureMeshNode(program, mesh);
+        return null;
     }
 
-    public static AttributeNode getAttributeNode(final GLScene scene, final AssetManager assets, String program, String type, String colour, final String texture, String material) {
+    private static List<Attribute> createAttributes(final GLScene scene, final AssetManager assets, String shader, String colour, final String texture, String material) {
         List<Attribute> attributes = new ArrayList<>();
         if (colour != null && !colour.isEmpty()) {
             System.out.println("Creating Colour Attribute: " + colour);
-            attributes.add(new GLColourAttribute(program, colour));
+            attributes.add(new GLColourAttribute(shader, colour));
         }
         if (texture != null && !texture.isEmpty()) {
             System.out.println("Creating Texture Attribute: " + texture);
-            attributes.add(new GLTextureAttribute(program, texture) {
+            attributes.add(new GLTextureAttribute(shader, texture) {
                 @Override
                 public void load() {
                     try (InputStream in = assets.open("texture/" + texture)) {
@@ -155,8 +169,21 @@ public class PerspectiveAndroidUtils {
         }
         if (material != null && !material.isEmpty()) {
             System.out.println("Creating Material Attribute: " + material);
-            attributes.add(new GLMaterialAttribute(program, material));
+            attributes.add(new GLMaterialAttribute(shader, material));
         }
-        return new AttributeNode(attributes.toArray(new Attribute[0]));
+        return attributes;
     }
+
+    private static void ensureMeshLoaded(final GLScene scene, final AssetManager assets, final String mesh) throws IOException {
+        if (scene.getVertexNormalTextureMesh(mesh) == null) {
+            new MeshLoader(assets.open("mesh/" + mesh)) {
+                @Override
+                public void onMesh(Mesh m) throws IOException {
+                    System.out.println("Loaded Mesh: " + mesh);
+                    scene.putVertexNormalTextureMesh(mesh, new GLVertexNormalTextureMesh(m));
+                }
+            }.start();
+        }
+    }
+
 }
