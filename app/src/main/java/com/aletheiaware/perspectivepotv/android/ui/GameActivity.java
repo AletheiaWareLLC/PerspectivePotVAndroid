@@ -77,7 +77,6 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             {0, 70, STAR_VIBRATION_GAP, 90, STAR_VIBRATION_GAP, 115, STAR_VIBRATION_GAP, 145},
             {0, 70, STAR_VIBRATION_GAP, 90, STAR_VIBRATION_GAP, 115, STAR_VIBRATION_GAP, 145, STAR_VIBRATION_GAP, 180},
     };
-    private static final long[] TRAVEL_VIBRATION = {0, 10};
     private static final long[] LAUNCH_VIBRATION = {0, 100};
     private static final long[] LANDING_VIBRATION = {0, 10};
     private static final long[] TURN_VIBRATION = {0, 10};
