@@ -20,7 +20,7 @@ limitations under the License.
     <color name="foreground">@color/black</color>
     <color name="primary">@color/light_purple</color>
     <color name="primary_dark">@color/dark_purple</color>
-    <color name="accent">@color/orange</color>
+    <color name="accent">@color/yellow</color>
     <color name="text_primary">@color/dark_grey</color>
     <color name="text_secondary">@color/light_grey</color>
     <color name="text">@color/white</color>
