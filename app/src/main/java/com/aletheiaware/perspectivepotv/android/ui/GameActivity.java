@@ -60,6 +60,7 @@ import androidx.preference.PreferenceManager;
 
 public class GameActivity extends AppCompatActivity implements Perspective.Callback, BillingManager.Callback {
 
+    private static final String THEME_MUSIC = "ThemeV2_3X.wav";
     private static final String BUTTON_SOUND = "Button.wav";
     private static final String LAUNCH_SOUND = "Engine.wav";
     private static final String LANDING_SOUND = "Click2.wav";
@@ -193,7 +194,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         mediaPlayer.stop();
                         mediaPlayer.release();
                     }
-                    AssetFileDescriptor afd = getAssets().openFd("music/MainThemeV2.wav");
+                    AssetFileDescriptor afd = getAssets().openFd("music/" + THEME_MUSIC);
                     mediaPlayer = createMediaPlayer();
                     mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
                     mediaPlayer.prepare();
