@@ -443,7 +443,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
         } else if (moves == target) {
             background = R.color.green;
         } else if (moves <= target+PerspectiveUtils.MAX_STARS) {
-            background = R.color.yellow;
+            background = R.color.orange;
         } else {
             background = R.color.red;
         }
