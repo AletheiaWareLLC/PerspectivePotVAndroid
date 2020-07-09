@@ -54,7 +54,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
@@ -89,8 +88,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     private World world;
     private Button launchButton;
     private GameView gameView;
-    private CardView gameMoveCountCard;
-    private TextView gameMoveCountText;
+    private TextView gameMoveCount;
     private GLScene glScene;
     private Perspective perspective;
     private SharedPreferences preferences;
@@ -266,8 +264,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                                     onGameMenu();
                                 }
                             });
-                            gameMoveCountCard = findViewById(R.id.game_move_count_card);
-                            gameMoveCountText = findViewById(R.id.game_move_count_text);
+                            gameMoveCount = findViewById(R.id.game_move_count);
                             launchButton = findViewById(R.id.game_launch_button);
                             launchButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -436,18 +433,18 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
 
     @UiThread
     public void updateMoveCount(int moves, int target) {
-        gameMoveCountText.setText(getString(R.string.game_move_format, moves, target));
-        int background;
+        gameMoveCount.setText(getString(R.string.game_move_format, moves, target));
+        int id;
         if (moves < target) {
-            background = android.R.color.transparent;
+            id = R.color.text;
         } else if (moves == target) {
-            background = R.color.green;
+            id = R.color.green;
         } else if (moves <= target+PerspectiveUtils.MAX_STARS) {
-            background = R.color.orange;
+            id = R.color.orange;
         } else {
-            background = R.color.red;
+            id = R.color.red;
         }
-        gameMoveCountCard.setCardBackgroundColor(ContextCompat.getColor(this, background));
+        gameMoveCount.setTextColor(ContextCompat.getColor(this, id));
     }
 
     @Override

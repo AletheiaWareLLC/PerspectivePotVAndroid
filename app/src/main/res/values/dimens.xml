@@ -15,10 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="card_corner_radius">12dp</dimen>
     <dimen name="card_view_padding">6dp</dimen>
     <dimen name="star_count_text_size">@dimen/text_secondary_size</dimen>
     <dimen name="text_primary_size">24sp</dimen>
     <dimen name="text_secondary_size">20sp</dimen>
     <dimen name="divider_thickness">2dp</dimen>
+    <dimen name="game_margin">12dp</dimen>
 </resources>

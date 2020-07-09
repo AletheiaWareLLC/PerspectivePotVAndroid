@@ -52,7 +52,7 @@ limitations under the License.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/view_margin"
+                android:layout_margin="@dimen/game_margin"
                 android:padding="@dimen/view_padding"
                 android:gravity="center"
                 android:src="@drawable/menu"
@@ -66,28 +66,26 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:layout_margin="@dimen/view_margin"
+                android:layout_margin="@dimen/game_margin"
                 android:padding="@dimen/view_padding"
                 android:textSize="@dimen/text_primary_size"
                 android:textColor="@color/text"
                 android:gravity="center"/>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/game_move_count_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/view_margin"
+                android:layout_margin="@dimen/game_margin"
                 android:padding="@dimen/view_padding"
                 app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="0dp">
+                app:cardBackgroundColor="@color/primary_dark">
 
                 <TextView
-                    android:id="@+id/game_move_count_text"
+                    android:id="@+id/game_move_count"
                     android:background="@android:color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/view_margin"
                     android:padding="@dimen/view_padding"
                     android:textSize="@dimen/text_primary_size"
                     android:textColor="@color/text"
@@ -103,7 +101,7 @@ limitations under the License.
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/view_margin"
+            android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
             android:textSize="@dimen/text_secondary_size"
             android:textColor="@color/text"
@@ -126,20 +124,19 @@ limitations under the License.
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/view_margin"
+            android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
             android:textSize="@dimen/text_secondary_size"
             android:textColor="@color/text"
             android:gravity="center" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/game_launch_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/view_margin"
+            android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="@color/primary_dark"
             app:cardCornerRadius="@dimen/card_corner_radius">
 
             <Button
@@ -147,7 +144,6 @@ limitations under the License.
                 android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/view_margin"
                 android:padding="@dimen/view_padding"
                 android:text="@string/game_launch"
                 android:textColor="@color/accent"
