@@ -560,7 +560,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
         // Vibrate once for each star earned
         if (stars > 0) {
             vibrate(STAR_VIBRATIONS[stars - 1]);
-            sound(STAR_SOUND, stars);
+            sound(STAR_SOUND, stars-1);
         }
 
         runOnUiThread(new Runnable() {
