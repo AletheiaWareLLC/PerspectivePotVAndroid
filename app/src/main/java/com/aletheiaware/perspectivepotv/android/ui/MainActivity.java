@@ -16,10 +16,6 @@
 
 package com.aletheiaware.perspectivepotv.android.ui;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +30,9 @@ import com.aletheiaware.perspective.utils.PerspectiveUtils;
 import com.aletheiaware.perspectivepotv.android.BuildConfig;
 import com.aletheiaware.perspectivepotv.android.R;
 import com.aletheiaware.perspectivepotv.android.utils.PerspectiveAndroidUtils;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -130,24 +129,27 @@ public class MainActivity extends AppCompatActivity {
         legaleseLabel.setMovementMethod(LinkMovementMethod.getInstance());
         TextView legaleseBetaLabel = view.findViewById(R.id.legalese_beta_label);
         legaleseBetaLabel.setMovementMethod(LinkMovementMethod.getInstance());
+        legaleseBetaLabel.setVisibility(BuildConfig.DEBUG ? View.VISIBLE : View.GONE);
+        Button accept = view.findViewById(R.id.main_legalese_accept);
+        Button reject = view.findViewById(R.id.main_legalese_reject);
         builder.setView(view);
-        builder.setPositiveButton(R.string.legalese_action_accept, new DialogInterface.OnClickListener() {
+        legaleseDialog = builder.create();
+        accept.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int id) {
+            public void onClick(View view) {
                 CommonAndroidUtils.setPreference(MainActivity.this, getString(R.string.preference_legalese_accepted), "true");
-                dialog.cancel();
+                legaleseDialog.cancel();
                 if (runnable != null) {
                     runnable.run();
                 }
             }
         });
-        builder.setNegativeButton(R.string.legalese_action_reject, new DialogInterface.OnClickListener() {
+        reject.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
+            public void onClick(View view) {
+                legaleseDialog.cancel();
             }
         });
-        legaleseDialog = builder.create();
         legaleseDialog.show();
     }
 }
