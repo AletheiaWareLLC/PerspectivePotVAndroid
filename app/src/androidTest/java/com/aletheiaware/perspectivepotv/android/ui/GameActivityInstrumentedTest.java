@@ -169,14 +169,15 @@ public class GameActivityInstrumentedTest {
     }
 
     @Test
-    public void screenshotGameWon() throws Exception {
+    public void screenshotGameWon0Stars() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        Thread.sleep(1000);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+10);
         activity.onGameWon();
         Thread.sleep(1000);
-        CommonAndroidUtils.captureScreenshot(activity, activity.gameOverDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-won.png");
+        CommonAndroidUtils.captureScreenshot(activity, activity.gameOverDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-won-0-stars.png");
         activity.finish();
     }
 
@@ -184,6 +185,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon1Star() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        Thread.sleep(1000);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+4);
         activity.onGameWon();
@@ -196,6 +198,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon2Stars() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        Thread.sleep(1000);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+3);
         activity.onGameWon();
@@ -208,6 +211,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon3Stars() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        Thread.sleep(1000);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+2);
         activity.onGameWon();
@@ -220,6 +224,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon4Stars() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        Thread.sleep(1000);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+1);
         activity.onGameWon();
@@ -232,6 +237,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon5Stars() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        Thread.sleep(1000);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget());
         activity.onGameWon();
