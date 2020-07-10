@@ -46,6 +46,7 @@ limitations under the License.
                 android:layout_margin="@dimen/view_margin"
                 android:padding="@dimen/view_padding"
                 android:text="@string/legalese_label"
+                android:textAlignment="center"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_primary_size" />
 
@@ -56,6 +57,7 @@ limitations under the License.
                 android:layout_margin="@dimen/view_margin"
                 android:padding="@dimen/view_padding"
                 android:text="@string/legalese_beta_label"
+                android:textAlignment="center"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_primary_size" />
 
