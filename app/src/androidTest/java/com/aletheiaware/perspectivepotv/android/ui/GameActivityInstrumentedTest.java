@@ -120,11 +120,31 @@ public class GameActivityInstrumentedTest {
     }
 
     @Test
-    public void screenshotGameHUD() throws Exception {
+    public void screenshotGameHUDTutorial() throws Exception {
         Intent intent = createTutorialIntent(1);
         GameActivity activity = intentsTestRule.launchActivity(intent);
         Thread.sleep(1000);
-        CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud.png");
+        CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud-tutorial.png");
+        activity.finish();
+    }
+
+    @Test
+    public void screenshotGameHUDWorldFree() throws Exception {
+        Intent intent = new Intent();
+        intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, PerspectiveUtils.WORLD_SIX);
+        GameActivity activity = intentsTestRule.launchActivity(intent);
+        Thread.sleep(1000);
+        CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud-world-free.png");
+        activity.finish();
+    }
+
+    @Test
+    public void screenshotGameHUDWorldPaid() throws Exception {
+        Intent intent = new Intent();
+        intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, PerspectiveUtils.WORLD_SEVEN);
+        GameActivity activity = intentsTestRule.launchActivity(intent);
+        Thread.sleep(1000);
+        CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud-world-paid.png");
         activity.finish();
     }
 
