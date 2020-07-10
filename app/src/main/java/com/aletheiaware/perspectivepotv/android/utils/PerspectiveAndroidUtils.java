@@ -112,11 +112,11 @@ public class PerspectiveAndroidUtils {
                 // Ensure space ship always points up
                 MatrixTransformationNode rotationNode = new MatrixTransformationNode("inverse-rotation");
 
-                // Split by semi-colon for different parts of ship (Ship-body;Ship-canopy;Ship-blast)
-                String[] meshes = mesh.split(";");
-                String[] colours = colour.split(";");
-                String[] textures = texture.split(";");
-                String[] materials = material.split(";");
+                // Split by slash for different parts of ship (Ship-body/Ship-canopy/Ship-blast)
+                String[] meshes = mesh.split("/", -1);
+                String[] colours = colour.split("/", -1);
+                String[] textures = texture.split("/", -1);
+                String[] materials = material.split("/", -1);
 
                 // Add each part to rotationNode
                 for (int i = 0; i < meshes.length && i < colours.length && i < textures.length && i < materials.length; i++) {
