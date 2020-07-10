@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <resources>
     <color name="icon_launcher_background">@color/purple</color>
-    <color name="background">@color/purple</color>
+    <color name="background">@color/dark_purple</color>
     <color name="foreground">@color/black</color>
     <color name="primary">@color/light_purple</color>
     <color name="primary_dark">@color/dark_purple</color>
