@@ -186,28 +186,6 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             }
         }.start();
 
-        // Load Background Music
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                        mediaPlayer.stop();
-                        mediaPlayer.release();
-                    }
-                    AssetFileDescriptor afd = getAssets().openFd("music/" + THEME_MUSIC);
-                    mediaPlayer = createMediaPlayer();
-                    mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                    mediaPlayer.setLooping(true);
-                    afd.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-
         // Load Sound Effects
         new Thread() {
             @Override
@@ -311,6 +289,41 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (preferences.getBoolean(getString(R.string.preference_puzzle_music_key), true)) {
+            // Load Background Music
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        AssetFileDescriptor afd = getAssets().openFd("music/" + THEME_MUSIC);
+                        mediaPlayer = createMediaPlayer();
+                        mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                        mediaPlayer.prepare();
+                        mediaPlayer.start();
+                        mediaPlayer.setLooping(true);
+                        afd.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+        } else {
+            Log.d(PerspectiveUtils.TAG, "Music Disabled");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         if (gameView != null) {
             gameView.quit();
@@ -320,10 +333,6 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             manager.destroy();
             manager = null;
         }
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
         if (soundPool != null) {
             soundPool.release();
             soundPool = null;
@@ -332,12 +341,16 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     }
 
     private void sound(String name, int loop) {
-        System.out.println("Sound Name: " + name);
-        int[] ids = glScene.getIntArray(name);
-        System.out.println("Sound ID: " + Arrays.toString(ids));
-        if (ids != null && ids.length > 0) {
-            int result = soundPool.play(ids[0], 1, 1, 1, loop, 1);
-            System.out.println("Playing Sound Result: " + result);
+        if (preferences.getBoolean(getString(R.string.preference_puzzle_sound_key), true)) {
+            System.out.println("Sound Name: " + name);
+            int[] ids = glScene.getIntArray(name);
+            System.out.println("Sound ID: " + Arrays.toString(ids));
+            if (ids != null && ids.length > 0) {
+                int result = soundPool.play(ids[0], 1, 1, 1, loop, 1);
+                System.out.println("Playing Sound Result: " + result);
+            }
+        } else {
+            Log.d(PerspectiveUtils.TAG, "SFX Disabled");
         }
     }
 
