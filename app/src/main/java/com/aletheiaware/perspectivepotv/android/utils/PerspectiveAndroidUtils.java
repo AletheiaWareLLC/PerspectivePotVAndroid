@@ -175,7 +175,8 @@ public class PerspectiveAndroidUtils {
     }
 
     private static void ensureMeshLoaded(final GLScene scene, final AssetManager assets, final String mesh) throws IOException {
-        if (scene.getVertexNormalTextureMesh(mesh) == null) {
+        if (scene.getIntArray(mesh) == null) {
+            scene.putIntArray(mesh, new int[0]);
             new MeshLoader(assets.open("mesh/" + mesh)) {
                 @Override
                 public void onMesh(Mesh m) throws IOException {
