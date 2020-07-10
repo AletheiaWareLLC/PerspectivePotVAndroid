@@ -23,8 +23,11 @@ import androidx.test.rule.GrantPermissionRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.aletheiaware.common.android.utils.CommonAndroidUtils;
+import com.aletheiaware.perspective.utils.PerspectiveUtils;
 import com.aletheiaware.perspectivepotv.android.ui.WorldSelectActivity;
+import com.aletheiaware.perspectivepotv.android.utils.PerspectiveAndroidUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +50,27 @@ public class WorldSelectActivityInstrumentedTest {
         WorldSelectActivity activity = intentsTestRule.launchActivity(new Intent());
         Thread.sleep(1000);
         CommonAndroidUtils.captureScreenshot(activity, "com.aletheiaware.perspectivepotv.android.ui.WorldSelectActivity.png");
+    }
+
+    @Test
+    public void screenshotPuzzleList() throws Exception {
+        final WorldSelectActivity activity = intentsTestRule.launchActivity(new Intent());
+        final IOException[] exception = new IOException[1];
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    activity.onSelect(PerspectiveAndroidUtils.getWorld(activity.getAssets(), PerspectiveUtils.WORLD_TUTORIAL));
+                } catch (IOException e) {
+                    exception[0] = e;
+                }
+            }
+        });
+        Thread.sleep(1000);
+        if (exception[0] != null) {
+            throw exception[0];
+        }
+        CommonAndroidUtils.captureScreenshot(activity, activity.puzzleListDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.WorldSelectActivity-puzzle-list.png");
     }
 
     @Test

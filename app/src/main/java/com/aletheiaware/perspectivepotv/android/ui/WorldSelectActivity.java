@@ -19,6 +19,8 @@ package com.aletheiaware.perspectivepotv.android.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.aletheiaware.common.android.utils.CommonAndroidUtils;
 import com.aletheiaware.common.utils.CommonUtils;
@@ -57,6 +59,7 @@ public class WorldSelectActivity extends AppCompatActivity implements WorldAdapt
 
     private final Map<String, int[]> puzzleStars = new HashMap<>();
     private final Map<String, SkuDetails> skuDetails = new HashMap<>();
+    public AlertDialog puzzleListDialog;
     public RecyclerView recyclerView;
     public WorldAdapter adapter;
     private BillingManager manager;
@@ -137,16 +140,18 @@ public class WorldSelectActivity extends AppCompatActivity implements WorldAdapt
     public void onSelect(World world) {
         if (world != null) {
             String name = world.getName();
-            RecyclerView view = (RecyclerView) getLayoutInflater().inflate(R.layout.dialog_puzzle_select, null);
-            view.setLayoutManager(new GridLayoutManager(view.getContext(), 3, GridLayoutManager.VERTICAL, false));
-            final AlertDialog dialog = new AlertDialog.Builder(WorldSelectActivity.this, R.style.WorldSelectDialogTheme)
-                    .setView(view)
-                    .setTitle(CommonUtils.capitalize(name))
+            View layout = getLayoutInflater().inflate(R.layout.dialog_puzzle_select, null);
+            TextView title = layout.findViewById(R.id.puzzle_list_title);
+            title.setText(CommonUtils.capitalize(name));
+            RecyclerView recycler = layout.findViewById(R.id.puzzle_list_recycler);
+            recycler.setLayoutManager(new GridLayoutManager(recycler.getContext(), 3, GridLayoutManager.VERTICAL, false));
+            puzzleListDialog = new AlertDialog.Builder(WorldSelectActivity.this, R.style.WorldSelectDialogTheme)
+                    .setView(layout)
                     .create();
             PuzzleAdapter puzzleAdapter = new PuzzleAdapter(this, world, puzzleStars.get(name), new PuzzleAdapter.Callback() {
                 @Override
                 public void onSelect(String world, int puzzle) {
-                    dialog.cancel();
+                    puzzleListDialog.cancel();
                     setResult(RESULT_OK);
                     finish();
                     Intent intent = new Intent(WorldSelectActivity.this, GameActivity.class);
@@ -155,8 +160,8 @@ public class WorldSelectActivity extends AppCompatActivity implements WorldAdapt
                     startActivity(intent);
                 }
             });
-            view.setAdapter(puzzleAdapter);
-            dialog.show();
+            recycler.setAdapter(puzzleAdapter);
+            puzzleListDialog.show();
         }
     }
 
