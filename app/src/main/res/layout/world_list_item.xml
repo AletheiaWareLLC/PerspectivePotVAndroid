@@ -39,7 +39,7 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:padding="@dimen/view_padding"
-        android:textColor="@color/text"
+        android:textColor="@color/text_secondary"
         android:textSize="@dimen/text_secondary_size"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
