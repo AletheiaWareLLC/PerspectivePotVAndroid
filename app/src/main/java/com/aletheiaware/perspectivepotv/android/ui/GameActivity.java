@@ -16,11 +16,11 @@
 
 package com.aletheiaware.perspectivepotv.android.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.content.res.ColorStateList;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -54,7 +54,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 import androidx.preference.PreferenceManager;
 
 public class GameActivity extends AppCompatActivity implements Perspective.Callback, BillingManager.Callback {
@@ -88,7 +90,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     private World world;
     private Button launchButton;
     private GameView gameView;
-    private TextView gameMoveCount;
+    private ImageButton gameMenuButton;
+    private CardView gameMoveCountCard;
+    private TextView gameMoveCountText;
     private GLScene glScene;
     private Perspective perspective;
     private SharedPreferences preferences;
@@ -168,7 +172,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     String[] dir = assets.list("/");
                     if (dir != null) {
                         for (String d : dir) {
-                            String[] file = assets.list("/"+d);
+                            String[] file = assets.list("/" + d);
                             if (file != null) {
                                 for (String f : file) {
                                     System.out.println("Asset: " + d + "/" + f);
@@ -257,14 +261,15 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                             gameView = findViewById(R.id.game_view);
                             gameView.setScene(glScene);
                             gameView.setPerspective(perspective);
-                            ImageButton menuButton = findViewById(R.id.game_menu_button);
-                            menuButton.setOnClickListener(new View.OnClickListener() {
+                            gameMenuButton = findViewById(R.id.game_menu_button);
+                            gameMenuButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     onGameMenu();
                                 }
                             });
-                            gameMoveCount = findViewById(R.id.game_move_count);
+                            gameMoveCountCard = findViewById(R.id.game_move_count_card);
+                            gameMoveCountText = findViewById(R.id.game_move_count_text);
                             launchButton = findViewById(R.id.game_launch_button);
                             launchButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -394,11 +399,14 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     final String title = CommonUtils.capitalize(world.getTitle());
                     final String description = puzzle.getDescription();
                     final int foreground = colourStringToInt(world.getForegroundColour());
-                    //final int background = colourStringToInt(world.getBackgroundColour());
+                    final int background = colourStringToInt(world.getBackgroundColour());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            gameMoveCountText.setTextColor(foreground);
+                            gameMoveCountCard.setCardBackgroundColor(background);
                             updateMoveCount(0, puzzle.getTarget());
+                            ImageViewCompat.setImageTintList(gameMenuButton, ColorStateList.valueOf(foreground));
                             TextView nameText = findViewById(R.id.game_puzzle_name);
                             nameText.setText(name);
                             nameText.setTextColor(foreground);
@@ -433,18 +441,19 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
 
     @UiThread
     public void updateMoveCount(int moves, int target) {
-        gameMoveCount.setText(getString(R.string.game_move_format, moves, target));
-        int id;
+        gameMoveCountText.setText(getString(R.string.game_move_format, moves, target));
         if (moves < target) {
-            id = R.color.text;
-        } else if (moves == target) {
+            return;
+        }
+        int id;
+        if (moves == target) {
             id = R.color.green;
-        } else if (moves <= target+PerspectiveUtils.MAX_STARS) {
+        } else if (moves <= target + PerspectiveUtils.MAX_STARS) {
             id = R.color.orange;
         } else {
             id = R.color.red;
         }
-        gameMoveCount.setTextColor(ContextCompat.getColor(this, id));
+        gameMoveCountText.setTextColor(ContextCompat.getColor(this, id));
     }
 
     @Override
@@ -502,26 +511,29 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.GameLostDialogTheme);
-                builder.setView(getLayoutInflater().inflate(R.layout.dialog_game_lost, null));
-                builder.setPositiveButton(R.string.puzzle_retry, new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.GameDialogTheme);
+                View layout = getLayoutInflater().inflate(R.layout.dialog_game_lost, null);
+                Button main = layout.findViewById(R.id.game_lost_main_menu);
+                Button retry = layout.findViewById(R.id.game_lost_retry);
+                builder.setView(layout);
+                builder.setCancelable(false);
+                gameOverDialog = builder.create();
+                main.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        perspective.clearAllLocations();
-                        loadPuzzle();
-                    }
-                });
-                builder.setNeutralButton(R.string.main_menu, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                    public void onClick(View view) {
+                        gameOverDialog.cancel();
                         setResult(RESULT_CANCELED);
                         finish();
                     }
                 });
-                builder.setCancelable(false);
-                gameOverDialog = builder.create();
+                retry.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        gameOverDialog.cancel();
+                        perspective.clearAllLocations();
+                        loadPuzzle();
+                    }
+                });
                 gameOverDialog.show();
             }
         });
@@ -557,25 +569,53 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
         // Vibrate once for each star earned
         if (stars > 0) {
             vibrate(STAR_VIBRATIONS[stars - 1]);
-            sound(STAR_SOUND, stars-1);
+            sound(STAR_SOUND, stars - 1);
         }
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.GameWonDialogTheme);
-                View view = getLayoutInflater().inflate(R.layout.dialog_game_won, null);
-                builder.setView(view);
-                view.findViewById(R.id.game_won_star1).setVisibility((stars > 0) ? View.VISIBLE : View.GONE);
-                view.findViewById(R.id.game_won_star2).setVisibility((stars > 1) ? View.VISIBLE : View.GONE);
-                view.findViewById(R.id.game_won_star3).setVisibility((stars > 2) ? View.VISIBLE : View.GONE);
-                view.findViewById(R.id.game_won_star4).setVisibility((stars > 3) ? View.VISIBLE : View.GONE);
-                view.findViewById(R.id.game_won_star5).setVisibility((stars > 4) ? View.VISIBLE : View.GONE);
-                if (puzzleIndex < world.getPuzzleCount()) {
-                    builder.setPositiveButton(R.string.puzzle_next, new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.GameDialogTheme);
+                View layout = getLayoutInflater().inflate(R.layout.dialog_game_won, null);
+                layout.findViewById(R.id.game_won_star1).setVisibility((stars > 0) ? View.VISIBLE : View.GONE);
+                layout.findViewById(R.id.game_won_star2).setVisibility((stars > 1) ? View.VISIBLE : View.GONE);
+                layout.findViewById(R.id.game_won_star3).setVisibility((stars > 2) ? View.VISIBLE : View.GONE);
+                layout.findViewById(R.id.game_won_star4).setVisibility((stars > 3) ? View.VISIBLE : View.GONE);
+                layout.findViewById(R.id.game_won_star5).setVisibility((stars > 4) ? View.VISIBLE : View.GONE);
+                Button main = layout.findViewById(R.id.game_won_main_menu);
+                CardView retryCard = layout.findViewById(R.id.game_won_retry_card);
+                Button retry = layout.findViewById(R.id.game_won_retry);
+                Button next = layout.findViewById(R.id.game_won_next);
+                builder.setView(layout);
+                builder.setCancelable(false);
+                gameOverDialog = builder.create();
+                main.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        gameOverDialog.cancel();
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                });
+                if (stars < 5) {
+                    retry.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
+                        public void onClick(View view) {
+                            gameOverDialog.cancel();
+                            perspective.clearAllLocations();
+                            loadPuzzle();
+                        }
+                    });
+                    retryCard.setVisibility(View.VISIBLE);
+                } else {
+                    retryCard.setVisibility(View.GONE);
+                }
+
+                if (puzzleIndex < world.getPuzzleCount()) {
+                    next.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            gameOverDialog.cancel();
                             perspective.clearAllLocations();
                             puzzleIndex++;
                             loadPuzzle();
@@ -584,10 +624,10 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 } else {
                     final String nextWorld = getNextWorld();
                     if (!nextWorld.equals(PerspectiveUtils.WORLD_TUTORIAL)) {
-                        builder.setPositiveButton(R.string.puzzle_next, new DialogInterface.OnClickListener() {
+                        next.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
+                            public void onClick(View view) {
+                                gameOverDialog.cancel();
                                 worldName = nextWorld;
                                 puzzleIndex = 1;
                                 setResult(RESULT_OK);
@@ -600,26 +640,6 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         });
                     }
                 }
-                if (stars < 5) {
-                    builder.setNegativeButton(R.string.puzzle_retry, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                            perspective.clearAllLocations();
-                            loadPuzzle();
-                        }
-                    });
-                }
-                builder.setNeutralButton(R.string.main_menu, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        setResult(RESULT_OK);
-                        finish();
-                    }
-                });
-                builder.setCancelable(false);
-                gameOverDialog = builder.create();
                 gameOverDialog.show();
             }
         });
@@ -630,33 +650,37 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.GameMenuDialogTheme);
+                AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.GameDialogTheme);
                 View layout = getLayoutInflater().inflate(R.layout.dialog_game_menu, null);
                 builder.setView(layout);
-                builder.setNegativeButton(R.string.game_reset, new DialogInterface.OnClickListener() {
+                gameMenuDialog = builder.create();
+                Button buttonMain = layout.findViewById(R.id.game_menu_main_menu);
+                buttonMain.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        perspective.clearAllLocations();
-                        loadPuzzle();
-                    }
-                });
-                builder.setPositiveButton(R.string.game_continue, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-                builder.setNeutralButton(R.string.main_menu, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                    public void onClick(View view) {
+                        gameMenuDialog.cancel();
                         setResult(RESULT_CANCELED);
                         finish();
                     }
                 });
-                builder.setCancelable(false);
-                gameMenuDialog = builder.create();
+                Button buttonSettings = layout.findViewById(R.id.game_menu_settings);
+                buttonSettings.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        gameMenuDialog.cancel();
+                        Intent intent = new Intent(GameActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                Button buttonReset = layout.findViewById(R.id.game_menu_reset);
+                buttonReset.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        gameMenuDialog.cancel();
+                        perspective.clearAllLocations();
+                        loadPuzzle();
+                    }
+                });
                 gameMenuDialog.show();
             }
         });

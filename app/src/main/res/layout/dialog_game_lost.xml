@@ -14,28 +14,89 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical"
+    android:layout_margin="@dimen/game_margin"
+    android:padding="@dimen/view_padding"
+    app:cardBackgroundColor="@color/background"
+    app:cardCornerRadius="@dimen/card_corner_radius"
     tools:context=".ui.GameActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/game_lost_title"
-        android:textColor="@color/text"
-        android:textSize="@dimen/text_primary_size" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/game_lost_message"
-        android:textColor="@color/text_secondary"
-        android:textSize="@dimen/text_secondary_size" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/game_margin"
+            android:padding="@dimen/view_padding"
+            android:text="@string/game_lost_title"
+            android:textAlignment="center"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_primary_size" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/game_margin"
+            android:padding="@dimen/view_padding"
+            android:text="@string/game_lost_message"
+            android:textAlignment="center"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_secondary_size" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/game_margin"
+                android:padding="@dimen/view_padding"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/card_corner_radius">
+
+                <Button
+                    android:id="@+id/game_lost_main_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/view_padding"
+                    android:text="@string/main_menu"
+                    android:textColor="@color/text_primary"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/game_margin"
+                android:padding="@dimen/view_padding"
+                app:cardBackgroundColor="@color/accent"
+                app:cardCornerRadius="@dimen/card_corner_radius">
+
+                <Button
+                    android:id="@+id/game_lost_retry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/view_padding"
+                    android:text="@string/game_retry"
+                    android:textColor="@color/text_primary"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

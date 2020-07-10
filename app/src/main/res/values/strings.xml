@@ -36,8 +36,6 @@ limitations under the License.
     <string name="main_settings">Settings</string>
     <string name="main_debug">DEBUG</string>
 
-    <string name="puzzle_next">Next</string>
-    <string name="puzzle_retry">Retry</string>
     <string name="puzzle_locked">Puzzle is locked</string>
 
     <string name="game_lost_title">Game Over</string>
@@ -48,7 +46,9 @@ limitations under the License.
     <string name="game_continue">Continue</string>
     <string name="game_launch">Launch</string>
     <string name="game_menu">Game Menu</string>
+    <string name="game_next">Next</string>
     <string name="game_reset">Reset</string>
+    <string name="game_retry">Retry</string>
     <string name="game_settings">Settings</string>
     <string name="star_one">One Star</string>
     <string name="star_two">Two Stars</string>

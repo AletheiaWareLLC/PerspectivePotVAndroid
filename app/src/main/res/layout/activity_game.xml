@@ -56,8 +56,7 @@ limitations under the License.
                 android:padding="@dimen/view_padding"
                 android:gravity="center"
                 android:src="@drawable/menu"
-                android:contentDescription="@string/game_menu"
-                android:tint="@color/white" />
+                android:contentDescription="@string/game_menu" />
 
             <TextView
                 android:id="@+id/game_puzzle_name"
@@ -68,28 +67,30 @@ limitations under the License.
                 android:layout_weight="1"
                 android:layout_margin="@dimen/game_margin"
                 android:padding="@dimen/view_padding"
+                android:text="Name"
                 android:textSize="@dimen/text_primary_size"
                 android:textColor="@color/text"
                 android:gravity="center"/>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/game_move_count_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/game_margin"
                 android:padding="@dimen/view_padding"
                 app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardBackgroundColor="@color/primary_dark">
+                app:cardBackgroundColor="@color/white">
 
                 <TextView
-                    android:id="@+id/game_move_count"
+                    android:id="@+id/game_move_count_text"
                     android:background="@android:color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/view_padding"
+                    android:text="0 / 0"
                     android:textSize="@dimen/text_primary_size"
-                    android:textColor="@color/text"
-                    android:gravity="center" />
+                    android:gravity="center"/>
 
             </androidx.cardview.widget.CardView>
 
@@ -103,6 +104,7 @@ limitations under the License.
             android:layout_gravity="center"
             android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
+            android:text="Title"
             android:textSize="@dimen/text_secondary_size"
             android:textColor="@color/text"
             android:gravity="center" />
@@ -128,6 +130,7 @@ limitations under the License.
             android:padding="@dimen/view_padding"
             android:textSize="@dimen/text_secondary_size"
             android:textColor="@color/text"
+            android:text="Description"
             android:gravity="center" />
 
         <androidx.cardview.widget.CardView
@@ -136,7 +139,7 @@ limitations under the License.
             android:layout_gravity="center"
             android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
-            app:cardBackgroundColor="@color/primary_dark"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/card_corner_radius">
 
             <Button
@@ -146,7 +149,7 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:padding="@dimen/view_padding"
                 android:text="@string/game_launch"
-                android:textColor="@color/accent"
+                android:textColor="@color/warning"
                 android:textSize="@dimen/text_primary_size"/>
 
         </androidx.cardview.widget.CardView>

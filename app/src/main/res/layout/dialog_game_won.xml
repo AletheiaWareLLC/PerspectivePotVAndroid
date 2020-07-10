@@ -14,75 +14,159 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/game_margin"
+    android:padding="@dimen/view_padding"
+    app:cardBackgroundColor="@color/background"
+    app:cardCornerRadius="@dimen/card_corner_radius"
     tools:context=".ui.GameActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/game_won_title"
-        android:textColor="@color/text"
-        android:textSize="@dimen/text_primary_size" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/game_won_message"
-        android:textColor="@color/text_secondary"
-        android:textSize="@dimen/text_secondary_size" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/game_won_star1"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/yellow"
-            android:src="@drawable/star"
-            android:contentDescription="@string/star_one" />
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/game_won_star2"
+            <ImageView
+                android:id="@+id/game_won_star1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/game_margin"
+                android:contentDescription="@string/star_one"
+                android:src="@drawable/star"
+                android:tint="@color/yellow" />
+
+            <ImageView
+                android:id="@+id/game_won_star2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/game_margin"
+                android:contentDescription="@string/star_two"
+                android:src="@drawable/star"
+                android:tint="@color/yellow" />
+
+            <ImageView
+                android:id="@+id/game_won_star3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/game_margin"
+                android:contentDescription="@string/star_three"
+                android:src="@drawable/star"
+                android:tint="@color/yellow" />
+
+            <ImageView
+                android:id="@+id/game_won_star4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/game_margin"
+                android:contentDescription="@string/star_four"
+                android:src="@drawable/star"
+                android:tint="@color/yellow" />
+
+            <ImageView
+                android:id="@+id/game_won_star5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/game_margin"
+                android:contentDescription="@string/star_five"
+                android:src="@drawable/star"
+                android:tint="@color/yellow" />
+
+        </LinearLayout>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/yellow"
-            android:src="@drawable/star"
-            android:contentDescription="@string/star_two" />
+            android:layout_margin="@dimen/game_margin"
+            android:padding="@dimen/view_padding"
+            android:text="@string/game_won_title"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_primary_size" />
 
-        <ImageView
-            android:id="@+id/game_won_star3"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/yellow"
-            android:src="@drawable/star"
-            android:contentDescription="@string/star_three" />
+            android:layout_margin="@dimen/game_margin"
+            android:padding="@dimen/view_padding"
+            android:text="@string/game_won_message"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_secondary_size" />
 
-        <ImageView
-            android:id="@+id/game_won_star4"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/game_won_retry_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/yellow"
-            android:src="@drawable/star"
-            android:contentDescription="@string/star_four" />
+            android:layout_margin="@dimen/game_margin"
+            android:padding="@dimen/view_padding"
+            app:cardBackgroundColor="@color/warning"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            android:visibility="gone" >
 
-        <ImageView
-            android:id="@+id/game_won_star5"
+            <Button
+                android:id="@+id/game_won_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/view_padding"
+                android:text="@string/game_retry"
+                android:textColor="@color/text_primary" />
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/yellow"
-            android:src="@drawable/star"
-            android:contentDescription="@string/star_five" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/game_margin"
+                android:padding="@dimen/view_padding"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/card_corner_radius">
+
+                <Button
+                    android:id="@+id/game_won_main_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/view_padding"
+                    android:text="@string/main_menu"
+                    android:textColor="@color/text_primary"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/game_margin"
+                android:padding="@dimen/view_padding"
+                app:cardBackgroundColor="@color/accent"
+                app:cardCornerRadius="@dimen/card_corner_radius">
+
+                <Button
+                    android:id="@+id/game_won_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/view_padding"
+                    android:text="@string/game_next"
+                    android:textColor="@color/text_primary"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>
