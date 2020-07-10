@@ -16,11 +16,12 @@
 
 package com.aletheiaware.perspectivepotv.android.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.aletheiaware.common.android.utils.CommonAndroidUtils;
 import com.aletheiaware.perspectivepotv.android.BuildConfig;
@@ -140,12 +141,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         public void clearProgress(final FragmentActivity activity) {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.WarningDialogTheme);
-            builder.setIcon(R.drawable.warning);
-            builder.setTitle(R.string.preference_clear_progress_confirmation_title);
-            builder.setMessage(R.string.preference_clear_progress_confirmation_message);
-            builder.setPositiveButton(R.string.preference_clear_progress_action, new DialogInterface.OnClickListener() {
+            View layout = getLayoutInflater().inflate(R.layout.dialog_clear_progress, null);
+            Button delete = layout.findViewById(R.id.settings_clear_progress);
+            builder.setView(layout);
+            clearProgressDialog = builder.create();
+            delete.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onClick(View view) {
+                    clearProgressDialog.dismiss();
                     // TODO should this clear the outline_enabled_preference?
                     // TODO should this clear the music_enabled_preference?
                     // TODO should this clear the sound_enabled_preference?
@@ -165,7 +168,6 @@ public class SettingsActivity extends AppCompatActivity {
                     }.start();
                 }
             });
-            clearProgressDialog = builder.create();
             clearProgressDialog.show();
         }
 

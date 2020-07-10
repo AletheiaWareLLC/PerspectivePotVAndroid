@@ -70,8 +70,7 @@ limitations under the License.
     <string name="preference_clear_progress_key">clear_progress_preference</string>
     <string name="preference_clear_progress_title">Clear Progress</string>
     <string name="preference_clear_progress_description">Resets all game progress</string>
-    <string name="preference_clear_progress_confirmation_title">Are you sure?</string>
-    <string name="preference_clear_progress_confirmation_message">All game progress will be deleted.</string>
+    <string name="preference_clear_progress_confirmation">All game progress will be deleted. Are you sure?</string>
     <string name="preference_clear_progress_action">Delete</string>
 
 </resources>
