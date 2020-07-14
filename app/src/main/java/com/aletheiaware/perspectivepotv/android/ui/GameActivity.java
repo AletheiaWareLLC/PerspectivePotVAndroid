@@ -62,13 +62,17 @@ import androidx.preference.PreferenceManager;
 public class GameActivity extends AppCompatActivity implements Perspective.Callback, BillingManager.Callback {
 
     private static final String THEME_MUSIC = "ThemeV2_3X.wav";
+
     private static final String BUTTON_SOUND = "Button.wav";
     private static final String LAUNCH_SOUND = "Engine.wav";
     private static final String LANDING_SOUND = "Click2.wav";
     private static final String TURN_SOUND = "Click1.wav";
-    private static final String SUCCESS_SOUND = "Success.wav";
+    private static final String GOAL_LEVEL_SOUND = "Goal-level.wav";
+    private static final String GOAL_WORLD_SOUND = "Goal-world.wav";
     private static final String FAILURE_SOUND = "Failure.wav";
-    private static final String STAR_SOUND = "star sound.wav";
+    private static final String STAR_SOUND = "Star.wav";
+    private static final String PORTAL_SOUND = "Portal.wav";
+    private static final String JOURNAL_SOUND = "Journal.wav";
 
     private static final long STAR_VIBRATION_GAP = 60;
     private static final long[][] STAR_VIBRATIONS = {
@@ -81,6 +85,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     private static final long[] LAUNCH_VIBRATION = {0, 100};
     private static final long[] LANDING_VIBRATION = {0, 10};
     private static final long[] TURN_VIBRATION = {0, 10};
+    private static final long[] PORTAL_VIBRATION = {0, 10};
 
     public AlertDialog gameOverDialog;
     public AlertDialog gameMenuDialog;
@@ -559,7 +564,11 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     @Override
     public void onGameWon() {
         Log.d(PerspectiveUtils.TAG, "Game Won");
-        sound(SUCCESS_SOUND, 0);
+        if (puzzleIndex < world.getPuzzleCount()) {
+            sound(GOAL_LEVEL_SOUND, 0);
+        } else {
+            sound(GOAL_WORLD_SOUND, 0);
+        }
         final Solution solution = perspective.getSolution();
         int target = perspective.puzzle.getTarget();
         int score = solution.getScore();
