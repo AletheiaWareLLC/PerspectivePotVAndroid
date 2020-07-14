@@ -19,8 +19,8 @@ limitations under the License.
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_padding"
     android:background="@color/background"
+    android:padding="@dimen/activity_padding"
     tools:context=".ui.MainActivity">
 
     <LinearLayout
@@ -36,8 +36,7 @@ limitations under the License.
             android:layout_margin="@dimen/view_margin"
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_logo_description"
-            android:scaleType="centerInside"
-            />
+            android:scaleType="centerInside" />
             <!-- TODO
                 app:srcCompat="@drawable/app_logo" />
             -->
@@ -49,30 +48,53 @@ limitations under the License.
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/main_play_button"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/view_margin"
+                android:layout_margin="@dimen/game_margin"
                 android:padding="@dimen/view_padding"
-                android:text="@string/main_play"
-                android:textColor="@color/text"
-                android:textSize="@dimen/text_primary_size" />
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
-            <Button
-                android:id="@+id/main_settings_button"
+                <Button
+                    android:id="@+id/main_play_button"
+                    style="@style/Shadowed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/view_margin"
+                    android:padding="@dimen/view_padding"
+                    android:text="@string/main_play"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_primary_size" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/view_margin"
+                android:layout_margin="@dimen/game_margin"
                 android:padding="@dimen/view_padding"
-                android:text="@string/main_settings"
-                android:textColor="@color/text"
-                android:textSize="@dimen/text_primary_size" />
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/card_corner_radius">
+
+                <Button
+                    android:id="@+id/main_settings_button"
+                    style="@style/Shadowed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/view_margin"
+                    android:padding="@dimen/view_padding"
+                    android:text="@string/main_settings"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_primary_size" />
+
+            </androidx.cardview.widget.CardView>
 
             <Button
                 android:id="@+id/main_debug_button"
+                style="@style/Shadowed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

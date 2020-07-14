@@ -44,6 +44,7 @@ limitations under the License.
                 android:padding="@dimen/view_padding"
                 android:layout_gravity="center"
                 android:gravity="center"
+                style="@style/Shadowed"
                 android:text="@string/preference_clear_progress_confirmation"
                 android:textAlignment="center"
                 android:textColor="@color/text_primary"
@@ -63,8 +64,11 @@ limitations under the License.
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/view_padding"
+                    style="@style/Shadowed"
                     android:gravity="center"
-                    android:text="@string/preference_clear_progress_action" />
+                    android:text="@string/preference_clear_progress_action"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/text_secondary_size" />
 
             </androidx.cardview.widget.CardView>
 

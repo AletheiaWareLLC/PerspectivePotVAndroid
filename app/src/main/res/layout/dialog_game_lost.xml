@@ -37,6 +37,7 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
+            style="@style/Shadowed"
             android:text="@string/game_lost_title"
             android:textAlignment="center"
             android:textColor="@color/text"
@@ -47,6 +48,7 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
+            style="@style/Shadowed"
             android:text="@string/game_lost_message"
             android:textAlignment="center"
             android:textColor="@color/text_secondary"
@@ -72,8 +74,10 @@ limitations under the License.
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/view_padding"
+                    style="@style/Shadowed"
                     android:text="@string/main_menu"
-                    android:textColor="@color/text_primary"/>
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_secondary_size" />
 
             </androidx.cardview.widget.CardView>
 
@@ -90,8 +94,10 @@ limitations under the License.
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/view_padding"
+                    style="@style/Shadowed"
                     android:text="@string/game_retry"
-                    android:textColor="@color/text_primary"/>
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_secondary_size" />
 
             </androidx.cardview.widget.CardView>
 

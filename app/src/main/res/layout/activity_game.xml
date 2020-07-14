@@ -67,6 +67,7 @@ limitations under the License.
                 android:layout_weight="1"
                 android:layout_margin="@dimen/game_margin"
                 android:padding="@dimen/view_padding"
+                style="@style/Shadowed"
                 android:text="Name"
                 android:textSize="@dimen/text_primary_size"
                 android:textColor="@color/text"
@@ -78,8 +79,8 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/game_margin"
                 android:padding="@dimen/view_padding"
-                app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/game_move_count_text"
@@ -88,7 +89,9 @@ limitations under the License.
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/view_padding"
+                    style="@style/Shadowed"
                     android:text="0 / 0"
+                    android:textAlignment="center"
                     android:textSize="@dimen/text_primary_size"
                     android:gravity="center"/>
 
@@ -104,6 +107,7 @@ limitations under the License.
             android:layout_gravity="center"
             android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
+            style="@style/Shadowed"
             android:text="Title"
             android:textSize="@dimen/text_secondary_size"
             android:textColor="@color/text"
@@ -128,31 +132,38 @@ limitations under the License.
             android:layout_gravity="center"
             android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
+            style="@style/Shadowed"
             android:textSize="@dimen/text_secondary_size"
             android:textColor="@color/text"
             android:text="Description"
             android:gravity="center" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/game_launch_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/card_corner_radius">
+            app:cardCornerRadius="@dimen/launch_card_corner_radius">
 
             <Button
                 android:id="@+id/game_launch_button"
-                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:padding="@dimen/view_padding"
+                style="@style/Shadowed"
                 android:text="@string/game_launch"
-                android:textColor="@color/warning"
-                android:textSize="@dimen/text_primary_size"/>
+                android:textSize="@dimen/text_primary_size" />
 
         </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/game_margin"
+            android:layout_margin="@dimen/game_margin" />
 
     </LinearLayout>
 

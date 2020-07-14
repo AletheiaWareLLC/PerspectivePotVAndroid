@@ -38,9 +38,10 @@ limitations under the License.
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/Shadowed"
+        android:text="@string/loading"
         android:textColor="@color/text"
-        android:textSize="@dimen/text_primary_size"
-        android:text="@string/loading"/>
+        android:textSize="@dimen/text_primary_size"/>
 
 </LinearLayout>
 

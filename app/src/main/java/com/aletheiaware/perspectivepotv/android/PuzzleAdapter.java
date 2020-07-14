@@ -122,7 +122,6 @@ public class PuzzleAdapter extends Adapter<PuzzleAdapter.PuzzleViewHolder> {
             this.locked = locked;
             itemCard.setCardBackgroundColor(ContextCompat.getColor(context, locked ? R.color.grey : R.color.white));
             itemName.setText(String.valueOf(puzzle));
-            itemName.setTextColor(ContextCompat.getColor(context, locked ? R.color.dark_grey : R.color.accent));
             for (int i = 0; i < PerspectiveUtils.MAX_STARS; i++) {
                 itemStars[i].setVisibility(!locked && stars > i ? View.VISIBLE : View.INVISIBLE);
             }
@@ -141,7 +140,6 @@ public class PuzzleAdapter extends Adapter<PuzzleAdapter.PuzzleViewHolder> {
             puzzle = -1;
             itemCard.setCardBackgroundColor(ContextCompat.getColor(context, R.color.grey));
             itemName.setText(R.string.empty_puzzle_list);
-            itemName.setTextColor(ContextCompat.getColor(context, R.color.dark_grey));
             for (View itemStar : itemStars) {
                 itemStar.setVisibility(View.INVISIBLE);
             }

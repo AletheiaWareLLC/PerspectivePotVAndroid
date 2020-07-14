@@ -35,6 +35,13 @@ limitations under the License.
 
     <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Borderless" />
 
+    <style name="Shadowed">
+        <item name="android:shadowColor">@color/grey</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+    </style>
+
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:textColor">@color/text</item>
         <item name="android:textColorPrimary">@color/text_primary</item>

@@ -32,6 +32,16 @@ limitations under the License.
         android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/game_margin"
+            android:padding="@dimen/view_padding"
+            style="@style/Shadowed"
+            android:text="@string/game_won_title"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_primary_size" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,15 +99,7 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/game_margin"
             android:padding="@dimen/view_padding"
-            android:text="@string/game_won_title"
-            android:textColor="@color/text"
-            android:textSize="@dimen/text_primary_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/game_margin"
-            android:padding="@dimen/view_padding"
+            style="@style/Shadowed"
             android:text="@string/game_won_message"
             android:textColor="@color/text_secondary"
             android:textSize="@dimen/text_secondary_size" />
@@ -117,8 +119,10 @@ limitations under the License.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/view_padding"
+                style="@style/Shadowed"
                 android:text="@string/game_retry"
-                android:textColor="@color/text_primary" />
+                android:textColor="@color/text"
+                android:textSize="@dimen/text_secondary_size" />
 
         </androidx.cardview.widget.CardView>
 
@@ -142,8 +146,10 @@ limitations under the License.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/view_padding"
+                    style="@style/Shadowed"
                     android:text="@string/main_menu"
-                    android:textColor="@color/text_primary"/>
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_secondary_size" />
 
             </androidx.cardview.widget.CardView>
 
@@ -160,8 +166,10 @@ limitations under the License.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/view_padding"
+                    style="@style/Shadowed"
                     android:text="@string/game_next"
-                    android:textColor="@color/text_primary"/>
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_secondary_size" />
 
             </androidx.cardview.widget.CardView>
 

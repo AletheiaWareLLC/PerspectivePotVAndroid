@@ -88,7 +88,8 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     private int puzzleIndex;
     private boolean outlineEnabled;
     private World world;
-    private Button launchButton;
+    private CardView gameLaunchCard;
+    private Button gameLaunchButton;
     private GameView gameView;
     private ImageButton gameMenuButton;
     private CardView gameMoveCountCard;
@@ -248,8 +249,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                             });
                             gameMoveCountCard = findViewById(R.id.game_move_count_card);
                             gameMoveCountText = findViewById(R.id.game_move_count_text);
-                            launchButton = findViewById(R.id.game_launch_button);
-                            launchButton.setOnClickListener(new View.OnClickListener() {
+                            gameLaunchCard = findViewById(R.id.game_launch_card);
+                            gameLaunchButton = findViewById(R.id.game_launch_button);
+                            gameLaunchButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     gameView.launch();
@@ -416,6 +418,8 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            gameLaunchButton.setTextColor(foreground);
+                            gameLaunchCard.setCardBackgroundColor(background);
                             gameMoveCountText.setTextColor(foreground);
                             gameMoveCountCard.setCardBackgroundColor(background);
                             updateMoveCount(0, puzzle.getTarget());
