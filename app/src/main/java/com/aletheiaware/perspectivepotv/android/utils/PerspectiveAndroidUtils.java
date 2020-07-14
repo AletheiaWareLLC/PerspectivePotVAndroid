@@ -36,6 +36,7 @@ import com.aletheiaware.joy.scene.Attribute;
 import com.aletheiaware.joy.scene.AttributeNode;
 import com.aletheiaware.joy.scene.MatrixTransformationNode;
 import com.aletheiaware.joy.scene.MeshLoader;
+import com.aletheiaware.joy.scene.Scene;
 import com.aletheiaware.joy.scene.SceneGraphNode;
 import com.aletheiaware.perspective.PerspectiveProto.Solution;
 import com.aletheiaware.perspective.PerspectiveProto.World;
@@ -111,39 +112,48 @@ public class PerspectiveAndroidUtils {
             case "sphere":
                 // Ensure space ship always points up
                 MatrixTransformationNode rotationNode = new MatrixTransformationNode("inverse-rotation");
-
-                // Split by slash for different parts of ship (Ship-body/Ship-canopy/Ship-blast)
-                String[] meshes = mesh.split("/", -1);
-                String[] colours = colour.split("/", -1);
-                String[] textures = texture.split("/", -1);
-                String[] materials = material.split("/", -1);
-
-                // Add each part to rotationNode
-                for (int i = 0; i < meshes.length && i < colours.length && i < textures.length && i < materials.length; i++) {
-                    ensureMeshLoaded(scene, assets, meshes[i]);
-
-                    List<Attribute> attributes = createAttributes(scene, assets, shader, colours[i], textures[i], materials[i]);
-                    AttributeNode attributeNode = new AttributeNode(attributes.toArray(new Attribute[0]));
-                    attributeNode.addChild(new GLVertexNormalTextureMeshNode(shader, meshes[i]));
-                    rotationNode.addChild(attributeNode);
-                }
-
+                addAttributedMesh(scene, assets, shader, mesh, colour, texture, material, rotationNode);
                 return rotationNode;
             case "outline":
             case "block":
             case "goal":
             case "portal":
             case "sky":
-                ensureMeshLoaded(scene, assets, mesh);
+                SceneGraphNode node = new SceneGraphNode() {
+                    @Override
+                    public void before(Scene scene) {
+                        // Ignored
+                    }
 
-                List<Attribute> attributes = createAttributes(scene, assets, shader, colour, texture, material);
-                AttributeNode attributeNode = new AttributeNode(attributes.toArray(new Attribute[0]));
-                attributeNode.addChild(new GLVertexNormalTextureMeshNode(shader, mesh));
-                return attributeNode;
+                    @Override
+                    public void after(Scene scene) {
+                        // Ignored
+                    }
+                };
+                addAttributedMesh(scene, assets, shader, mesh, colour, texture, material, node);
+                return node;
             default:
                 System.err.println("Unrecognized: " + shader + " " + name + " " + type + " " + mesh + " " + colour + " " + texture + " " + material);
         }
         return null;
+    }
+
+    private static void addAttributedMesh(GLScene scene, AssetManager assets, String shader, String mesh, String colour, String texture, String material, SceneGraphNode rootNode) throws IOException {
+        // Split by slash for different parts of ship (Ship-body/Ship-canopy/Ship-blast)
+        String[] meshes = mesh.split("/", -1);
+        String[] colours = colour.split("/", -1);
+        String[] textures = texture.split("/", -1);
+        String[] materials = material.split("/", -1);
+
+        // Add each part to rootNode
+        for (int i = 0; i < meshes.length && i < colours.length && i < textures.length && i < materials.length; i++) {
+            ensureMeshLoaded(scene, assets, meshes[i]);
+
+            List<Attribute> attributes = createAttributes(scene, assets, shader, colours[i], textures[i], materials[i]);
+            AttributeNode attributeNode = new AttributeNode(attributes.toArray(new Attribute[0]));
+            attributeNode.addChild(new GLVertexNormalTextureMeshNode(shader, meshes[i]));
+            rootNode.addChild(attributeNode);
+        }
     }
 
     private static List<Attribute> createAttributes(final GLScene scene, final AssetManager assets, String shader, String colour, final String texture, String material) {
