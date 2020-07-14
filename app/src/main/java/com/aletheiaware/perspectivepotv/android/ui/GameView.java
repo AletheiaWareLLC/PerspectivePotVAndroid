@@ -133,15 +133,6 @@ public class GameView extends GLSurfaceView implements OnTouchListener, GLSurfac
         return false;
     }
 
-    public void launch() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                perspective.launch();
-            }
-        });
-    }
-
     public void quit() {
         handlerThread.quit();
     }

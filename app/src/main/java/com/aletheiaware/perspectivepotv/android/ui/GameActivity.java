@@ -37,18 +37,26 @@ import com.aletheiaware.common.android.utils.CommonAndroidUtils;
 import com.aletheiaware.common.utils.CommonUtils;
 import com.aletheiaware.joy.android.scene.GLScene;
 import com.aletheiaware.joy.scene.SceneGraphNode;
+import com.aletheiaware.joy.scene.Vector;
 import com.aletheiaware.perspective.Perspective;
+import com.aletheiaware.perspective.Perspective.Element;
+import com.aletheiaware.perspective.PerspectiveProto.Move;
 import com.aletheiaware.perspective.PerspectiveProto.Puzzle;
 import com.aletheiaware.perspective.PerspectiveProto.Solution;
 import com.aletheiaware.perspective.PerspectiveProto.World;
 import com.aletheiaware.perspective.utils.PerspectiveUtils;
 import com.aletheiaware.perspectivepotv.android.R;
 import com.aletheiaware.perspectivepotv.android.billing.BillingManager;
+import com.aletheiaware.perspectivepotv.android.scene.LaunchAnimation;
 import com.aletheiaware.perspectivepotv.android.utils.PerspectiveAndroidUtils;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
@@ -259,7 +267,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                             gameLaunchButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    gameView.launch();
+                                    launch();
                                 }
                             });
                             loadPuzzle();
@@ -490,17 +498,90 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     }
 
     @Override
-    public void onTravelStart() {
-        Log.d(PerspectiveUtils.TAG, "Travel Start");
-        vibrate(LAUNCH_VIBRATION);
-        sound(LAUNCH_SOUND, 0);
+    public void onDropComplete() {
+        // Ignore
     }
 
-    @Override
-    public void onTravelComplete() {
-        Log.d(PerspectiveUtils.TAG, "Travel Complete");
-        vibrate(LANDING_VIBRATION);
-        sound(LANDING_SOUND, 0);
+    public void launch() {
+        synchronized (perspective) {
+            SceneGraphNode node = perspective.getSceneGraphNode();
+            if (!node.hasAnimation()) {
+                System.out.println("launch");
+                vibrate(LAUNCH_VIBRATION);
+                sound(LAUNCH_SOUND, 0);
+                if (perspective.inverseRotation.makeInverse(perspective.mainRotation)) {
+                    // TODO improve this - creating new sets and maps each time is expensive
+                    Map<String, Vector> blocks = new HashMap<>();
+                    List<Element> bs = perspective.getElements("block");
+                    if (bs != null) {
+                        for (Element b : bs) {
+                            blocks.put(b.name, glScene.getVector(b.name));
+                        }
+                    }
+                    final Map<String, Vector> goals = new HashMap<>();
+                    List<Element> gs = perspective.getElements("goal");
+                    if (gs != null) {
+                        for (Element g : gs) {
+                            goals.put(g.name, glScene.getVector(g.name));
+                        }
+                    }
+                    final Map<String, Vector> spheres = new HashMap<>();
+                    List<Element> ss = perspective.getElements("sphere");
+                    if (ss != null) {
+                        for (Element s : ss) {
+                            spheres.put(s.name, glScene.getVector(s.name));
+                        }
+                    }
+                    node.setAnimation(new LaunchAnimation(perspective.size, perspective.inverseRotation, perspective.up, blocks, goals, perspective.linkedPortals, spheres) {
+                        @Override
+                        public void onBlockHit(String asteroid) {
+                            // If asteroid has journal play journal sound
+                            vibrate(LANDING_VIBRATION);
+                            sound(LANDING_SOUND, 0);
+                        }
+
+                        @Override
+                        public void onPortalTraversed() {
+                            vibrate(PORTAL_VIBRATION);
+                            sound(PORTAL_SOUND, 0);
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            boolean gameLost = false;
+                            boolean gameWon = true;
+                            for (Entry<String, Vector> s : spheres.entrySet()) {
+                                String k = s.getKey();
+                                Vector v = s.getValue();
+                                if (PerspectiveUtils.isOutOfBounds(v, perspective.size)) {
+                                    // if any spheres are out of bounds - game over
+                                    gameLost = true;
+                                } else if (!goals.containsValue(v)) {
+                                    // if all spheres are in the goals - game won
+                                    gameWon = false;
+                                }
+                                System.out.println("Move: " + k + " " + v);
+                                perspective.solution.addMove(Move.newBuilder()
+                                        .setKey(k)
+                                        .setValue(PerspectiveUtils.vectorToLocation(v))
+                                        .build());
+                            }
+                            if (gameLost) {
+                                perspective.gameOver = true;
+                                perspective.gameWon = false;
+                                onGameLost();
+                            } else if (gameWon) {
+                                perspective.gameOver = true;
+                                perspective.gameWon = true;
+                                onGameWon();
+                            }
+                        }
+                    });
+                } else {
+                    System.err.println("Matrix invert failed");
+                }
+            }
+        }
     }
 
     @Override
