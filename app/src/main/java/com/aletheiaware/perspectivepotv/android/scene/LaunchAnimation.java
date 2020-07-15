@@ -26,8 +26,9 @@ import java.util.Map;
 
 public abstract class LaunchAnimation extends Animation {
 
-    private static final float ACCELERATION = 0.005f;
-    private static final float INCREMENT = 0.01f;
+    private static final float ACCELERATION = 0.01f;
+    private static final float BURN_DURATION = 1.0f;// 1 second burn
+    private static final float INCREMENT = 0.001f;
 
     private final Vector dest = new Vector();
     private final Vector temp = new Vector();
@@ -74,28 +75,37 @@ public abstract class LaunchAnimation extends Animation {
         System.out.println("Launch axis: " + java.util.Arrays.toString(launchAxis));
         float progress = (System.currentTimeMillis() - start) / 1000.0f;// Time to seconds
         System.out.println("Time: " + progress);
-        // TODO SUVAT
-        // S = ?
-        // U = 0
-        // V = ?
-        // A = gravity
-        // T = progress
-        // Solve for S (distance)
-        // S = (U * T) + (0.5 * A * T * T)
-        // TODO Split into two - ACCELERATION until MAX_VELOCITY, then d = MAX_V * time
-        float distance = (0 * progress) + (0.5f * ACCELERATION * progress * progress);
+
+        float distance = 0f;
+
+        // Stage 1: Accelerating
+        if (progress < BURN_DURATION) {
+            System.out.println("Stage1: " + progress);
+            distance = (0.5f * ACCELERATION * progress * progress);
+        } else {
+            System.out.println("Stage1: " + BURN_DURATION);
+            distance = (0.5f * ACCELERATION * BURN_DURATION * BURN_DURATION);
+            // Stage 2: Max Velocity
+            float velocity = ACCELERATION * BURN_DURATION;
+            System.out.println("Stage2: " + (progress-BURN_DURATION));
+            distance += velocity*(progress-BURN_DURATION);
+        }
+
         System.out.println("Distance: " + distance);
         for (float i = 0; i < distance; i += INCREMENT) {
             dest.setX(position.getX() + (INCREMENT * launchAxis[0]));
             dest.setY(position.getY() + (INCREMENT * launchAxis[1]));
             dest.setZ(position.getZ() + (INCREMENT * launchAxis[2]));
-            dest.round(2);// Round to 2 decimal places
+            dest.round(3);// Round to 3 decimal places
             if (PerspectiveUtils.isCellCenter(dest)) {
-                // Double size so ball is offscreen, well out of bounds
-                if (PerspectiveUtils.isOutOfBounds(dest, size * 2)) {
-                    System.out.println("Ball out of bounds");
-                    position.set(dest);
-                    return true;
+                if (PerspectiveUtils.isOutOfBounds(dest, size)) {
+                    onOutlineCrossed();
+                    // Double size so ball is offscreen, well out of bounds
+                    if (PerspectiveUtils.isOutOfBounds(dest, size * 2)) {
+                        System.out.println("Ball out of bounds");
+                        position.set(dest);
+                        return true;
+                    }
                 }
 
                 if (goals != null) {
@@ -138,4 +148,6 @@ public abstract class LaunchAnimation extends Animation {
     public abstract void onBlockHit(String block);
 
     public abstract void onPortalTraversed();
+
+    public abstract void onOutlineCrossed();
 }

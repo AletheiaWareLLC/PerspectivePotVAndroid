@@ -553,6 +553,11 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         }
 
                         @Override
+                        public void onOutlineCrossed() {
+                            // TODO ship just moved out of bounds, change face to sad
+                        }
+
+                        @Override
                         public void onPortalTraversed() {
                             vibrate(PORTAL_VIBRATION);
                             sound(PORTAL_SOUND, 0);
