@@ -99,6 +99,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     private static final long[] TURN_VIBRATION = {0, 10};
     private static final long[] PORTAL_VIBRATION = {0, 10};
 
+    private final int[] fogEnabled = new int[1];
+    private final float[] fogIntensity = new float[1];
+
     public AlertDialog gameOverDialog;
     public AlertDialog gameMenuDialog;
     public AlertDialog gameDialogDialog;
@@ -248,6 +251,10 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     glScene.putFloatArray(GLScene.BACKGROUND, background);
                     // Fog
                     glScene.putFloatArray("fog-colour", PerspectiveUtils.PURPLE);
+                    fogEnabled[0] = 1;
+                    glScene.putIntArray("fog-enabled", fogEnabled);
+                    fogIntensity[0] = 0.75f;
+                    glScene.putFloatArray("fog-intensity", fogIntensity);
 
                     // Create Game View in UI Thread
                     runOnUiThread(new Runnable() {

@@ -26,6 +26,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 
 import com.aletheiaware.joy.JoyProto.Mesh;
@@ -68,6 +71,8 @@ public class DebugActivity extends AppCompatActivity {
 
     private final float[] frustum = new float[2];
     private final float[] light = new float[4];
+    private final int[] fogEnabled = new int[1];
+    private final float[] fogIntensity = new float[1];
     private final Matrix model = new Matrix();
     private final Matrix view = new Matrix();
     private final Matrix projection = new Matrix();
@@ -97,6 +102,27 @@ public class DebugActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
+        ImageButton menu = findViewById(R.id.debug_menu);
+        final ScrollView options = findViewById(R.id.debug_options);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Menu Clicked");
+                switch (options.getVisibility()) {
+                    case View.VISIBLE:
+                        System.out.println("Hiding Options");
+                        options.setVisibility(View.GONE);
+                        break;
+                    case View.INVISIBLE:
+                        // fallthrough
+                    case View.GONE:
+                        // fallthrough
+                    default:
+                        System.out.println("Showing Options");
+                        options.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         AudioAttributes attrs = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -202,6 +228,25 @@ public class DebugActivity extends AppCompatActivity {
                 // TODO
             }
         });
+
+        SeekBar fogDial = findViewById(R.id.debug_fog_dial);
+        fogDial.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                fogEnabled[0] = i;
+                fogIntensity[0] = i/100f;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         debugView = findViewById(R.id.debug_view);
         scene = new GLScene();
         debugView.setScene(scene);
@@ -276,13 +321,17 @@ public class DebugActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                float size = 3;
-                float distance = (size * size) / 2f;
+                float size = 1.0f;
+                float distance = 1.5f;
                 System.out.println("Distance: " + distance);
 
                 // Colours
                 for (int i = 0; i < PerspectiveUtils.COLOUR_NAMES.length; i++) {
                     scene.putFloatArray(PerspectiveUtils.COLOUR_NAMES[i], PerspectiveUtils.COLOURS[i]);
+                }
+                for (int i = 0; i < PerspectiveUtils.MATERIAL_NAMES.length; i++) {
+                    scene.putFloatArray(PerspectiveUtils.MATERIAL_NAMES[i], PerspectiveUtils.MATERIALS[i]);
+                    materialAdapter.add(PerspectiveUtils.MATERIAL_NAMES[i]);
                 }
                 scene.putFloatArray(GLScene.BACKGROUND, PerspectiveUtils.PURPLE);
                 // Frustum
@@ -308,10 +357,10 @@ public class DebugActivity extends AppCompatActivity {
                 scene.putMatrix("inverse-rotation", inverseRotation.makeIdentity());
                 scene.putMatrix("temp-rotation", tempRotation.makeIdentity());
                 // Translation
-                scene.putVector("front", new Vector(0,0,2));
-                scene.putVector("back", new Vector(0,0,-2));
-                scene.putVector("left", new Vector(2,0,0));
-                scene.putVector("right", new Vector(-2,0,0));
+                scene.putVector("front", new Vector(0,0,1));
+                scene.putVector("back", new Vector(0,0,-1));
+                scene.putVector("left", new Vector(1,0,0));
+                scene.putVector("right", new Vector(-1,0,0));
                 // Scale
                 scene.putVector("quarter", new Vector(0.25f,0.25f,0.25f));
                 // Camera
@@ -326,19 +375,8 @@ public class DebugActivity extends AppCompatActivity {
                 scene.putVector("camera-up", cameraUp);
                 // Fog
                 scene.putFloatArray("fog-colour", PerspectiveUtils.PURPLE);
-                // Material
-                materialAdapter.add("matte");
-                scene.putFloatArray("matte", new float[]{0.1f, 0.1f, 0.1f});
-                materialAdapter.add("medium");
-                scene.putFloatArray("medium", new float[]{0.5f, 0.5f, 0.5f});
-                materialAdapter.add("glossy");
-                scene.putFloatArray("glossy", new float[]{1.0f, 1.0f, 1.0f});
-                materialAdapter.add("ambient-only");
-                scene.putFloatArray("ambient-only", new float[]{1.0f, 0.0f, 0.0f});
-                materialAdapter.add("diffuse-only");
-                scene.putFloatArray("diffuse-only", new float[]{0.0f, 1.0f, 0.0f});
-                materialAdapter.add("specular-only");
-                scene.putFloatArray("specular-only", new float[]{0.0f, 0.0f, 1.0f});
+                scene.putIntArray("fog-enabled", fogEnabled);
+                scene.putFloatArray("fog-intensity", fogIntensity);
 
                 GLProgram debugProgram = new GLProgram(Shader.newBuilder()
                         .setName(program)
@@ -377,6 +415,7 @@ public class DebugActivity extends AppCompatActivity {
                                 "uniform MEDIUMP vec4 u_Colour;\n" +
                                 "uniform MEDIUMP vec4 u_FogColour;\n" +
                                 "uniform bool u_FogEnabled;\n" +
+                                "uniform MEDIUMP float u_FogIntensity;\n" +
                                 "uniform MEDIUMP vec3 u_LightPos;\n" +
                                 "uniform MEDIUMP vec3 u_Material;// {Ambient, Diffuse, Specular}\n" +
                                 "uniform bool u_TextureEnabled;\n" +
@@ -399,7 +438,7 @@ public class DebugActivity extends AppCompatActivity {
                                 "    }\n" +
                                 "    colour = colour*ambient + colour*diffuse + colour*specular;\n" +
                                 "    if (u_FogEnabled) {\n" +
-                                "        float fog = clamp(gl_FragCoord.z, 0.0, 1.0);\n" +
+                                "        float fog = clamp(gl_FragCoord.z*u_FogIntensity, 0.0, 1.0);\n" +
                                 "        colour = colour*(1.0-fog) + u_FogColour*fog;\n" +
                                 "    }\n" +
                                 "    mgl_FragColour = colour;\n" +
@@ -412,6 +451,7 @@ public class DebugActivity extends AppCompatActivity {
                         .addUniforms("u_Colour")
                         .addUniforms("u_FogColour")
                         .addUniforms("u_FogEnabled")
+                        .addUniforms("u_FogIntensity")
                         .addUniforms("u_LightPos")
                         .addUniforms("u_Material")
                         .addUniforms("u_MVMatrix")

@@ -24,80 +24,17 @@ limitations under the License.
     android:padding="@dimen/activity_padding"
     tools:context=".ui.DebugActivity">
 
-    <TextView
-        android:labelFor="@+id/debug_music_spinner"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/debug_menu"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/view_margin"
         android:padding="@dimen/view_padding"
-        android:text="Music" />
+        android:background="@android:color/transparent"
+        android:src="@drawable/menu"
+        android:tint="@color/white"/>
 
-    <Spinner
-        android:id="@+id/debug_music_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/view_margin"
-        android:padding="@dimen/view_padding" />
-
-    <TextView
-        android:labelFor="@+id/debug_sound_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/view_margin"
-        android:padding="@dimen/view_padding"
-        android:text="Sound Effect" />
-
-    <Spinner
-        android:id="@+id/debug_sound_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/view_margin"
-        android:padding="@dimen/view_padding" />
-
-    <TextView
-        android:labelFor="@+id/debug_mesh_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/view_margin"
-        android:padding="@dimen/view_padding"
-        android:text="Mesh" />
-
-    <Spinner
-        android:id="@+id/debug_mesh_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/view_margin"
-        android:padding="@dimen/view_padding" />
-
-    <TextView
-        android:labelFor="@+id/debug_texture_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/view_margin"
-        android:padding="@dimen/view_padding"
-        android:text="Texture" />
-
-    <Spinner
-        android:id="@+id/debug_texture_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/view_margin"
-        android:padding="@dimen/view_padding" />
-
-    <TextView
-        android:labelFor="@+id/debug_material_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/view_margin"
-        android:padding="@dimen/view_padding"
-        android:text="Material" />
-
-    <Spinner
-        android:id="@+id/debug_material_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/view_margin"
-        android:padding="@dimen/view_padding" />
+    <include layout="@layout/debug_options"/>
 
     <com.aletheiaware.perspectivepotv.android.ui.DebugView
         android:id="@+id/debug_view"
