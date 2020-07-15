@@ -624,7 +624,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 main.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        gameOverDialog.cancel();
+                        gameOverDialog.dismiss();
                         setResult(RESULT_CANCELED);
                         finish();
                     }
@@ -632,7 +632,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 retry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        gameOverDialog.cancel();
+                        gameOverDialog.dismiss();
                         perspective.clearAllLocations();
                         loadPuzzle();
                     }
@@ -699,7 +699,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 main.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        gameOverDialog.cancel();
+                        gameOverDialog.dismiss();
                         setResult(RESULT_OK);
                         finish();
                     }
@@ -708,7 +708,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     retry.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            gameOverDialog.cancel();
+                            gameOverDialog.dismiss();
                             perspective.clearAllLocations();
                             loadPuzzle();
                         }
@@ -722,7 +722,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     next.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            gameOverDialog.cancel();
+                            gameOverDialog.dismiss();
                             perspective.clearAllLocations();
                             puzzleIndex++;
                             loadPuzzle();
@@ -734,7 +734,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         next.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                gameOverDialog.cancel();
+                                gameOverDialog.dismiss();
                                 worldName = nextWorld;
                                 puzzleIndex = 1;
                                 setResult(RESULT_OK);
@@ -765,7 +765,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 buttonMain.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        gameMenuDialog.cancel();
+                        gameMenuDialog.dismiss();
                         setResult(RESULT_CANCELED);
                         finish();
                     }
@@ -774,7 +774,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 buttonSettings.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        gameMenuDialog.cancel();
+                        gameMenuDialog.dismiss();
                         Intent intent = new Intent(GameActivity.this, SettingsActivity.class);
                         startActivity(intent);
                     }
@@ -783,7 +783,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 buttonReset.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        gameMenuDialog.cancel();
+                        gameMenuDialog.dismiss();
                         perspective.clearAllLocations();
                         loadPuzzle();
                     }
