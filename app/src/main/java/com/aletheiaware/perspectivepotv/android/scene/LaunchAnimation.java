@@ -26,7 +26,7 @@ import java.util.Map;
 
 public abstract class LaunchAnimation extends Animation {
 
-    private static final float ACCELERATION = 0.1f;
+    private static final float ACCELERATION = 0.005f;
     private static final float INCREMENT = 0.01f;
 
     private final Vector dest = new Vector();
