@@ -40,6 +40,7 @@ import com.aletheiaware.joy.scene.SceneGraphNode;
 import com.aletheiaware.joy.scene.Vector;
 import com.aletheiaware.perspective.Perspective;
 import com.aletheiaware.perspective.Perspective.Element;
+import com.aletheiaware.perspective.PerspectiveProto.Dialog;
 import com.aletheiaware.perspective.PerspectiveProto.Move;
 import com.aletheiaware.perspective.PerspectiveProto.Puzzle;
 import com.aletheiaware.perspective.PerspectiveProto.Solution;
@@ -52,7 +53,10 @@ import com.aletheiaware.perspectivepotv.android.utils.PerspectiveAndroidUtils;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +101,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
 
     public AlertDialog gameOverDialog;
     public AlertDialog gameMenuDialog;
+    public AlertDialog gameDialogDialog;
     private String worldName;
     private int puzzleIndex;
     private boolean outlineEnabled;
@@ -423,6 +428,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 final Puzzle puzzle = PerspectiveUtils.getPuzzle(world, puzzleIndex);
                 if (puzzle != null) {
                     perspective.importPuzzle(puzzle);
+                    checkDialogs();
                     final String name = CommonUtils.capitalize(world.getName()) + " - " + puzzleIndex;
                     final String title = CommonUtils.capitalize(world.getTitle());
                     final String description = puzzle.getDescription();
@@ -535,7 +541,6 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     node.setAnimation(new LaunchAnimation(perspective.size, perspective.inverseRotation, perspective.up, blocks, goals, perspective.linkedPortals, spheres) {
                         @Override
                         public void onBlockHit(String asteroid) {
-                            // If asteroid has journal play journal sound
                             vibrate(LANDING_VIBRATION);
                             sound(LANDING_SOUND, 0);
                         }
@@ -574,6 +579,8 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                                 perspective.gameOver = true;
                                 perspective.gameWon = true;
                                 onGameWon();
+                            } else {
+                                checkDialogs();
                             }
                         }
                     });
@@ -582,6 +589,91 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 }
             }
         }
+    }
+
+    private void checkDialogs() {
+        List<String> dialogs = new ArrayList<>();
+        List<Element> ss = perspective.getElements("sphere");
+        if (ss != null) {
+            for (Element s : ss) {
+                Vector location = glScene.getVector(s.name);
+                for (String d : perspective.dialogs.keySet()) {
+                    if (location.equals(glScene.getVector(d))) {
+                        dialogs.add(d);
+                    }
+                }
+            }
+        }
+        if (dialogs.size() > 0) {
+            Collections.sort(dialogs, new Comparator<String>() {
+                public int compare(String o1, String o2) {
+                    return extractInt(o1) - extractInt(o2);
+                }
+
+                int extractInt(String s) {
+                    String num = s.replaceAll("\\D", "");
+                    // return 0 if no digits found
+                    return num.isEmpty() ? 0 : Integer.parseInt(num);
+                }
+            });
+            onDialog(dialogs);
+        }
+    }
+
+    private void onDialog(final List<String> dialogs) {
+        System.out.println("onDialog: " + dialogs);
+        runOnUiThread(new Runnable() {
+            int index = 0;
+            CardView card;
+            TextView author;
+            TextView content;
+            Button next;
+
+            @Override
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.GameDialogTheme);
+                card = (CardView) getLayoutInflater().inflate(R.layout.dialog_game_dialog, null);
+                author = card.findViewById(R.id.game_dialog_author);
+                content = card.findViewById(R.id.game_dialog_content);
+                next = card.findViewById(R.id.game_dialog_next);
+                builder.setView(card);
+                builder.setCancelable(false);
+                gameDialogDialog = builder.create();
+                next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        index++;
+                        if (index < dialogs.size()) {
+                            setupDialog();
+                        } else {
+                            gameDialogDialog.dismiss();
+                        }
+                    }
+                });
+                setupDialog();
+                gameDialogDialog.show();
+            }
+
+            private void setupDialog() {
+                String n = dialogs.get(index);
+                Dialog d = perspective.dialogs.get(n);
+                if ("journal".equals(d.getType())) {
+                    sound(JOURNAL_SOUND, 0);
+                }
+                int fg = colourStringToInt(d.getForegroundColour());
+                int bg = colourStringToInt(d.getBackgroundColour());
+                String a = d.getAuthor();
+                String c = d.getContent();
+                List<String> es = d.getElementList();// TODO
+
+                card.setCardBackgroundColor(bg);
+                String separator = System.getProperty("line.separator");
+                author.setText(a.replace("\\n", separator));
+                author.setTextColor(fg);
+                content.setText(c.replace("\\n", separator));
+                content.setTextColor(fg);
+            }
+        });
     }
 
     @Override
