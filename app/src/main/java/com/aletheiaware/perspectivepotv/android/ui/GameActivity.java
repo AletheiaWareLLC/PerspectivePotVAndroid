@@ -78,22 +78,29 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
 
     private static final String BUTTON_SOUND = "Button.wav";
     private static final String LAUNCH_SOUND = "Engine.wav";
-    private static final String LANDING_SOUND = "Click2.wav";
+    private static final String LANDING_SOUND = "Thud.wav";
     private static final String TURN_SOUND = "Click1.wav";
     private static final String GOAL_LEVEL_SOUND = "Goal-level.wav";
     private static final String GOAL_WORLD_SOUND = "Goal-world.wav";
     private static final String FAILURE_SOUND = "Failure.wav";
-    private static final String STAR_SOUND = "Star.wav";
     private static final String PORTAL_SOUND = "Portal.wav";
     private static final String JOURNAL_SOUND = "Journal.wav";
+    private static final String[] STAR_SOUNDS = {
+            "1Star.wav",
+            "2Star.wav",
+            "3Star.wav",
+            "4Star.wav",
+            "5Star.wav",
+    };
 
-    private static final long STAR_VIBRATION_GAP = 60;
+    private static final long STAR_VIBRATION_ON = 70;
+    private static final long STAR_VIBRATION_OFF = 60;
     private static final long[][] STAR_VIBRATIONS = {
-            {0, 70},
-            {0, 70, STAR_VIBRATION_GAP, 90},
-            {0, 70, STAR_VIBRATION_GAP, 90, STAR_VIBRATION_GAP, 115},
-            {0, 70, STAR_VIBRATION_GAP, 90, STAR_VIBRATION_GAP, 115, STAR_VIBRATION_GAP, 145},
-            {0, 70, STAR_VIBRATION_GAP, 90, STAR_VIBRATION_GAP, 115, STAR_VIBRATION_GAP, 145, STAR_VIBRATION_GAP, 180},
+            {0, STAR_VIBRATION_ON},
+            {0, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON},
+            {0, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON},
+            {0, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON},
+            {0, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON},
     };
     private static final long[] LAUNCH_VIBRATION = {0, 100};
     private static final long[] LANDING_VIBRATION = {0, 10};
@@ -392,13 +399,13 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
         super.onDestroy();
     }
 
-    private void sound(String name, int loop) {
+    private void sound(String name) {
         if (preferences.getBoolean(getString(R.string.preference_puzzle_sound_key), true)) {
             System.out.println("Sound Name: " + name);
             int[] ids = glScene.getIntArray(name);
             System.out.println("Sound ID: " + Arrays.toString(ids));
             if (ids != null && ids.length > 0) {
-                int result = soundPool.play(ids[0], 1, 1, 1, loop, 1);
+                int result = soundPool.play(ids[0], 1, 1, 1, 0, 1);
                 System.out.println("Playing Sound Result: " + result);
             }
         } else {
@@ -576,7 +583,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         @Override
                         public void onBlockHit(String asteroid) {
                             vibrate(LANDING_VIBRATION);
-                            sound(LANDING_SOUND, 0);
+                            sound(LANDING_SOUND);
                         }
 
                         @Override
@@ -699,7 +706,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 String n = dialogs.get(index);
                 Dialog d = perspective.dialogs.get(n);
                 if ("journal".equals(d.getType())) {
-                    sound(JOURNAL_SOUND, 0);
+                    sound(JOURNAL_SOUND);
                 }
                 int fg = colourStringToInt(d.getForegroundColour());
                 int bg = colourStringToInt(d.getBackgroundColour());
@@ -721,7 +728,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     public void onTurnComplete() {
         Log.d(PerspectiveUtils.TAG, "Turn Complete");
         vibrate(TURN_VIBRATION);
-        sound(TURN_SOUND, 0);
+        sound(TURN_SOUND);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -743,7 +750,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     @Override
     public void onGameLost() {
         Log.d(PerspectiveUtils.TAG, "Game Lost");
-        sound(FAILURE_SOUND, 0);
+        sound(FAILURE_SOUND);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -781,9 +788,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     public void onGameWon() {
         Log.d(PerspectiveUtils.TAG, "Game Won");
         if (puzzleIndex < world.getPuzzleCount()) {
-            sound(GOAL_LEVEL_SOUND, 0);
+            sound(GOAL_LEVEL_SOUND);
         } else {
-            sound(GOAL_WORLD_SOUND, 0);
+            sound(GOAL_WORLD_SOUND);
         }
         final Solution solution = perspective.getSolution();
         int target = perspective.puzzle.getTarget();
@@ -811,7 +818,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
         // Vibrate once for each star earned
         if (stars > 0) {
             vibrate(STAR_VIBRATIONS[stars - 1]);
-            sound(STAR_SOUND, stars - 1);
+            sound(STAR_SOUNDS[stars - 1]);
         }
 
         runOnUiThread(new Runnable() {
@@ -890,7 +897,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     }
 
     public void onGameMenu() {
-        sound(BUTTON_SOUND, 0);
+        sound(BUTTON_SOUND);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
