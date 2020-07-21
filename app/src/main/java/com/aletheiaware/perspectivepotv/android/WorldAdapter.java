@@ -51,16 +51,21 @@ public class WorldAdapter extends Adapter<ViewHolder> {
     private final Map<String, String> pricesMap = new HashMap<>();
     private final Map<String, World> worldsMap = new HashMap<>();
     private final Callback callback;
+    private int visible = 1;
 
     public WorldAdapter(Activity activity, Callback callback) {
         this.activity = activity;
         this.callback = callback;
     }
 
-    public synchronized void addWorld(World world, int stars) {
+    public synchronized void addWorld(World world, boolean completed, int stars) {
         String name = world.getName();
+        System.out.println("Adding World: " + name + " " + completed + " " + stars);
         if (!names.contains(name)) {
             names.add(name);
+            if (completed) {
+                visible++;
+            }
         }
         worldsMap.put(name, world);
         starsMap.put(name, stars);
@@ -168,7 +173,7 @@ public class WorldAdapter extends Adapter<ViewHolder> {
         if (names.isEmpty()) {
             return 1;// Empty view
         }
-        return names.size();
+        return Math.min(visible, names.size());
     }
 
     static class WorldViewHolder extends ViewHolder {

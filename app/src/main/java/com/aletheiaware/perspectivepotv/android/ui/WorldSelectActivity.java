@@ -111,6 +111,7 @@ public class WorldSelectActivity extends AppCompatActivity implements WorldAdapt
             final int puzzles = w.getPuzzleCount();
             final int[] stars = new int[puzzles];
             int totalStars = 0;
+            boolean completed = puzzles > 0;
             for (int i = 0; i < puzzles; i++) {
                 stars[i] = -1;
                 Solution s = null;
@@ -123,13 +124,15 @@ public class WorldSelectActivity extends AppCompatActivity implements WorldAdapt
                         e.printStackTrace();
                     }
                 }
-                if (s != null) {
+                if (s == null) {
+                    completed = false;
+                } else {
                     stars[i] = PerspectiveUtils.scoreToStars(s.getScore(), p.getTarget());
                     totalStars += stars[i];
                 }
             }
             puzzleStars.put(world, stars);
-            adapter.addWorld(w, totalStars);
+            adapter.addWorld(w, completed, totalStars);
         } catch (IOException e) {
             CommonAndroidUtils.showErrorDialog(this, R.style.ErrorDialogTheme, R.string.error_add_world, e);
             e.printStackTrace();
