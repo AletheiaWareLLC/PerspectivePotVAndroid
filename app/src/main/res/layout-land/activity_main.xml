@@ -20,7 +20,6 @@ limitations under the License.
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="@dimen/activity_padding"
     tools:context=".ui.MainActivity">
 
     <LinearLayout
@@ -31,15 +30,12 @@ limitations under the License.
 
         <ImageView
             android:id="@+id/main_logo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/view_margin"
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_logo_description"
-            android:scaleType="centerInside" />
-            <!-- TODO
-                app:srcCompat="@drawable/banner" />
-            -->
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/banner" />
 
         <LinearLayout
             android:layout_width="wrap_content"
