@@ -690,7 +690,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     }
                 });
                 setupDialog();
-                gameDialogDialog.show();
+                if (!isFinishing()) {
+                    gameDialogDialog.show();
+                }
             }
 
             private void setupDialog() {
@@ -768,7 +770,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         loadPuzzle();
                     }
                 });
-                gameOverDialog.show();
+                if (!isFinishing()) {
+                    gameOverDialog.show();
+                }
             }
         });
     }
@@ -878,7 +882,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         });
                     }
                 }
-                gameOverDialog.show();
+                if (!isFinishing()) {
+                    gameOverDialog.show();
+                }
             }
         });
     }
@@ -919,7 +925,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         loadPuzzle();
                     }
                 });
-                gameMenuDialog.show();
+                if (!isFinishing()) {
+                    gameMenuDialog.show();
+                }
             }
         });
     }
