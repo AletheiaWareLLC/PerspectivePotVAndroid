@@ -18,11 +18,6 @@ package com.aletheiaware.perspectivepotv.android;
 
 import android.app.Activity;
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,7 +25,12 @@ import android.widget.TextView;
 
 import com.aletheiaware.perspective.PerspectiveProto.World;
 import com.aletheiaware.perspective.utils.PerspectiveUtils;
-import com.aletheiaware.perspectivepotv.android.R;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 public class PuzzleAdapter extends Adapter<PuzzleAdapter.PuzzleViewHolder> {
 
