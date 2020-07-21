@@ -37,6 +37,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.IntBuffer;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -78,6 +79,7 @@ public class GameActivityInstrumentedTest {
         Intent intent = createIconicIntent();
         intent.putExtra(PerspectiveAndroidUtils.ORIENTATION_EXTRA, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         GLScene scene = activity.getGlScene();
         setIconicScene(scene, activity.getPerspective());
         Thread.sleep(1000);
@@ -89,6 +91,7 @@ public class GameActivityInstrumentedTest {
         Intent intent = createIconicIntent();
         intent.putExtra(PerspectiveAndroidUtils.ORIENTATION_EXTRA, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         GLScene scene = activity.getGlScene();
         setIconicScene(scene, activity.getPerspective());
         Thread.sleep(1000);
@@ -123,6 +126,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameHUDTutorial() throws Exception {
         Intent intent = createTutorialIntent(1);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         Thread.sleep(1000);
         CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud-tutorial.png");
         activity.finish();
@@ -133,6 +137,7 @@ public class GameActivityInstrumentedTest {
         Intent intent = new Intent();
         intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, PerspectiveUtils.WORLD_SIX);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         Thread.sleep(1000);
         CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud-world-free.png");
         activity.finish();
@@ -143,6 +148,7 @@ public class GameActivityInstrumentedTest {
         Intent intent = new Intent();
         intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, PerspectiveUtils.WORLD_SEVEN);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         Thread.sleep(1000);
         CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud-world-paid.png");
         activity.finish();
@@ -152,6 +158,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameMenu() throws Exception {
         Intent intent = createTutorialIntent(1);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         activity.onGameMenu();
         Thread.sleep(1000);
         CommonAndroidUtils.captureScreenshot(activity, activity.gameMenuDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-menu.png");
@@ -162,6 +169,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameLost() throws Exception {
         Intent intent = createTutorialIntent(1);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         activity.onGameLost();
         Thread.sleep(1000);
         CommonAndroidUtils.captureScreenshot(activity, activity.gameOverDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-lost.png");
@@ -172,7 +180,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon0Stars() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
-        Thread.sleep(1000);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+10);
         activity.onGameWon();
@@ -185,7 +193,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon1Star() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
-        Thread.sleep(1000);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+4);
         activity.onGameWon();
@@ -198,7 +206,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon2Stars() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
-        Thread.sleep(1000);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+3);
         activity.onGameWon();
@@ -211,7 +219,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon3Stars() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
-        Thread.sleep(1000);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+2);
         activity.onGameWon();
@@ -224,7 +232,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon4Stars() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
-        Thread.sleep(1000);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+1);
         activity.onGameWon();
@@ -237,7 +245,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotGameWon5Stars() throws Exception {
         Intent intent = createTutorialIntent(0);
         GameActivity activity = intentsTestRule.launchActivity(intent);
-        Thread.sleep(1000);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget());
         activity.onGameWon();
@@ -305,7 +313,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotWorld1Puzzle6() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_ONE, 6);
     }
-/*
+
     @Test
     public void screenshotWorld2Puzzle1() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_TWO, 1);
@@ -921,7 +929,7 @@ public class GameActivityInstrumentedTest {
     public void screenshotWorld9Puzzle16() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_NINE, 16);
     }
-
+/*
     @Test
     public void screenshotWorld10Puzzle1() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_TEN, 1);
@@ -1407,13 +1415,13 @@ public class GameActivityInstrumentedTest {
     public void screenshotWorld15Puzzle11() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_FIFTEEN, 11);
     }
-*/
+
     @Ignore("Not Generated")
     @Test
     public void screenshotWorld15Puzzle12() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_FIFTEEN, 12);
     }
-
+*/
     private void captureScreenshot(String world, int puzzle) throws Exception {
         String name = "com.aletheiaware.perspectivepotv.android.ui.GameActivity-" + world + "-" + puzzle + ".png";
         Log.d(PerspectiveUtils.TAG, "Capturing " + name);
@@ -1421,6 +1429,7 @@ public class GameActivityInstrumentedTest {
         intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, world);
         intent.putExtra(PerspectiveAndroidUtils.PUZZLE_EXTRA, puzzle);
         GameActivity activity = intentsTestRule.launchActivity(intent);
+        activity.loadLatch.await(10, TimeUnit.SECONDS);
         Thread.sleep(1000);
         captureScreenshot(activity.getGlScene(), name);
         activity.finish();

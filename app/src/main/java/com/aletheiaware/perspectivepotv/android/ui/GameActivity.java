@@ -61,6 +61,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.CountDownLatch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
@@ -105,6 +106,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     public AlertDialog gameOverDialog;
     public AlertDialog gameMenuDialog;
     public AlertDialog gameDialogDialog;
+    public CountDownLatch loadLatch;
     private String worldName;
     private int puzzleIndex;
     private boolean outlineEnabled;
@@ -170,6 +172,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     }
 
     private void load(Bundle data) {
+        loadLatch = new CountDownLatch(1);
         worldName = data.getString(PerspectiveAndroidUtils.WORLD_EXTRA);
         puzzleIndex = data.getInt(PerspectiveAndroidUtils.PUZZLE_EXTRA);
         if (data.containsKey(PerspectiveAndroidUtils.ORIENTATION_EXTRA)) {
@@ -464,6 +467,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                             } else {
                                 descriptionText.setVisibility(View.GONE);
                             }
+                            loadLatch.countDown();
                         }
                     });
                 }
