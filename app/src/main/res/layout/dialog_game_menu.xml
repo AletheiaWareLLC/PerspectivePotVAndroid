@@ -45,7 +45,7 @@ limitations under the License.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/view_padding"
-                style="@style/Shadowed"
+                style="@style/OrbitronShadowed"
                 android:text="@string/main_menu"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary_size" />
@@ -65,7 +65,7 @@ limitations under the License.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/view_padding"
-                style="@style/Shadowed"
+                style="@style/OrbitronShadowed"
                 android:text="@string/game_settings"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_secondary_size" />
@@ -85,7 +85,7 @@ limitations under the License.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/view_padding"
-                style="@style/Shadowed"
+                style="@style/OrbitronShadowed"
                 android:text="@string/game_reset"
                 android:textColor="@color/text"
                 android:textSize="@dimen/text_secondary_size" />

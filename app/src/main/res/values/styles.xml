@@ -35,7 +35,8 @@ limitations under the License.
 
     <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Borderless" />
 
-    <style name="Shadowed">
+    <style name="OrbitronShadowed">
+        <item name="android:fontFamily">@font/orbitron</item>
         <item name="android:shadowColor">@color/grey</item>
         <item name="android:shadowRadius">1</item>
         <item name="android:shadowDx">1</item>

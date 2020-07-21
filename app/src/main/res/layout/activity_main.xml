@@ -54,7 +54,7 @@ limitations under the License.
 
                 <Button
                     android:id="@+id/main_play_button"
-                    style="@style/Shadowed"
+                    style="@style/OrbitronShadowed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -76,7 +76,7 @@ limitations under the License.
 
                 <Button
                     android:id="@+id/main_settings_button"
-                    style="@style/Shadowed"
+                    style="@style/OrbitronShadowed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -90,7 +90,7 @@ limitations under the License.
 
             <Button
                 android:id="@+id/main_debug_button"
-                style="@style/Shadowed"
+                style="@style/OrbitronShadowed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
