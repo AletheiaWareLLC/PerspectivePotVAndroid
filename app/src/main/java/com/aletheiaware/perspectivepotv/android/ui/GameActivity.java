@@ -74,7 +74,7 @@ import androidx.preference.PreferenceManager;
 
 public class GameActivity extends AppCompatActivity implements Perspective.Callback, BillingManager.Callback {
 
-    private static final String THEME_MUSIC = "ThemeV2_3X.wav";
+    private static final String THEME_MUSIC = "MainThemeV2.wav";
 
     private static final String BUTTON_SOUND = "Button.wav";
     private static final String LAUNCH_SOUND = "Engine.wav";
