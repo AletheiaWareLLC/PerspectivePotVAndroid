@@ -27,7 +27,7 @@ import java.util.Map;
 public abstract class LaunchAnimation extends Animation {
 
     private static final float ACCELERATION = 0.01f;
-    private static final float BURN_DURATION = 1.0f;// 1 second burn
+    private static final float BURN_DURATION = 1.6f;// 1.6 second burn
     private static final float INCREMENT = 0.001f;
 
     private final Vector dest = new Vector();
@@ -83,6 +83,7 @@ public abstract class LaunchAnimation extends Animation {
             System.out.println("Stage1: " + progress);
             distance = (0.5f * ACCELERATION * progress * progress);
         } else {
+            onBlastComplete();
             System.out.println("Stage1: " + BURN_DURATION);
             distance = (0.5f * ACCELERATION * BURN_DURATION * BURN_DURATION);
             // Stage 2: Max Velocity
@@ -144,6 +145,8 @@ public abstract class LaunchAnimation extends Animation {
         }
         return false;
     }
+
+    public abstract void onBlastComplete();
 
     public abstract void onBlockHit(String block);
 

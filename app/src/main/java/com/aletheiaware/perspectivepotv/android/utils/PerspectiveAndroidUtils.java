@@ -36,11 +36,13 @@ import com.aletheiaware.joy.scene.Attribute;
 import com.aletheiaware.joy.scene.AttributeNode;
 import com.aletheiaware.joy.scene.MatrixTransformationNode;
 import com.aletheiaware.joy.scene.MeshLoader;
-import com.aletheiaware.joy.scene.Scene;
-import com.aletheiaware.joy.scene.SceneGraphNode;
+import com.aletheiaware.joy.scene.ScaleNode;
+import com.aletheiaware.joy.scene.TranslateNode;
+import com.aletheiaware.perspective.Perspective;
 import com.aletheiaware.perspective.PerspectiveProto.Solution;
 import com.aletheiaware.perspective.PerspectiveProto.World;
 import com.aletheiaware.perspective.utils.PerspectiveUtils;
+import com.aletheiaware.perspectivepotv.android.scene.BlastNode;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -107,53 +109,57 @@ public class PerspectiveAndroidUtils {
         PerspectiveUtils.clearSolutions(context.getFilesDir());
     }
 
-    public static SceneGraphNode getSceneGraphNode(GLScene scene, AssetManager assets, String shader, String name, String type, String mesh, String colour, String texture, String material) throws IOException {
+    public static void addSceneGraphNode(GLScene scene, Perspective perspective, AssetManager assets, String shader, String name, String type, String mesh, String colour, String texture, String material) throws IOException {
         switch (type) {
-            case "sphere":
+            case "sky": {
+                ScaleNode skyScale = new ScaleNode("sky-scale");
+                perspective.scenegraphs.get(shader).addChild(skyScale);
+                skyScale.addChild(createAttributedMesh(scene, assets, shader, mesh, colour, texture, material));
+                break;
+            }
+            case "outline": {
+                ScaleNode outlineScale = new ScaleNode("outline-scale");
+                perspective.scenegraphs.get(shader).addChild(outlineScale);
+                outlineScale.addChild(createAttributedMesh(scene, assets, shader, mesh, colour, texture, material));
+                break;
+            }
+            case "sphere": {
+                TranslateNode translateNode = new TranslateNode(name);
+                perspective.scenegraphs.get(shader).addChild(translateNode);
                 // Ensure space ship always points up
                 MatrixTransformationNode rotationNode = new MatrixTransformationNode("inverse-rotation");
-                addAttributedMesh(scene, assets, shader, mesh, colour, texture, material, rotationNode);
-                return rotationNode;
-            case "outline":
+                translateNode.addChild(rotationNode);
+                AttributeNode attributeNode = createAttributedMesh(scene, assets, shader, mesh, colour, texture, material);
+                if ("blast".equals(shader)) {
+                    BlastNode blastNode = new BlastNode(shader);
+                    rotationNode.addChild(blastNode);
+                    blastNode.addChild(attributeNode);
+                } else {
+                    rotationNode.addChild(attributeNode);
+                }
+                break;
+            }
             case "block":
             case "goal":
-            case "portal":
-            case "sky":
-                SceneGraphNode node = new SceneGraphNode() {
-                    @Override
-                    public void before(Scene scene) {
-                        // Ignored
-                    }
-
-                    @Override
-                    public void after(Scene scene) {
-                        // Ignored
-                    }
-                };
-                addAttributedMesh(scene, assets, shader, mesh, colour, texture, material, node);
-                return node;
+            case "scenery":
+            case "portal": {
+                TranslateNode translateNode = new TranslateNode(name);
+                perspective.scenegraphs.get(shader).addChild(translateNode);
+                translateNode.addChild(createAttributedMesh(scene, assets, shader, mesh, colour, texture, material));
+                break;
+            }
             default:
                 System.err.println("Unrecognized: " + shader + " " + name + " " + type + " " + mesh + " " + colour + " " + texture + " " + material);
         }
-        return null;
     }
 
-    private static void addAttributedMesh(GLScene scene, AssetManager assets, String shader, String mesh, String colour, String texture, String material, SceneGraphNode rootNode) throws IOException {
-        // Split by slash for different parts of ship (Ship-body/Ship-canopy/Ship-blast)
-        String[] meshes = mesh.split("/", -1);
-        String[] colours = colour.split("/", -1);
-        String[] textures = texture.split("/", -1);
-        String[] materials = material.split("/", -1);
-
-        // Add each part to rootNode
-        for (int i = 0; i < meshes.length && i < colours.length && i < textures.length && i < materials.length; i++) {
-            ensureMeshLoaded(scene, assets, meshes[i]);
-
-            List<Attribute> attributes = createAttributes(scene, assets, shader, colours[i], textures[i], materials[i]);
-            AttributeNode attributeNode = new AttributeNode(attributes.toArray(new Attribute[0]));
-            attributeNode.addChild(new GLVertexNormalTextureMeshNode(shader, meshes[i]));
-            rootNode.addChild(attributeNode);
-        }
+    private static AttributeNode createAttributedMesh(GLScene scene, AssetManager assets, String shader, String mesh, String colour, String texture, String material) throws IOException {
+        ensureMeshLoaded(scene, assets, mesh);
+        System.out.println("Creating: " + shader + " " + mesh + " " + colour + " " + texture + " " + material);
+        List<Attribute> attributes = createAttributes(scene, assets, shader, colour, texture, material);
+        AttributeNode attributeNode = new AttributeNode(attributes.toArray(new Attribute[0]));
+        attributeNode.addChild(new GLVertexNormalTextureMeshNode(shader, mesh));
+        return attributeNode;
     }
 
     private static List<Attribute> createAttributes(final GLScene scene, final AssetManager assets, String shader, String colour, final String texture, String material) {

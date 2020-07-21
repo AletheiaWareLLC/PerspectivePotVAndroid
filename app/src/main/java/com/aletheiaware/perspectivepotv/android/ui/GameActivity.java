@@ -37,6 +37,7 @@ import com.aletheiaware.common.android.utils.CommonAndroidUtils;
 import com.aletheiaware.common.utils.CommonUtils;
 import com.aletheiaware.joy.android.scene.GLScene;
 import com.aletheiaware.joy.scene.SceneGraphNode;
+import com.aletheiaware.joy.scene.TranslateNode;
 import com.aletheiaware.joy.scene.Vector;
 import com.aletheiaware.perspective.Perspective;
 import com.aletheiaware.perspective.Perspective.Element;
@@ -102,10 +103,14 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             {0, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON},
             {0, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON, STAR_VIBRATION_OFF, STAR_VIBRATION_ON},
     };
-    private static final long[] LAUNCH_VIBRATION = {0, 100};
+    private static final long[] LAUNCH_VIBRATION = {0, 1600};
     private static final long[] LANDING_VIBRATION = {0, 10};
     private static final long[] TURN_VIBRATION = {0, 10};
     private static final long[] PORTAL_VIBRATION = {0, 10};
+
+
+    private final int[] blastEnabled = new int[1];
+    private final float[] blastRandom = new float[1];
 
     private final int[] fogEnabled = new int[1];
     private final float[] fogIntensity = new float[1];
@@ -260,6 +265,10 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         background = glScene.getFloatArray(colour);
                     }
                     glScene.putFloatArray(GLScene.BACKGROUND, background);
+                    // Blast
+                    glScene.putFloatArray("blast-random", blastRandom);
+                    blastEnabled[0] = 0;
+                    glScene.putIntArray("blast-enabled", blastEnabled);
                     // Fog
                     glScene.putFloatArray("fog-colour", PerspectiveUtils.PURPLE);
                     fogEnabled[0] = 1;
@@ -534,14 +543,35 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     }
 
     @Override
-    public SceneGraphNode getSceneGraphNode(String shader, String name, String type, String mesh, String colour, String texture, String material) {
+    public void addSceneGraphNode(String shader, String name, String type, String mesh, String colour, String texture, String material) {
         try {
-            return PerspectiveAndroidUtils.getSceneGraphNode(glScene, getAssets(), shader, name, type, mesh, colour, texture, material);
+            // Split by slash for different parts of ship (Ship-body/Ship-canopy/Ship-blast-inner/Ship-blast-outer)
+            String[] shaders = shader.split("/", -1);
+            String[] meshes = mesh.split("/", -1);
+            String[] colours = colour.split("/", -1);
+            String[] textures = texture.split("/", -1);
+            String[] materials = material.split("/", -1);
+            int[] lengths = new int[] {
+                shaders.length,
+                meshes.length,
+                colours.length,
+                textures.length,
+                materials.length,
+            };
+            int limit = Integer.MAX_VALUE;
+            for (int length : lengths) {
+                limit = Math.min(limit, length);
+                if (length != lengths[0]) {
+                    System.err.println("Incorrect parts: " + shader + " " + name + " " + type + " " + mesh + " " + colour + " " + texture + " " + material);
+                }
+            }
+            for (int i = 0; i < limit; i++) {
+                PerspectiveAndroidUtils.addSceneGraphNode(glScene, perspective, getAssets(), shaders[i], name, type, meshes[i], colours[i], textures[i], materials[i]);
+            }
         } catch (IOException e) {
             CommonAndroidUtils.showErrorDialog(this, R.style.ErrorDialogTheme, R.string.error_get_scene_graph_node, e);
             e.printStackTrace();
         }
-        return null;
     }
 
     @Override
@@ -555,7 +585,8 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             if (!node.hasAnimation()) {
                 System.out.println("launch");
                 vibrate(LAUNCH_VIBRATION);
-                sound(LAUNCH_SOUND, 0);
+                sound(LAUNCH_SOUND);
+                blastEnabled[0] = 1;
                 if (perspective.inverseRotation.makeInverse(perspective.mainRotation)) {
                     // TODO improve this - creating new sets and maps each time is expensive
                     Map<String, Vector> blocks = new HashMap<>();
@@ -581,6 +612,11 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     }
                     node.setAnimation(new LaunchAnimation(perspective.size, perspective.inverseRotation, perspective.up, blocks, goals, perspective.linkedPortals, spheres) {
                         @Override
+                        public void onBlastComplete() {
+                            blastEnabled[0] = 0;
+                        }
+
+                        @Override
                         public void onBlockHit(String asteroid) {
                             vibrate(LANDING_VIBRATION);
                             sound(LANDING_SOUND);
@@ -594,7 +630,14 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         @Override
                         public void onPortalTraversed() {
                             vibrate(PORTAL_VIBRATION);
-                            sound(PORTAL_SOUND, 0);
+                            sound(PORTAL_SOUND);
+                        }
+
+                        @Override
+                        public boolean tick() {
+                            blastRandom[0] = (float)((System.currentTimeMillis()/100.0)%1.0);
+                            System.out.println("Blast Random: " + blastRandom[0]);
+                            return super.tick();
                         }
 
                         @Override
