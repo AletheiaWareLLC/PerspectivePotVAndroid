@@ -256,7 +256,27 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     glScene.putFloatArray("fog-colour", PerspectiveUtils.PURPLE);
                     fogEnabled[0] = 1;
                     glScene.putIntArray("fog-enabled", fogEnabled);
-                    fogIntensity[0] = 0.75f;
+                    switch (worldName) {
+                        case PerspectiveUtils.WORLD_TUTORIAL:
+                            // fallthrough
+                        case PerspectiveUtils.WORLD_ONE:
+                            // fallthrough
+                        case PerspectiveUtils.WORLD_TWO:
+                            fogIntensity[0] = 0.85f;
+                            break;
+                        case PerspectiveUtils.WORLD_THREE:
+                            // fallthrough
+                        case PerspectiveUtils.WORLD_FOUR:
+                            fogIntensity[0] = 0.8f;
+                            break;
+                        case PerspectiveUtils.WORLD_FIVE:
+                            // fallthrough
+                        case PerspectiveUtils.WORLD_SIX:
+                            // fallthrough
+                        default:
+                            fogIntensity[0] = 0.75f;
+                            break;
+                    }
                     glScene.putFloatArray("fog-intensity", fogIntensity);
 
                     // Create Game View in UI Thread
