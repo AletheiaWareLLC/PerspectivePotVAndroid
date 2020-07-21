@@ -101,6 +101,7 @@ limitations under the License.
             android:padding="@dimen/view_padding"
             style="@style/OrbitronShadowed"
             android:text="@string/game_won_message"
+            android:textAlignment="center"
             android:textColor="@color/text_secondary"
             android:textSize="@dimen/text_secondary_size" />
 
