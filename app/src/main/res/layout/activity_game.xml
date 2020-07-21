@@ -46,17 +46,29 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/game_menu_button"
-                android:background="@android:color/transparent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/game_menu_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/game_margin"
                 android:padding="@dimen/view_padding"
-                android:gravity="center"
-                android:src="@drawable/menu"
-                android:contentDescription="@string/game_menu" />
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/card_corner_radius">
+
+                <ImageButton
+                    android:id="@+id/game_menu_button"
+                    android:background="@android:color/transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/view_padding"
+                    android:gravity="center"
+                    android:src="@drawable/menu"
+                    android:minHeight="@dimen/text_secondary_size"
+                    android:contentDescription="@string/game_menu" />
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/game_puzzle_name"

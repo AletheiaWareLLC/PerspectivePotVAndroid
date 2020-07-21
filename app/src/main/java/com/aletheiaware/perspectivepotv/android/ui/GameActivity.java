@@ -114,6 +114,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     private CardView gameLaunchCard;
     private Button gameLaunchButton;
     private GameView gameView;
+    private CardView gameMenuCard;
     private ImageButton gameMenuButton;
     private CardView gameMoveCountCard;
     private TextView gameMoveCountText;
@@ -288,6 +289,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                             gameView = findViewById(R.id.game_view);
                             gameView.setScene(glScene);
                             gameView.setPerspective(perspective);
+                            gameMenuCard = findViewById(R.id.game_menu_card);
                             gameMenuButton = findViewById(R.id.game_menu_button);
                             gameMenuButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -469,6 +471,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         public void run() {
                             gameLaunchButton.setTextColor(foreground);
                             gameLaunchCard.setCardBackgroundColor(background);
+                            gameMenuCard.setCardBackgroundColor(background);
                             gameMoveCountText.setTextColor(foreground);
                             gameMoveCountCard.setCardBackgroundColor(background);
                             updateMoveCount(0, puzzle.getTarget());
