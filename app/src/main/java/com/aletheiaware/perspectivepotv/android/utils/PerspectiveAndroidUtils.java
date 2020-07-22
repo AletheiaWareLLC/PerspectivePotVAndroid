@@ -130,12 +130,15 @@ public class PerspectiveAndroidUtils {
                 MatrixTransformationNode rotationNode = new MatrixTransformationNode("inverse-rotation");
                 translateNode.addChild(rotationNode);
                 AttributeNode attributeNode = createAttributedMesh(scene, assets, shader, mesh, colour, texture, material);
-                if ("blast".equals(shader)) {
-                    BlastNode blastNode = new BlastNode(shader);
-                    rotationNode.addChild(blastNode);
-                    blastNode.addChild(attributeNode);
-                } else {
-                    rotationNode.addChild(attributeNode);
+                switch (shader) {
+                    case "blast":
+                        BlastNode blastNode = new BlastNode(shader);
+                        rotationNode.addChild(blastNode);
+                        blastNode.addChild(attributeNode);
+                        break;
+                    default:
+                        rotationNode.addChild(attributeNode);
+                        break;
                 }
                 break;
             }
