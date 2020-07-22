@@ -50,6 +50,7 @@ import com.aletheiaware.perspective.utils.PerspectiveUtils;
 import com.aletheiaware.perspectivepotv.android.R;
 import com.aletheiaware.perspectivepotv.android.billing.BillingManager;
 import com.aletheiaware.perspectivepotv.android.scene.LaunchAnimation;
+import com.aletheiaware.perspectivepotv.android.scene.ShipFaceAttribute;
 import com.aletheiaware.perspectivepotv.android.utils.PerspectiveAndroidUtils;
 
 import java.io.IOException;
@@ -108,12 +109,13 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     private static final long[] TURN_VIBRATION = {0, 10};
     private static final long[] PORTAL_VIBRATION = {0, 10};
 
-
     private final int[] blastEnabled = new int[1];
     private final float[] blastRandom = new float[1];
 
     private final int[] fogEnabled = new int[1];
     private final float[] fogIntensity = new float[1];
+
+    private final int[] shipEmotion = new int[1];
 
     public AlertDialog gameOverDialog;
     public AlertDialog gameMenuDialog;
@@ -295,6 +297,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                             break;
                     }
                     glScene.putFloatArray("fog-intensity", fogIntensity);
+                    // Ship Emotion
+                    shipEmotion[0] = ShipFaceAttribute.SHIP_FACE_HAPPY;
+                    glScene.putIntArray("ship-emotion", shipEmotion);
 
                     // Create Game View in UI Thread
                     runOnUiThread(new Runnable() {
@@ -477,6 +482,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 if (puzzle != null) {
                     perspective.importPuzzle(puzzle);
                     checkDialogs();
+                    shipEmotion[0] = ShipFaceAttribute.SHIP_FACE_HAPPY;
                     final String name = CommonUtils.capitalize(world.getName()) + " - " + puzzleIndex;
                     final String title = CommonUtils.capitalize(world.getTitle());
                     final String description = puzzle.getDescription();
@@ -624,7 +630,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
 
                         @Override
                         public void onOutlineCrossed() {
-                            // TODO ship just moved out of bounds, change face to sad
+                            System.out.println("onOutlineCrossed");
+                            // Ship moved out of bounds, change face to sad
+                            shipEmotion[0] = ShipFaceAttribute.SHIP_FACE_SAD;
                         }
 
                         @Override

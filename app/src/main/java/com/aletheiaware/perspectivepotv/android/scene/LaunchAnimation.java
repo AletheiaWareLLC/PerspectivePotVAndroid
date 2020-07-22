@@ -99,7 +99,7 @@ public abstract class LaunchAnimation extends Animation {
             dest.setZ(position.getZ() + (INCREMENT * launchAxis[2]));
             dest.round(3);// Round to 3 decimal places
             if (PerspectiveUtils.isCellCenter(dest)) {
-                if (PerspectiveUtils.isOutOfBounds(dest, size)) {
+                if (PerspectiveUtils.isOutOfBounds(dest, size / 2)) {
                     onOutlineCrossed();
                     // Double size so ball is offscreen, well out of bounds
                     if (PerspectiveUtils.isOutOfBounds(dest, size * 2)) {
@@ -140,7 +140,7 @@ public abstract class LaunchAnimation extends Animation {
                 }
             }
 
-            System.out.println("Ball moved to " + dest);
+            //System.out.println("Ball moved to " + dest);
             position.set(dest);
         }
         return false;

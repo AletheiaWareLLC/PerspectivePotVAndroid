@@ -43,6 +43,7 @@ import com.aletheiaware.perspective.PerspectiveProto.Solution;
 import com.aletheiaware.perspective.PerspectiveProto.World;
 import com.aletheiaware.perspective.utils.PerspectiveUtils;
 import com.aletheiaware.perspectivepotv.android.scene.BlastNode;
+import com.aletheiaware.perspectivepotv.android.scene.ShipFaceAttribute;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -172,19 +173,26 @@ public class PerspectiveAndroidUtils {
             attributes.add(new GLColourAttribute(shader, colour));
         }
         if (texture != null && !texture.isEmpty()) {
-            System.out.println("Creating Texture Attribute: " + texture);
-            attributes.add(new GLTextureAttribute(shader, texture) {
-                @Override
-                public void load() {
-                    try (InputStream in = assets.open("texture/" + texture)) {
-                        int[] texIds = GLUtils.loadTexture(in);
-                        System.out.println("Loaded Texture: " + texture + " as " + Arrays.toString(texIds));
-                        scene.putIntArray(texture, texIds);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            switch (texture) {
+                case "shipface":
+                    System.out.println("Creating Ship Face Attribute");
+                    attributes.add(new ShipFaceAttribute(shader) {
+                        @Override
+                        public void load() {
+                            loadTexture(scene, assets, textureName);
+                        }
+                    });
+                    break;
+                default:
+                    System.out.println("Creating Texture Attribute: " + texture);
+                    attributes.add(new GLTextureAttribute(shader, texture) {
+                        @Override
+                        public void load() {
+                            loadTexture(scene, assets, textureName);
+                        }
+                    });
+                    break;
+            }
         }
         if (material != null && !material.isEmpty()) {
             System.out.println("Creating Material Attribute: " + material);
@@ -206,4 +214,13 @@ public class PerspectiveAndroidUtils {
         }
     }
 
+    private static void loadTexture(final GLScene scene, final AssetManager assets, final String texture) {
+        try (InputStream in = assets.open("texture/" + texture)) {
+            int[] texIds = GLUtils.loadTexture(in);
+            System.out.println("Loaded Texture: " + texture + " as " + Arrays.toString(texIds));
+            scene.putIntArray(texture, texIds);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
