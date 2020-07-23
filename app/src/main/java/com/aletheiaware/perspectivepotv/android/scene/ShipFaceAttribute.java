@@ -13,15 +13,12 @@ public abstract class ShipFaceAttribute extends GLTextureAttribute {
             "Ship-canopy-sad.png",
     };
 
-    public String textureName;
-
     public ShipFaceAttribute(String programName) {
-        super(programName, "");
+        super(programName);
     }
 
     @Override
-    public int[] getTexture(Scene scene) {
-        textureName = SHIP_FACE[scene.getIntArray("ship-emotion")[0]];
-        return scene.getIntArray(textureName);
+    public String getTextureName(Scene scene) {
+        return SHIP_FACE[scene.getIntArray("ship-emotion")[0]];
     }
 }

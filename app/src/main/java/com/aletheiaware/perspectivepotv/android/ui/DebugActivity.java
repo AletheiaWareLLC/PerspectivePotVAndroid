@@ -52,6 +52,7 @@ import com.aletheiaware.joy.scene.Matrix;
 import com.aletheiaware.joy.scene.MatrixTransformationNode;
 import com.aletheiaware.joy.scene.MeshLoader;
 import com.aletheiaware.joy.scene.ScaleNode;
+import com.aletheiaware.joy.scene.Scene;
 import com.aletheiaware.joy.scene.TranslateNode;
 import com.aletheiaware.joy.scene.Vector;
 import com.aletheiaware.perspective.utils.PerspectiveUtils;
@@ -587,13 +588,18 @@ public class DebugActivity extends AppCompatActivity {
         if (textureName == null || textureName.equals("")) {
             System.out.println("No texture name");
         } else {
-            attributes.add(new GLTextureAttribute(program, textureName) {
+            attributes.add(new GLTextureAttribute(program) {
                 @Override
-                public void load() {
-                    try (InputStream in = getAssets().open("texture/" + textureName)) {
+                public String getTextureName(Scene scene) {
+                    return textureName;
+                }
+
+                @Override
+                public void load(String texture) {
+                    try (InputStream in = getAssets().open("texture/" + texture)) {
                         int[] texIds = GLUtils.loadTexture(in);
-                        System.out.println("Loaded Texture: " + textureName + " as " + Arrays.toString(texIds));
-                        scene.putIntArray(textureName, texIds);
+                        System.out.println("Loaded Texture: " + texture + " as " + Arrays.toString(texIds));
+                        scene.putIntArray(texture, texIds);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -37,6 +37,7 @@ import com.aletheiaware.joy.scene.AttributeNode;
 import com.aletheiaware.joy.scene.MatrixTransformationNode;
 import com.aletheiaware.joy.scene.MeshLoader;
 import com.aletheiaware.joy.scene.ScaleNode;
+import com.aletheiaware.joy.scene.Scene;
 import com.aletheiaware.joy.scene.TranslateNode;
 import com.aletheiaware.perspective.Perspective;
 import com.aletheiaware.perspective.PerspectiveProto.Solution;
@@ -178,17 +179,22 @@ public class PerspectiveAndroidUtils {
                     System.out.println("Creating Ship Face Attribute");
                     attributes.add(new ShipFaceAttribute(shader) {
                         @Override
-                        public void load() {
-                            loadTexture(scene, assets, textureName);
+                        public void load(String texture) {
+                            loadTexture(scene, assets, texture);
                         }
                     });
                     break;
                 default:
                     System.out.println("Creating Texture Attribute: " + texture);
-                    attributes.add(new GLTextureAttribute(shader, texture) {
+                    attributes.add(new GLTextureAttribute(shader) {
                         @Override
-                        public void load() {
-                            loadTexture(scene, assets, textureName);
+                        public String getTextureName(Scene scene) {
+                            return texture;
+                        }
+
+                        @Override
+                        public void load(String texture) {
+                            loadTexture(scene, assets, texture);
                         }
                     });
                     break;
