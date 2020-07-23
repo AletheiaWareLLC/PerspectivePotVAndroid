@@ -46,7 +46,6 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/view_margin"
                 android:padding="@dimen/view_padding"
-                style="@style/OrbitronShadowed"
                 android:text="@string/legalese_label"
                 android:textAlignment="center"
                 android:textColor="@color/text_primary"
@@ -58,7 +57,6 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/view_margin"
                 android:padding="@dimen/view_padding"
-                style="@style/OrbitronShadowed"
                 android:text="@string/legalese_beta_label"
                 android:textAlignment="center"
                 android:textColor="@color/text_primary"
@@ -86,7 +84,6 @@ limitations under the License.
                         android:layout_gravity="center"
                         android:padding="@dimen/view_padding"
                         android:gravity="center"
-                        style="@style/OrbitronShadowed"
                         android:text="@string/legalese_action_reject"
                         android:textColor="@color/text"
                         android:textSize="@dimen/text_secondary_size" />
@@ -107,7 +104,6 @@ limitations under the License.
                         android:layout_height="wrap_content"
                         android:padding="@dimen/view_padding"
                         android:gravity="center"
-                        style="@style/OrbitronShadowed"
                         android:text="@string/legalese_action_accept"
                         android:textColor="@color/text"
                         android:textSize="@dimen/text_secondary_size" />
