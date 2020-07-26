@@ -37,7 +37,6 @@ import com.aletheiaware.common.android.utils.CommonAndroidUtils;
 import com.aletheiaware.common.utils.CommonUtils;
 import com.aletheiaware.joy.android.scene.GLScene;
 import com.aletheiaware.joy.scene.SceneGraphNode;
-import com.aletheiaware.joy.scene.TranslateNode;
 import com.aletheiaware.joy.scene.Vector;
 import com.aletheiaware.perspective.Perspective;
 import com.aletheiaware.perspective.Perspective.Element;
