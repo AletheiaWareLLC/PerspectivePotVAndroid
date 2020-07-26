@@ -481,6 +481,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 if (puzzle != null) {
                     perspective.importPuzzle(puzzle);
                     checkDialogs();
+                    blastEnabled[0] = 0;
                     shipEmotion[0] = ShipFaceAttribute.SHIP_FACE_HAPPY;
                     final String name = CommonUtils.capitalize(world.getName()) + " - " + puzzleIndex;
                     final String title = CommonUtils.capitalize(world.getTitle());
