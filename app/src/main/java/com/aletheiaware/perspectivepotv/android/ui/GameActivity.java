@@ -756,6 +756,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             private void setupDialog() {
                 String n = dialogs.get(index);
                 Dialog d = perspective.dialogs.get(n);
+                if (d == null) {
+                    return;
+                }
                 if ("journal".equals(d.getType())) {
                     sound(JOURNAL_SOUND);
                 }
@@ -763,10 +766,13 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 int bg = colourStringToInt(d.getBackgroundColour());
                 String a = d.getAuthor();
                 String c = d.getContent();
-                List<String> es = d.getElementList();// TODO
+                // TODO List<String> es = d.getElementList();
 
                 card.setCardBackgroundColor(bg);
                 String separator = System.getProperty("line.separator");
+                if (separator == null || separator.isEmpty()) {
+                    separator = "\n";
+                }
                 author.setText(a.replace("\\n", separator));
                 author.setTextColor(fg);
                 content.setText(c.replace("\\n", separator));
