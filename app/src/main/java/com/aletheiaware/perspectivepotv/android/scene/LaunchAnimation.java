@@ -60,8 +60,10 @@ public abstract class LaunchAnimation extends Animation {
 
     @Override
     public boolean tick() {
+        long now = System.currentTimeMillis();
         if (start < 0) {
-            start = System.currentTimeMillis();
+            start = now;
+            onBegin();
         }
         if (spheres.isEmpty()) {
             return true;
@@ -73,7 +75,7 @@ public abstract class LaunchAnimation extends Animation {
         }
 
         System.out.println("Launch axis: " + java.util.Arrays.toString(launchAxis));
-        float progress = (System.currentTimeMillis() - start) / 1000.0f;// Time to seconds
+        float progress = (now - start) / 1000.0f;// Time to seconds
         System.out.println("Time: " + progress);
 
         float distance = 0f;
@@ -104,6 +106,7 @@ public abstract class LaunchAnimation extends Animation {
                     // Double size so ball is offscreen, well out of bounds
                     if (PerspectiveUtils.isOutOfBounds(dest, size * 2)) {
                         System.out.println("Ball out of bounds");
+                        onBlastComplete();
                         position.set(dest);
                         return true;
                     }
@@ -113,6 +116,7 @@ public abstract class LaunchAnimation extends Animation {
                     for (Vector g : goals.values()) {
                         if (dest.equals(g)) {
                             System.out.println("Ball in Goal");
+                            onBlastComplete();
                             position.set(dest);
                             return true;
                         }
@@ -134,6 +138,7 @@ public abstract class LaunchAnimation extends Animation {
                 for (Map.Entry<String, Vector> b : blocks.entrySet()) {
                     if (next.equals(b.getValue())) {
                         System.out.println("Ball stopped at Block");
+                        onBlastComplete();
                         onBlockHit(b.getKey());
                         return true;
                     }

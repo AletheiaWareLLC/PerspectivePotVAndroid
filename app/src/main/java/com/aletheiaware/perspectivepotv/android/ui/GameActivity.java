@@ -586,13 +586,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     }
 
     public void launch() {
-        synchronized (perspective) {
-            SceneGraphNode node = perspective.getSceneGraphNode();
-            if (!node.hasAnimation()) {
+        synchronized (glScene) {
+            if (!glScene.hasAnimation()) {
                 System.out.println("launch");
-                vibrate(LAUNCH_VIBRATION);
-                sound(LAUNCH_SOUND);
-                blastEnabled[0] = 1;
                 if (perspective.inverseRotation.makeInverse(perspective.mainRotation)) {
                     // TODO improve this - creating new sets and maps each time is expensive
                     Map<String, Vector> blocks = new HashMap<>();
@@ -616,14 +612,24 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                             spheres.put(s.name, glScene.getVector(s.name));
                         }
                     }
-                    node.setAnimation(new LaunchAnimation(perspective.size, perspective.inverseRotation, perspective.up, blocks, goals, perspective.linkedPortals, spheres) {
+                    glScene.setAnimation(new LaunchAnimation(perspective.size, perspective.inverseRotation, perspective.up, blocks, goals, perspective.linkedPortals, spheres) {
+                        @Override
+                        public void onBegin() {
+                            vibrate(LAUNCH_VIBRATION);
+                            sound(LAUNCH_SOUND);
+                            blastEnabled[0] = 1;
+                        }
+
                         @Override
                         public void onBlastComplete() {
+                            System.out.println("onBlastComplete");
                             blastEnabled[0] = 0;
+                            // TODO Stop LAUNCH_SOUND and LAUNCH_VIBRATION if still active
                         }
 
                         @Override
                         public void onBlockHit(String asteroid) {
+                            System.out.println("onBlockHit: " + asteroid);
                             vibrate(LANDING_VIBRATION);
                             sound(LANDING_SOUND);
                         }
@@ -637,6 +643,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
 
                         @Override
                         public void onPortalTraversed() {
+                            System.out.println("onPortalTraversed");
                             vibrate(PORTAL_VIBRATION);
                             sound(PORTAL_SOUND);
                         }
