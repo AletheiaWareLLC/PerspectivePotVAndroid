@@ -51,7 +51,7 @@ public class WorldAdapter extends Adapter<ViewHolder> {
     private final Map<String, String> pricesMap = new HashMap<>();
     private final Map<String, World> worldsMap = new HashMap<>();
     private final Callback callback;
-    private int visible = 1;
+    private int visible = BuildConfig.DEBUG ? 100 : 1;
 
     public WorldAdapter(Activity activity, Callback callback) {
         this.activity = activity;
