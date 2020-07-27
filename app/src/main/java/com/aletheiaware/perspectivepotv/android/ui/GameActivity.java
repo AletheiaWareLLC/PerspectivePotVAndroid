@@ -49,6 +49,7 @@ import com.aletheiaware.perspective.PerspectiveProto.World;
 import com.aletheiaware.perspective.utils.PerspectiveUtils;
 import com.aletheiaware.perspectivepotv.android.R;
 import com.aletheiaware.perspectivepotv.android.billing.BillingManager;
+import com.aletheiaware.perspectivepotv.android.scene.FogFadeAnimation;
 import com.aletheiaware.perspectivepotv.android.scene.LaunchAnimation;
 import com.aletheiaware.perspectivepotv.android.scene.ShipFaceAttribute;
 import com.aletheiaware.perspectivepotv.android.utils.PerspectiveAndroidUtils;
@@ -294,27 +295,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     glScene.putFloatArray("fog-colour", PerspectiveUtils.PURPLE);
                     fogEnabled[0] = 1;
                     glScene.putIntArray("fog-enabled", fogEnabled);
-                    switch (worldName) {
-                        case PerspectiveUtils.WORLD_TUTORIAL:
-                            // fallthrough
-                        case PerspectiveUtils.WORLD_ONE:
-                            // fallthrough
-                        case PerspectiveUtils.WORLD_TWO:
-                            fogIntensity[0] = 0.85f;
-                            break;
-                        case PerspectiveUtils.WORLD_THREE:
-                            // fallthrough
-                        case PerspectiveUtils.WORLD_FOUR:
-                            fogIntensity[0] = 0.8f;
-                            break;
-                        case PerspectiveUtils.WORLD_FIVE:
-                            // fallthrough
-                        case PerspectiveUtils.WORLD_SIX:
-                            // fallthrough
-                        default:
-                            fogIntensity[0] = 0.75f;
-                            break;
-                    }
+                    fogIntensity[0] = 1.5f;
                     glScene.putFloatArray("fog-intensity", fogIntensity);
                     // Ship Emotion
                     shipEmotion[0] = ShipFaceAttribute.SHIP_FACE_HAPPY;
@@ -503,7 +484,31 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     checkDialogs();
                     blastEnabled[0] = 0;
                     shipEmotion[0] = ShipFaceAttribute.SHIP_FACE_HAPPY;
-                    gameView.requestRender();
+                    fogIntensity[0] = 1.5f;
+                    float fogStart = fogIntensity[0];
+                    float fogEnd;
+                    switch (worldName) {
+                        case PerspectiveUtils.WORLD_TUTORIAL:
+                            // fallthrough
+                        case PerspectiveUtils.WORLD_ONE:
+                            // fallthrough
+                        case PerspectiveUtils.WORLD_TWO:
+                            fogEnd = 0.85f;
+                            break;
+                        case PerspectiveUtils.WORLD_THREE:
+                            // fallthrough
+                        case PerspectiveUtils.WORLD_FOUR:
+                            fogEnd = 0.8f;
+                            break;
+                        case PerspectiveUtils.WORLD_FIVE:
+                            // fallthrough
+                        case PerspectiveUtils.WORLD_SIX:
+                            // fallthrough
+                        default:
+                            fogEnd = 0.75f;
+                            break;
+                    }
+                    glScene.setAnimation(new FogFadeAnimation(fogIntensity, fogStart, fogEnd));
                     final String name = CommonUtils.capitalize(world.getName()) + " - " + puzzleIndex;
                     final String title = CommonUtils.capitalize(world.getTitle());
                     final String description = puzzle.getDescription();
