@@ -25,6 +25,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -36,7 +37,7 @@ import android.widget.TextView;
 import com.aletheiaware.common.android.utils.CommonAndroidUtils;
 import com.aletheiaware.common.utils.CommonUtils;
 import com.aletheiaware.joy.android.scene.GLScene;
-import com.aletheiaware.joy.scene.SceneGraphNode;
+import com.aletheiaware.joy.scene.Animation;
 import com.aletheiaware.joy.scene.Vector;
 import com.aletheiaware.perspective.Perspective;
 import com.aletheiaware.perspective.Perspective.Element;
@@ -200,7 +201,26 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 || preferences.getBoolean(getString(R.string.preference_puzzle_outline_key), true);
 
         Log.d(PerspectiveUtils.TAG, "Creating Scene");
-        glScene = new GLScene();
+        glScene = new GLScene() {
+            @Override
+            public void setAnimation(Animation a) {
+                // Render until the animation is complete
+                System.out.println("Setting GL Render Mode: Continuous");
+                gameView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+                super.setAnimation(a);
+            }
+        };
+        glScene.setFrameCallback(new GLScene.FrameCallback() {
+            @Override
+            public boolean onFrame() {
+                // Stop rendering duplicate frames
+                if (!glScene.hasAnimation() && gameView.getRenderMode() != GLSurfaceView.RENDERMODE_WHEN_DIRTY) {
+                    System.out.println("Setting GL Render Mode: When Dirty");
+                    gameView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+                }
+                return true;
+            }
+        });
 
         final AssetManager assets = getAssets();
         // List Assets

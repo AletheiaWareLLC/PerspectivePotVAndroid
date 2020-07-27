@@ -107,6 +107,7 @@ public class GameView extends GLSurfaceView implements OnTouchListener, GLSurfac
                         @Override
                         public void run() {
                             gesture.start((int) e.getX(), (int) e.getY());
+                            requestRender();
                         }
                     });
                     return true;
@@ -115,6 +116,7 @@ public class GameView extends GLSurfaceView implements OnTouchListener, GLSurfac
                         @Override
                         public void run() {
                             gesture.move((int) e.getX(), (int) e.getY());
+                            requestRender();
                         }
                     });
                     return true;
