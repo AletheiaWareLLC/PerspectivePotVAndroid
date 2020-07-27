@@ -503,6 +503,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     checkDialogs();
                     blastEnabled[0] = 0;
                     shipEmotion[0] = ShipFaceAttribute.SHIP_FACE_HAPPY;
+                    gameView.requestRender();
                     final String name = CommonUtils.capitalize(world.getName()) + " - " + puzzleIndex;
                     final String title = CommonUtils.capitalize(world.getTitle());
                     final String description = puzzle.getDescription();
