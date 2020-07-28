@@ -1018,6 +1018,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     @Override
                     public void onClick(View view) {
                         gameMenuDialog.dismiss();
+                        glScene.clearAnimation();
                         perspective.clearAllLocations();
                         loadPuzzle();
                     }
