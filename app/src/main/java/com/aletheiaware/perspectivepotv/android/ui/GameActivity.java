@@ -486,28 +486,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     shipEmotion[0] = ShipFaceAttribute.SHIP_FACE_HAPPY;
                     fogIntensity[0] = 1.5f;
                     float fogStart = fogIntensity[0];
-                    float fogEnd;
-                    switch (worldName) {
-                        case PerspectiveUtils.WORLD_TUTORIAL:
-                            // fallthrough
-                        case PerspectiveUtils.WORLD_ONE:
-                            // fallthrough
-                        case PerspectiveUtils.WORLD_TWO:
-                            fogEnd = 0.85f;
-                            break;
-                        case PerspectiveUtils.WORLD_THREE:
-                            // fallthrough
-                        case PerspectiveUtils.WORLD_FOUR:
-                            fogEnd = 0.8f;
-                            break;
-                        case PerspectiveUtils.WORLD_FIVE:
-                            // fallthrough
-                        case PerspectiveUtils.WORLD_SIX:
-                            // fallthrough
-                        default:
-                            fogEnd = 0.75f;
-                            break;
-                    }
+                    float fogEnd = getWorldFog();
                     glScene.setAnimation(new FogFadeAnimation(fogIntensity, fogStart, fogEnd));
                     final String name = CommonUtils.capitalize(world.getName()) + " - " + puzzleIndex;
                     final String title = CommonUtils.capitalize(world.getTitle());
@@ -1083,6 +1062,27 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 } // else fallthrough
             default:
                 return PerspectiveUtils.WORLD_TUTORIAL;
+        }
+    }
+
+    public float getWorldFog() {
+        switch (worldName) {
+            case PerspectiveUtils.WORLD_TUTORIAL:
+                return 0.95f;
+            case PerspectiveUtils.WORLD_ONE:
+                return 0.9f;
+            case PerspectiveUtils.WORLD_TWO:
+                return 0.85f;
+            case PerspectiveUtils.WORLD_THREE:
+                return 0.8f;
+            case PerspectiveUtils.WORLD_FOUR:
+                return 0.75f;
+            case PerspectiveUtils.WORLD_FIVE:
+                return 0.7f;
+            case PerspectiveUtils.WORLD_SIX:
+                return 0.65f;
+            default:
+                return 0.5f;
         }
     }
 
