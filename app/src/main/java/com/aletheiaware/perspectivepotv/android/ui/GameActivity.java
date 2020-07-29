@@ -81,14 +81,15 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
 
     private static final String ALIEN_SOUND = "Click2.wav";
     private static final String BUTTON_SOUND = "Button.wav";
-    private static final String LAUNCH_SOUND = "Engine.wav";
-    private static final String LANDING_SOUND = "Thud.wav";
-    private static final String TURN_SOUND = "Click1.wav";
+    private static final String FAILURE_SOUND = "Failure.wav";
     private static final String GOAL_LEVEL_SOUND = "Goal-level.wav";
     private static final String GOAL_WORLD_SOUND = "Goal-world.wav";
-    private static final String FAILURE_SOUND = "Failure.wav";
-    private static final String PORTAL_SOUND = "Portal.wav";
     private static final String JOURNAL_SOUND = "Journal.wav";
+    private static final String LAUNCH_SOUND = "Engine.wav";
+    private static final String LANDING_SOUND = "Thud.wav";
+    private static final String PORTAL_SOUND = "Portal.wav";
+    private static final String TURN_SOUND = "Click1.wav";
+
     private static final String[] STAR_SOUNDS = {
             "1Star.wav",
             "2Star.wav",
@@ -388,7 +389,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 }
             }.start();
         } else {
-            Log.d(PerspectiveUtils.TAG, "Music Disabled");
+            Log.d(PerspectiveUtils.TAG, "Music FX Disabled");
         }
     }
 
@@ -428,7 +429,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 System.out.println("Playing Sound Result: " + result);
             }
         } else {
-            Log.d(PerspectiveUtils.TAG, "SFX Disabled");
+            Log.d(PerspectiveUtils.TAG, "Sound FX Disabled");
         }
     }
 
@@ -437,6 +438,8 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             Log.d(PerspectiveUtils.TAG, "No vibrator");
         } else if (preferences.getBoolean(getString(R.string.preference_puzzle_vibration_key), true)) {
             vibrator.vibrate(pattern, -1);
+        } else {
+            Log.d(PerspectiveUtils.TAG, "Vibration FX Disabled");
         }
     }
 
@@ -445,33 +448,33 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
         mp.setOnInfoListener(new MediaPlayer.OnInfoListener() {
             @Override
             public boolean onInfo(MediaPlayer mp, int what, int extra) {
-                System.out.println("onInfo: " + mp.toString() + " " + what + " " + extra);
+                System.out.println("MediaPlayer.onInfo: " + mp.toString() + " " + what + " " + extra);
                 return false;
             }
         });
         mp.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mp, int percent) {
-                System.out.println("onBufferingUpdate: " + mp.toString() + " " + percent);
+                System.out.println("MediaPlayer.onBufferingUpdate: " + mp.toString() + " " + percent);
             }
         });
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                System.out.println("onCompletion: " + mp.toString());
+                System.out.println("MediaPlayer.onCompletion: " + mp.toString());
             }
         });
         mp.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
-                System.out.println("onError: " + mp.toString() + " " + what + " " + extra);
+                System.out.println("MediaPlayer.onError: " + mp.toString() + " " + what + " " + extra);
                 return false;
             }
         });
         mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                System.out.println("onPrepared: " + mp.toString());
+                System.out.println("MediaPlayer.onPrepared: " + mp.toString());
             }
         });
         return mp;
@@ -578,7 +581,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             for (int length : lengths) {
                 limit = Math.min(limit, length);
                 if (length != lengths[0]) {
-                    System.err.println("Incorrect parts: " + shader + " " + name + " " + type + " " + mesh + " " + colour + " " + texture + " " + material);
+                    System.err.println("Incorrect parts: " + shader + "(" + shaders.length + ") " + name + " " + type + " " + mesh + "(" + meshes.length + ") " + colour + "(" + colours.length + ") " + texture + "(" + textures.length + ") " + material + "(" + materials.length + ")");
                 }
             }
             for (int i = 0; i < limit; i++) {

@@ -62,7 +62,7 @@ public abstract class LaunchAnimation extends Animation {
     public boolean tick() {
         long now = System.currentTimeMillis();
         if (start < 0) {
-            start = now;
+            setStart(now);
             onBegin();
         }
         if (spheres.isEmpty()) {
@@ -145,7 +145,7 @@ public abstract class LaunchAnimation extends Animation {
                 }
             }
 
-            //System.out.println("Ball moved to " + dest);
+            System.out.println("Ball moved to " + dest);
             position.set(dest);
         }
         return false;
