@@ -79,6 +79,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
 
     private static final String THEME_MUSIC = "MainThemeV2.ogg";
 
+    private static final String ALIEN_SOUND = "Click2.wav";
     private static final String BUTTON_SOUND = "Button.wav";
     private static final String LAUNCH_SOUND = "Engine.wav";
     private static final String LANDING_SOUND = "Thud.wav";
@@ -781,8 +782,13 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 if (d == null) {
                     return;
                 }
-                if ("journal".equals(d.getType())) {
-                    sound(JOURNAL_SOUND);
+                switch (d.getType()) {
+                    case "alien":
+                        sound(ALIEN_SOUND);
+                        break;
+                    case "journal":
+                        sound(JOURNAL_SOUND);
+                        break;
                 }
                 int fg = colourStringToInt(d.getForegroundColour());
                 int bg = colourStringToInt(d.getBackgroundColour());
