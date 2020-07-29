@@ -36,10 +36,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button playButton;
-    private Button settingsButton;
-    private Button debugButton;
-    private ImageButton logoButton;
+    public Button playButton;
+    public Button settingsButton;
+    public Button debugButton;
+    public ImageButton logoButton;
     public AlertDialog legaleseDialog;
 
     @Override

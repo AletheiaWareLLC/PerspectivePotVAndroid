@@ -18,6 +18,8 @@ package com.aletheiaware.perspectivepotv.android.ui;
 
 import android.Manifest;
 import android.content.Intent;
+import android.view.View;
+
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.rule.GrantPermissionRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -44,6 +46,19 @@ public class MainActivityInstrumentedTest {
         MainActivity activity = intentsTestRule.launchActivity(new Intent());
         Thread.sleep(1000);
         CommonAndroidUtils.captureScreenshot(activity, "com.aletheiaware.perspectivepotv.android.ui.MainActivity.png");
+    }
+
+    @Test
+    public void screenshot_release() throws Exception {
+        final MainActivity activity = intentsTestRule.launchActivity(new Intent());
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                activity.debugButton.setVisibility(View.GONE);// Hide debug option
+            }
+        });
+        Thread.sleep(1000);
+        CommonAndroidUtils.captureScreenshot(activity, "com.aletheiaware.perspectivepotv.android.ui.MainActivity-release.png");
     }
 
     @Test
