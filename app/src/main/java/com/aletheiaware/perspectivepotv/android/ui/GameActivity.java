@@ -748,20 +748,30 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 builder.setView(card);
                 builder.setCancelable(false);
                 gameDialogDialog = builder.create();
+                content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        next();
+                    }
+                });
                 next.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        index++;
-                        if (index < dialogs.size()) {
-                            setupDialog();
-                        } else {
-                            gameDialogDialog.dismiss();
-                        }
+                        next();
                     }
                 });
                 setupDialog();
                 if (!isFinishing()) {
                     gameDialogDialog.show();
+                }
+            }
+
+            private void next() {
+                index++;
+                if (index < dialogs.size()) {
+                    setupDialog();
+                } else {
+                    gameDialogDialog.dismiss();
                 }
             }
 
