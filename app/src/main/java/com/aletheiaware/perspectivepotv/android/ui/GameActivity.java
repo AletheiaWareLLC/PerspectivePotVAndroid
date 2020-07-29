@@ -622,7 +622,11 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     List<Element> ss = perspective.getElements("sphere");
                     if (ss != null) {
                         for (Element s : ss) {
-                            spheres.put(s.name, glScene.getVector(s.name));
+                            if (s.name.startsWith("s")) {
+                                spheres.put(s.name, glScene.getVector(s.name));
+                            } else {
+                                System.out.println("Ignoring Sphere: " + s.name);
+                            }
                         }
                     }
                     glScene.setAnimation(new LaunchAnimation(perspective.size, perspective.inverseRotation, perspective.up, blocks, goals, perspective.linkedPortals, spheres) {
