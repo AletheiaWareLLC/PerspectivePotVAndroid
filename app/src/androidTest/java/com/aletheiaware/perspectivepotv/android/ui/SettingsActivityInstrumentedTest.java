@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class SettingsActivityInstrumentedTest {
 
-    private IntentsTestRule<SettingsActivity> intentsTestRule = new IntentsTestRule<>(SettingsActivity.class, true, false);
+    private final IntentsTestRule<SettingsActivity> intentsTestRule = new IntentsTestRule<>(SettingsActivity.class, true, false);
 
     @Rule
     public RuleChain ruleChain = RuleChain.outerRule(GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE))

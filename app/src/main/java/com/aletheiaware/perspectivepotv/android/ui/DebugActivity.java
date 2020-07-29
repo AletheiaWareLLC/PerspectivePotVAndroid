@@ -89,7 +89,7 @@ public class DebugActivity extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
-    private Map<String, Integer> soundMap = new HashMap<>();
+    private final Map<String, Integer> soundMap = new HashMap<>();
     private String musicName;
     private String soundName;
     private String meshName;

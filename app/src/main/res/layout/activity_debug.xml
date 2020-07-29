@@ -17,7 +17,7 @@ limitations under the License.
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/purple"
+    android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -32,7 +32,8 @@ limitations under the License.
         android:padding="@dimen/view_padding"
         android:background="@android:color/transparent"
         android:src="@drawable/menu"
-        android:tint="@color/white"/>
+        android:tint="@color/white"
+        android:contentDescription="@string/debug_menu" />
 
     <include layout="@layout/debug_options"/>
 

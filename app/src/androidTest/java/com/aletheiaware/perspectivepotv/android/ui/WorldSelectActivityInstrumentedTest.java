@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class WorldSelectActivityInstrumentedTest {
 
-    private IntentsTestRule<WorldSelectActivity> intentsTestRule = new IntentsTestRule<>(WorldSelectActivity.class, true, false);
+    private final IntentsTestRule<WorldSelectActivity> intentsTestRule = new IntentsTestRule<>(WorldSelectActivity.class, true, false);
 
     @Rule
     public RuleChain ruleChain = RuleChain.outerRule(GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE))

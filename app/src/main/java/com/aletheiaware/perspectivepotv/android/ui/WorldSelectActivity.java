@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -212,7 +213,7 @@ public class WorldSelectActivity extends AppCompatActivity implements WorldAdapt
         Log.d(PerspectiveUtils.TAG, "Querying SKUs: " + skus);
         manager.querySkuDetailsAsync(SkuType.INAPP, skus, new SkuDetailsResponseListener() {
             @Override
-            public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
+            public void onSkuDetailsResponse(@NonNull BillingResult billingResult, List<SkuDetails> skuDetailsList) {
                 int code = billingResult.getResponseCode();
                 Log.d(PerspectiveUtils.TAG, "SKU query finished. Response code: " + code);
                 if (code == BillingResponseCode.OK) {

@@ -35,7 +35,8 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/view_margin"
                 android:padding="@dimen/view_padding"
-                android:src="@drawable/warning" />
+                android:src="@drawable/warning"
+                android:contentDescription="@string/warning" />
 
             <TextView
                 android:layout_width="match_parent"

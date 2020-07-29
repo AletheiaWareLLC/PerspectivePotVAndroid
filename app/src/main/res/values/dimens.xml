@@ -21,6 +21,5 @@ limitations under the License.
     <dimen name="star_count_text_size">@dimen/text_primary_size</dimen>
     <dimen name="text_primary_size">24sp</dimen>
     <dimen name="text_secondary_size">20sp</dimen>
-    <dimen name="divider_thickness">2dp</dimen>
     <dimen name="game_margin">12dp</dimen>
 </resources>

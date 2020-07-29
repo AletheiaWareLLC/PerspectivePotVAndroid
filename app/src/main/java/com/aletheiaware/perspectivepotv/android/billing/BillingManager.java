@@ -17,6 +17,8 @@
 package com.aletheiaware.perspectivepotv.android.billing;
 
 import android.app.Activity;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.Base64;
 import android.util.Log;
@@ -67,7 +69,7 @@ public class BillingManager implements PurchasesUpdatedListener {
         void onTokenConsumed(String purchaseToken);
     }
 
-    private Map<String, Purchase> purchases = new HashMap<>();
+    private final Map<String, Purchase> purchases = new HashMap<>();
     private final Set<String> consumedTokens = new HashSet<>();
     private final Activity activity;
     private final Callback callback;
@@ -190,7 +192,7 @@ public class BillingManager implements PurchasesUpdatedListener {
             public void run() {
                 client.consumeAsync(consumeParams, new ConsumeResponseListener() {
                     @Override
-                    public void onConsumeResponse(BillingResult billingResult, String purchaseToken) {
+                    public void onConsumeResponse(@NonNull BillingResult billingResult, @NonNull String purchaseToken) {
                         int code = billingResult.getResponseCode();
                         Log.d(PerspectiveUtils.TAG, "Consume Token Response Code: " + code);
                         if (code == BillingResponseCode.OK) {
@@ -219,7 +221,7 @@ public class BillingManager implements PurchasesUpdatedListener {
                             .setPurchaseToken(purchase.getPurchaseToken())
                             .build(), new AcknowledgePurchaseResponseListener() {
                         @Override
-                        public void onAcknowledgePurchaseResponse(BillingResult billingResult) {
+                        public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
                             int code = billingResult.getResponseCode();
                             Log.d(PerspectiveUtils.TAG, "Purchase Acknowledgement Response Code: " + code);
                             if (code == BillingResponseCode.OK) {
@@ -273,7 +275,7 @@ public class BillingManager implements PurchasesUpdatedListener {
     public void startServiceConnection(final Runnable executeOnSuccess) {
         client.startConnection(new BillingClientStateListener() {
                 @Override
-                public void onBillingSetupFinished(BillingResult billingResult) {
+                public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
                     int code = billingResult.getResponseCode();
                     Log.d(PerspectiveUtils.TAG, "Setup Response Code: " + code);
                     if (code == BillingClient.BillingResponseCode.OK) {

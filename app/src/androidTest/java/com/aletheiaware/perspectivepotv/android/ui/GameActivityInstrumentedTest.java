@@ -60,7 +60,7 @@ public class GameActivityInstrumentedTest {
     public GrantPermissionRule grantPermissionRule = GrantPermissionRule.grant(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
     @Rule
-    public IntentsTestRule<GameActivity> intentsTestRule = new IntentsTestRule<>(GameActivity.class, true, false);
+    public final IntentsTestRule<GameActivity> intentsTestRule = new IntentsTestRule<>(GameActivity.class, true, false);
 
     private static PowerManager.WakeLock wakeLock;
 
