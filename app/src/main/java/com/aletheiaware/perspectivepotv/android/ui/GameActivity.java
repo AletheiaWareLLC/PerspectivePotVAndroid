@@ -958,12 +958,12 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                                 gameOverDialog.dismiss();
                                 worldName = nextWorld;
                                 puzzleIndex = 1;
-                                setResult(RESULT_OK);
-                                finish();
                                 Intent intent = new Intent(GameActivity.this, GameActivity.class);
                                 intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, worldName);
                                 intent.putExtra(PerspectiveAndroidUtils.PUZZLE_EXTRA, puzzleIndex);
                                 startActivity(intent);
+                                setResult(RESULT_OK);
+                                finish();
                             }
                         });
                     }
