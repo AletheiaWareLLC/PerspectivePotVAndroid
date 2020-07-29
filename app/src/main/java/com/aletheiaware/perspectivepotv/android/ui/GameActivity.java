@@ -362,6 +362,10 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
         return perspective;
     }
 
+    public GameView getGameView() {
+        return gameView;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

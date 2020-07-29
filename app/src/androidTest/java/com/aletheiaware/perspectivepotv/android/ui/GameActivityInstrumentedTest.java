@@ -54,6 +54,8 @@ import androidx.test.rule.GrantPermissionRule;
 @RunWith(AndroidJUnit4.class)
 public class GameActivityInstrumentedTest {
 
+    private static final long SLEEP_TIME = 2000;
+
     @Rule
     public GrantPermissionRule grantPermissionRule = GrantPermissionRule.grant(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
@@ -82,8 +84,8 @@ public class GameActivityInstrumentedTest {
         activity.loadLatch.await(10, TimeUnit.SECONDS);
         GLScene scene = activity.getGlScene();
         setIconicScene(scene, activity.getPerspective());
-        Thread.sleep(1000);
-        captureScreenshot(scene, "com.aletheiaware.perspectivepotv.android.ui.GameActivity-banner.png");
+        Thread.sleep(SLEEP_TIME);
+        captureScreenshot(scene, activity.getGameView(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-banner.png");
     }
 
     @Test
@@ -94,8 +96,8 @@ public class GameActivityInstrumentedTest {
         activity.loadLatch.await(10, TimeUnit.SECONDS);
         GLScene scene = activity.getGlScene();
         setIconicScene(scene, activity.getPerspective());
-        Thread.sleep(1000);
-        captureScreenshot(scene, "com.aletheiaware.perspectivepotv.android.ui.GameActivity-logo.png");
+        Thread.sleep(SLEEP_TIME);
+        captureScreenshot(scene, activity.getGameView(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-logo.png");
     }
 
     private Intent createIconicIntent() {
@@ -125,7 +127,7 @@ public class GameActivityInstrumentedTest {
         Intent intent = createTutorialIntent(1);
         GameActivity activity = intentsTestRule.launchActivity(intent);
         activity.loadLatch.await(10, TimeUnit.SECONDS);
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud-tutorial.png");
         activity.finish();
     }
@@ -136,7 +138,7 @@ public class GameActivityInstrumentedTest {
         intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, PerspectiveUtils.WORLD_SIX);
         GameActivity activity = intentsTestRule.launchActivity(intent);
         activity.loadLatch.await(10, TimeUnit.SECONDS);
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud-world-free.png");
         activity.finish();
     }
@@ -147,7 +149,7 @@ public class GameActivityInstrumentedTest {
         intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, PerspectiveUtils.WORLD_SEVEN);
         GameActivity activity = intentsTestRule.launchActivity(intent);
         activity.loadLatch.await(10, TimeUnit.SECONDS);
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity,"com.aletheiaware.perspectivepotv.android.ui.GameActivity-hud-world-paid.png");
         activity.finish();
     }
@@ -158,7 +160,7 @@ public class GameActivityInstrumentedTest {
         GameActivity activity = intentsTestRule.launchActivity(intent);
         activity.loadLatch.await(10, TimeUnit.SECONDS);
         activity.onGameMenu();
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity, activity.gameMenuDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-menu.png");
         activity.finish();
     }
@@ -169,7 +171,7 @@ public class GameActivityInstrumentedTest {
         GameActivity activity = intentsTestRule.launchActivity(intent);
         activity.loadLatch.await(10, TimeUnit.SECONDS);
         activity.onGameLost();
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity, activity.gameOverDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-lost.png");
         activity.finish();
     }
@@ -182,7 +184,7 @@ public class GameActivityInstrumentedTest {
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+10);
         activity.onGameWon();
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity, activity.gameOverDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-won-0-stars.png");
         activity.finish();
     }
@@ -195,7 +197,7 @@ public class GameActivityInstrumentedTest {
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+4);
         activity.onGameWon();
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity, activity.gameOverDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-won-1-star.png");
         activity.finish();
     }
@@ -208,7 +210,7 @@ public class GameActivityInstrumentedTest {
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+3);
         activity.onGameWon();
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity, activity.gameOverDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-won-2-stars.png");
         activity.finish();
     }
@@ -221,7 +223,7 @@ public class GameActivityInstrumentedTest {
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+2);
         activity.onGameWon();
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity, activity.gameOverDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-won-3-stars.png");
         activity.finish();
     }
@@ -234,7 +236,7 @@ public class GameActivityInstrumentedTest {
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget()+1);
         activity.onGameWon();
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity, activity.gameOverDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-won-4-stars.png");
         activity.finish();
     }
@@ -247,7 +249,7 @@ public class GameActivityInstrumentedTest {
         Perspective perspective = activity.getPerspective();
         perspective.solution.setScore(perspective.puzzle.getTarget());
         activity.onGameWon();
-        Thread.sleep(1000);
+        Thread.sleep(SLEEP_TIME);
         CommonAndroidUtils.captureScreenshot(activity, activity.gameOverDialog.getWindow(), "com.aletheiaware.perspectivepotv.android.ui.GameActivity-game-won-5-stars.png");
         activity.finish();
     }
@@ -1428,12 +1430,12 @@ public class GameActivityInstrumentedTest {
         intent.putExtra(PerspectiveAndroidUtils.PUZZLE_EXTRA, puzzle);
         GameActivity activity = intentsTestRule.launchActivity(intent);
         activity.loadLatch.await(10, TimeUnit.SECONDS);
-        Thread.sleep(1000);
-        captureScreenshot(activity.getGlScene(), name);
+        Thread.sleep(SLEEP_TIME);
+        captureScreenshot(activity.getGlScene(), activity.getGameView(), name);
         activity.finish();
     }
 
-    public void captureScreenshot(final GLScene scene, final String name) {
+    public void captureScreenshot(final GLScene scene, final GameView gameView, final String name) {
         final CountDownLatch latch = new CountDownLatch(1);
         scene.setFrameCallback(new GLScene.FrameCallback() {
             @Override
@@ -1474,6 +1476,7 @@ public class GameActivityInstrumentedTest {
                 return false;
             }
         });
+        gameView.requestRender();
         try {
             latch.await();
         } catch (InterruptedException e) {
