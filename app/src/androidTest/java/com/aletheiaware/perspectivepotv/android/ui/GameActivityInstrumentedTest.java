@@ -101,7 +101,7 @@ public class GameActivityInstrumentedTest {
     private Intent createIconicIntent() {
         Intent intent = new Intent();
         intent.putExtra(PerspectiveAndroidUtils.WORLD_EXTRA, PerspectiveUtils.WORLD_ONE);
-        intent.putExtra(PerspectiveAndroidUtils.PUZZLE_EXTRA, 6);
+        intent.putExtra(PerspectiveAndroidUtils.PUZZLE_EXTRA, 2);
         intent.putExtra(PerspectiveAndroidUtils.OUTLINE_EXTRA, true);
         return intent;
     }
@@ -117,9 +117,7 @@ public class GameActivityInstrumentedTest {
     private void setIconicScene(GLScene scene, Perspective perspective) {
         perspective.rotate(0, (float) (Math.PI / 4));
         perspective.rotate((float) (Math.PI / 8), 0);
-        scene.putFloatArray(GLScene.BACKGROUND, PerspectiveUtils.BLUE);
-        // Hack outline to be white
-        scene.putFloatArray("red", PerspectiveUtils.WHITE);
+        scene.putFloatArray(GLScene.BACKGROUND, PerspectiveUtils.PURPLE);
     }
 
     @Test
