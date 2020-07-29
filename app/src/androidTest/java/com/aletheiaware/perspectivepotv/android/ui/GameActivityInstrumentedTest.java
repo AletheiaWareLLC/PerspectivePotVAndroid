@@ -274,11 +274,13 @@ public class GameActivityInstrumentedTest {
         captureScreenshot(PerspectiveUtils.WORLD_TUTORIAL, 4);
     }
 
+    @Ignore("Not Generated")
     @Test
     public void screenshotTutorialPuzzle5() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_TUTORIAL, 5);
     }
 
+    @Ignore("Not Generated")
     @Test
     public void screenshotTutorialPuzzle6() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_TUTORIAL, 6);
@@ -309,6 +311,7 @@ public class GameActivityInstrumentedTest {
         captureScreenshot(PerspectiveUtils.WORLD_ONE, 5);
     }
 
+    @Ignore("Not Generated")
     @Test
     public void screenshotWorld1Puzzle6() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_ONE, 6);
@@ -359,6 +362,7 @@ public class GameActivityInstrumentedTest {
         captureScreenshot(PerspectiveUtils.WORLD_TWO, 9);
     }
 
+    @Ignore("Not Generated")
     @Test
     public void screenshotWorld2Puzzle10() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_TWO, 10);
@@ -421,6 +425,7 @@ public class GameActivityInstrumentedTest {
         captureScreenshot(PerspectiveUtils.WORLD_THREE, 9);
     }
 
+    @Ignore("Not Generated")
     @Test
     public void screenshotWorld3Puzzle10() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_THREE, 10);
@@ -550,13 +555,11 @@ public class GameActivityInstrumentedTest {
         captureScreenshot(PerspectiveUtils.WORLD_FIVE, 10);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld5Puzzle11() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_FIVE, 11);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld5Puzzle12() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_FIVE, 12);
@@ -636,19 +639,16 @@ public class GameActivityInstrumentedTest {
         captureScreenshot(PerspectiveUtils.WORLD_SIX, 10);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld6Puzzle11() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_SIX, 11);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld6Puzzle12() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_SIX, 12);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld6Puzzle13() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_SIX, 13);
@@ -722,19 +722,16 @@ public class GameActivityInstrumentedTest {
         captureScreenshot(PerspectiveUtils.WORLD_SEVEN, 10);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld7Puzzle11() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_SEVEN, 11);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld7Puzzle12() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_SEVEN, 12);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld7Puzzle13() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_SEVEN, 13);
@@ -808,31 +805,26 @@ public class GameActivityInstrumentedTest {
         captureScreenshot(PerspectiveUtils.WORLD_EIGHT, 10);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld8Puzzle11() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_EIGHT, 11);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld8Puzzle12() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_EIGHT, 12);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld8Puzzle13() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_EIGHT, 13);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld8Puzzle14() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_EIGHT, 14);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld8Puzzle15() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_EIGHT, 15);
@@ -894,37 +886,31 @@ public class GameActivityInstrumentedTest {
         captureScreenshot(PerspectiveUtils.WORLD_NINE, 10);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld9Puzzle11() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_NINE, 11);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld9Puzzle12() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_NINE, 12);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld9Puzzle13() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_NINE, 13);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld9Puzzle14() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_NINE, 14);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld9Puzzle15() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_NINE, 15);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld9Puzzle16() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_NINE, 16);
