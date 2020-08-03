@@ -208,8 +208,10 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             @Override
             public void setAnimation(Animation a) {
                 // Render until the animation is complete
-                System.out.println("Setting GL Render Mode: Continuous");
-                gameView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+                if (gameView != null) {
+                    System.out.println("Setting GL Render Mode: Continuous");
+                    gameView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+                }
                 super.setAnimation(a);
             }
         };
@@ -217,7 +219,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             @Override
             public boolean onFrame() {
                 // Stop rendering duplicate frames
-                if (!glScene.hasAnimation() && gameView.getRenderMode() != GLSurfaceView.RENDERMODE_WHEN_DIRTY) {
+                if (!glScene.hasAnimation() && gameView != null && gameView.getRenderMode() != GLSurfaceView.RENDERMODE_WHEN_DIRTY) {
                     System.out.println("Setting GL Render Mode: When Dirty");
                     gameView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
                 }
