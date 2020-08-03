@@ -112,6 +112,7 @@ public class PerspectiveAndroidUtils {
     }
 
     public static void addSceneGraphNode(GLScene scene, Perspective perspective, AssetManager assets, String shader, String name, String type, String mesh, String colour, String texture, String material) throws IOException {
+        System.out.println("Adding Scene Graph Node: " + shader + " " + name + " " + type + " " + mesh + " " + colour + " " + texture + " " + material);
         switch (type) {
             case "sky": {
                 ScaleNode skyScale = new ScaleNode("sky-scale");
@@ -154,7 +155,7 @@ public class PerspectiveAndroidUtils {
                 break;
             }
             default:
-                System.err.println("Unrecognized: " + shader + " " + name + " " + type + " " + mesh + " " + colour + " " + texture + " " + material);
+                System.err.println("Unrecognized Type: " + type);
         }
     }
 
