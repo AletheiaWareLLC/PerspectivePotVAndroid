@@ -74,7 +74,9 @@ public class PuzzleAdapter extends Adapter<PuzzleAdapter.PuzzleViewHolder> {
             holder.setEmptyView();
         } else {
             boolean locked = true;
-            if (position == 0) {// First puzzle always unlocked
+            if (BuildConfig.DEBUG) {// All puzzles unlocked in debug
+                locked = false;
+            } else if (position == 0) {// First puzzle always unlocked
                 locked = false;
             } else if (stars[position] >= 0) {// Puzzle is unlocked if already solved
                 locked = false;
