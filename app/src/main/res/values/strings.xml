@@ -43,7 +43,8 @@ limitations under the License.
     <string name="game_lost_title">Game Over</string>
     <string name="game_lost_message">You got lost in space</string>
     <string name="game_won_title">Congratulations!</string>
-    <string name="game_won_message">You\'re one step closer to the truth</string>
+    <string name="game_won_message">One Step Closer</string>
+    <string name="game_won_message_tutorial">Great Job!</string>
     <string name="game_move_format">%d / %d</string>
     <string name="game_launch">Launch</string>
     <string name="game_menu">Game Menu</string>

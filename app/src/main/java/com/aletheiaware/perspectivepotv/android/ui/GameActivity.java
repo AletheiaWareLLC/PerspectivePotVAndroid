@@ -929,6 +929,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 layout.findViewById(R.id.game_won_star3).setVisibility((stars > 2) ? View.VISIBLE : View.GONE);
                 layout.findViewById(R.id.game_won_star4).setVisibility((stars > 3) ? View.VISIBLE : View.GONE);
                 layout.findViewById(R.id.game_won_star5).setVisibility((stars > 4) ? View.VISIBLE : View.GONE);
+                TextView text = layout.findViewById(R.id.game_won_text);
                 Button main = layout.findViewById(R.id.game_won_main_menu);
                 CardView retryCard = layout.findViewById(R.id.game_won_retry_card);
                 Button retry = layout.findViewById(R.id.game_won_retry);
@@ -944,6 +945,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         finish();
                     }
                 });
+                if (PerspectiveUtils.WORLD_TUTORIAL.equals(worldName)) {
+                    text.setText(R.string.game_won_message_tutorial);
+                }
                 if (stars < 5) {
                     retry.setOnClickListener(new View.OnClickListener() {
                         @Override
