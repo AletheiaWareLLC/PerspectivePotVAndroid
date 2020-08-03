@@ -311,7 +311,6 @@ public class GameActivityInstrumentedTest {
         captureScreenshot(PerspectiveUtils.WORLD_ONE, 5);
     }
 
-    @Ignore("Not Generated")
     @Test
     public void screenshotWorld1Puzzle6() throws Exception {
         captureScreenshot(PerspectiveUtils.WORLD_ONE, 6);
