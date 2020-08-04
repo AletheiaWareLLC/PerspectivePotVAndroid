@@ -70,7 +70,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class DebugActivity extends AppCompatActivity {
 
-    private final float[] frustum = new float[2];
+    private final float[] cameraFrustum = new float[2];
     private final float[] light = new float[4];
     private final int[] fogEnabled = new int[1];
     private final float[] fogIntensity = new float[1];
@@ -335,11 +335,6 @@ public class DebugActivity extends AppCompatActivity {
                     materialAdapter.add(PerspectiveUtils.MATERIAL_NAMES[i]);
                 }
                 scene.putFloatArray(GLScene.BACKGROUND, PerspectiveUtils.PURPLE);
-                // Frustum
-                // Crop the scene proportionally
-                frustum[0] = size * 0.5f;
-                frustum[1] = distance + size;
-                scene.putFloatArray("frustum", frustum);
                 // Light
                 // Ensure light is always outside
                 light[0] = 0;
@@ -374,6 +369,11 @@ public class DebugActivity extends AppCompatActivity {
                 scene.putVector("camera-eye", cameraEye);
                 scene.putVector("camera-look-at", cameraLookAt);
                 scene.putVector("camera-up", cameraUp);
+                // Frustum
+                // Crop the scene proportionally
+                cameraFrustum[0] = size * 0.5f;
+                cameraFrustum[1] = distance + size;
+                scene.putFloatArray("camera-frustum", cameraFrustum);
                 // Fog
                 scene.putFloatArray("fog-colour", PerspectiveUtils.PURPLE);
                 scene.putIntArray("fog-enabled", fogEnabled);
