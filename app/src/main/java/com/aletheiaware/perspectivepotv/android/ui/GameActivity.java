@@ -291,6 +291,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                         background = glScene.getFloatArray(colour);
                     }
                     glScene.putFloatArray(GLScene.BACKGROUND, background);
+                    glScene.putIntArray("camera-viewport", glScene.getViewport());
                     // Blast
                     glScene.putFloatArray("blast-random", blastRandom);
                     blastEnabled[0] = 0;

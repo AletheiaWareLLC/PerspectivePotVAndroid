@@ -374,6 +374,8 @@ public class DebugActivity extends AppCompatActivity {
                 cameraFrustum[0] = size * 0.5f;
                 cameraFrustum[1] = distance + size;
                 scene.putFloatArray("camera-frustum", cameraFrustum);
+                // Viewport
+                scene.putIntArray("camera-viewport", scene.getViewport());
                 // Fog
                 scene.putFloatArray("fog-colour", PerspectiveUtils.PURPLE);
                 scene.putIntArray("fog-enabled", fogEnabled);
