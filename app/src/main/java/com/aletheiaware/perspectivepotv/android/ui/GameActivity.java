@@ -824,6 +824,10 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
     }
 
     @Override
+    public void onRotateComplete() {
+    }
+
+    @Override
     public void onTurnComplete() {
         Log.d(PerspectiveUtils.TAG, "Turn Complete");
         vibrate(TURN_VIBRATION);
