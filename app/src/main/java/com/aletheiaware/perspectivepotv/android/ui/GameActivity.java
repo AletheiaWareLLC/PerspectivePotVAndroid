@@ -977,6 +977,7 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                             loadPuzzle();
                         }
                     });
+                    next.setVisibility(View.VISIBLE);
                 } else {
                     final String nextWorld = getNextWorld();
                     if (!nextWorld.equals(PerspectiveUtils.WORLD_TUTORIAL)) {
@@ -994,6 +995,9 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                                 finish();
                             }
                         });
+                        next.setVisibility(View.VISIBLE);
+                    } else {
+                        next.setVisibility(View.GONE);
                     }
                 }
                 if (!isFinishing()) {
