@@ -59,8 +59,8 @@ limitations under the License.
                 <ImageButton
                     android:id="@+id/game_menu_button"
                     android:background="@android:color/transparent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/touch_target_size"
+                    android:layout_height="@dimen/touch_target_size"
                     android:layout_gravity="center"
                     android:padding="@dimen/view_padding"
                     android:gravity="center"
@@ -159,7 +159,7 @@ limitations under the License.
             <Button
                 android:id="@+id/game_launch_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/touch_target_size"
                 android:background="@android:color/transparent"
                 android:padding="@dimen/view_padding"
                 android:text="@string/game_launch"

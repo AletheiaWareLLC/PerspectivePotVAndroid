@@ -22,4 +22,5 @@ limitations under the License.
     <dimen name="text_primary_size">24sp</dimen>
     <dimen name="text_secondary_size">20sp</dimen>
     <dimen name="game_margin">12dp</dimen>
+    <dimen name="touch_target_size">48dp</dimen>
 </resources>
