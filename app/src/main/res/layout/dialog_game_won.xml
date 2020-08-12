@@ -53,7 +53,7 @@ limitations under the License.
                 android:layout_margin="@dimen/game_margin"
                 android:contentDescription="@string/star_one"
                 android:src="@drawable/star"
-                android:tint="@color/yellow" />
+                app:tint="@color/yellow" />
 
             <ImageView
                 android:id="@+id/game_won_star2"
@@ -62,7 +62,7 @@ limitations under the License.
                 android:layout_margin="@dimen/game_margin"
                 android:contentDescription="@string/star_two"
                 android:src="@drawable/star"
-                android:tint="@color/yellow" />
+                app:tint="@color/yellow" />
 
             <ImageView
                 android:id="@+id/game_won_star3"
@@ -71,7 +71,7 @@ limitations under the License.
                 android:layout_margin="@dimen/game_margin"
                 android:contentDescription="@string/star_three"
                 android:src="@drawable/star"
-                android:tint="@color/yellow" />
+                app:tint="@color/yellow" />
 
             <ImageView
                 android:id="@+id/game_won_star4"
@@ -80,7 +80,7 @@ limitations under the License.
                 android:layout_margin="@dimen/game_margin"
                 android:contentDescription="@string/star_four"
                 android:src="@drawable/star"
-                android:tint="@color/yellow" />
+                app:tint="@color/yellow" />
 
             <ImageView
                 android:id="@+id/game_won_star5"
@@ -89,7 +89,7 @@ limitations under the License.
                 android:layout_margin="@dimen/game_margin"
                 android:contentDescription="@string/star_five"
                 android:src="@drawable/star"
-                android:tint="@color/yellow" />
+                app:tint="@color/yellow" />
 
         </LinearLayout>
 

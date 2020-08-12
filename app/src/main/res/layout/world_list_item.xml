@@ -76,8 +76,8 @@ limitations under the License.
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:src="@drawable/star"
-                android:tint="@color/yellow"
-                android:contentDescription="@string/star" />
+                android:contentDescription="@string/star"
+                app:tint="@color/yellow" />
 
             <TextView
                 android:id="@+id/world_item_star_count"

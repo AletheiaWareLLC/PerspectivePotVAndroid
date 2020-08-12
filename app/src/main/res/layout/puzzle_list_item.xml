@@ -50,8 +50,8 @@ limitations under the License.
                 android:paddingEnd="@dimen/view_padding"
                 android:paddingStart="@dimen/view_padding"
                 android:src="@drawable/lock"
-                android:tint="@color/dark_grey"
-                android:contentDescription="@string/puzzle_locked" />
+                android:contentDescription="@string/puzzle_locked"
+                app:tint="@color/dark_grey" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,8 +69,8 @@ limitations under the License.
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/star"
-                    android:tint="@color/yellow"
-                    android:contentDescription="@string/star_one" />
+                    android:contentDescription="@string/star_one"
+                    app:tint="@color/yellow" />
 
                 <ImageView
                     android:id="@+id/puzzle_list_star2"
@@ -78,8 +78,8 @@ limitations under the License.
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/star"
-                    android:tint="@color/yellow"
-                    android:contentDescription="@string/star_two" />
+                    android:contentDescription="@string/star_two"
+                    app:tint="@color/yellow" />
 
                 <ImageView
                     android:id="@+id/puzzle_list_star3"
@@ -87,8 +87,8 @@ limitations under the License.
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/star"
-                    android:tint="@color/yellow"
-                    android:contentDescription="@string/star_three" />
+                    android:contentDescription="@string/star_three"
+                    app:tint="@color/yellow" />
 
                 <ImageView
                     android:id="@+id/puzzle_list_star4"
@@ -96,8 +96,8 @@ limitations under the License.
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/star"
-                    android:tint="@color/yellow"
-                    android:contentDescription="@string/star_four" />
+                    android:contentDescription="@string/star_four"
+                    app:tint="@color/yellow" />
 
                 <ImageView
                     android:id="@+id/puzzle_list_star5"
@@ -105,8 +105,8 @@ limitations under the License.
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/star"
-                    android:tint="@color/yellow"
-                    android:contentDescription="@string/star_five" />
+                    android:contentDescription="@string/star_five"
+                    app:tint="@color/yellow" />
 
             </LinearLayout>
 
