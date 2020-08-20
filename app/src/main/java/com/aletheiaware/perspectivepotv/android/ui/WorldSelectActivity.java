@@ -203,12 +203,6 @@ public class WorldSelectActivity extends AppCompatActivity implements WorldAdapt
         }.start();
     }
 
-    @Override
-    public void onTokenConsumed(String purchaseToken) {
-        Log.d(PerspectiveUtils.TAG, "Token Consumed: " + purchaseToken);
-        // TODO
-    }
-
     public void querySkuDetails(List<String> skus) {
         Log.d(PerspectiveUtils.TAG, "Querying SKUs: " + skus);
         manager.querySkuDetailsAsync(SkuType.INAPP, skus, new SkuDetailsResponseListener() {

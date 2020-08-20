@@ -17,15 +17,12 @@
 package com.aletheiaware.perspectivepotv.android.billing;
 
 import android.app.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.Base64;
 import android.util.Log;
 
+import com.aletheiaware.perspective.utils.PerspectiveUtils;
 import com.aletheiaware.perspectivepotv.android.BuildConfig;
 import com.aletheiaware.perspectivepotv.android.R;
-import com.aletheiaware.perspective.utils.PerspectiveUtils;
 import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
 import com.android.billingclient.api.BillingClient;
@@ -34,8 +31,6 @@ import com.android.billingclient.api.BillingClient.SkuType;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.ConsumeParams;
-import com.android.billingclient.api.ConsumeResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.Purchase.PurchaseState;
 import com.android.billingclient.api.Purchase.PurchasesResult;
@@ -53,10 +48,11 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class BillingManager implements PurchasesUpdatedListener {
 
@@ -65,12 +61,9 @@ public class BillingManager implements PurchasesUpdatedListener {
         void onBillingClientSetup();
         // Called when map of purchases has been updated.
         void onPurchasesUpdated();
-        // Called when a purchase has been consumed
-        void onTokenConsumed(String purchaseToken);
     }
 
     private final Map<String, Purchase> purchases = new HashMap<>();
-    private final Set<String> consumedTokens = new HashSet<>();
     private final Activity activity;
     private final Callback callback;
     private BillingClient client;
@@ -177,33 +170,6 @@ public class BillingManager implements PurchasesUpdatedListener {
         });
     }
 
-    public void consumeAsync(String purchaseToken) {
-        if (consumedTokens.contains(purchaseToken)) {
-            Log.i(PerspectiveUtils.TAG, "Token was already scheduled to be consumed");
-            return;
-        }
-        consumedTokens.add(purchaseToken);
-
-        final ConsumeParams consumeParams = ConsumeParams.newBuilder()
-                .setPurchaseToken(purchaseToken)
-                .build();
-        executeServiceRequest(new Runnable() {
-            @Override
-            public void run() {
-                client.consumeAsync(consumeParams, new ConsumeResponseListener() {
-                    @Override
-                    public void onConsumeResponse(@NonNull BillingResult billingResult, @NonNull String purchaseToken) {
-                        int code = billingResult.getResponseCode();
-                        Log.d(PerspectiveUtils.TAG, "Consume Token Response Code: " + code);
-                        if (code == BillingResponseCode.OK) {
-                            callback.onTokenConsumed(purchaseToken);
-                        }
-                    }
-                });
-            }
-        });
-    }
-
     private void handlePurchase(Purchase purchase) {
         try {
             byte[] decodedKey = Base64.decode(activity.getString(R.string.app_public_key), Base64.DEFAULT);
@@ -224,9 +190,6 @@ public class BillingManager implements PurchasesUpdatedListener {
                         public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
                             int code = billingResult.getResponseCode();
                             Log.d(PerspectiveUtils.TAG, "Purchase Acknowledgement Response Code: " + code);
-                            if (code == BillingResponseCode.OK) {
-                                // TODO
-                            }
                         }
                     });
                 }
