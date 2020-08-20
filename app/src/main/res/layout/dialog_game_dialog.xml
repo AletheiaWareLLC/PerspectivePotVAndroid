@@ -54,24 +54,54 @@ limitations under the License.
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/text_secondary_size" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/game_margin"
-                android:padding="@dimen/view_padding"
-                app:cardBackgroundColor="@color/accent"
-                app:cardCornerRadius="@dimen/card_corner_radius">
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/game_dialog_next"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/game_dialog_back_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/game_margin"
                     android:padding="@dimen/view_padding"
-                    android:text="@string/game_next"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/text_secondary_size" />
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
-            </androidx.cardview.widget.CardView>
+                    <Button
+                        android:id="@+id/game_dialog_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/view_padding"
+                        android:text="@string/game_back"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_secondary_size" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/game_margin"
+                    android:padding="@dimen/view_padding"
+                    app:cardBackgroundColor="@color/accent"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
+
+                    <Button
+                        android:id="@+id/game_dialog_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/view_padding"
+                        android:text="@string/game_next"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_secondary_size" />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -751,6 +751,8 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
             CardView card;
             TextView author;
             TextView content;
+            CardView backCard;
+            Button back;
             Button next;
 
             @Override
@@ -759,6 +761,8 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 card = (CardView) getLayoutInflater().inflate(R.layout.dialog_game_dialog, null);
                 author = card.findViewById(R.id.game_dialog_author);
                 content = card.findViewById(R.id.game_dialog_content);
+                backCard = card.findViewById(R.id.game_dialog_back_card);
+                back = card.findViewById(R.id.game_dialog_back);
                 next = card.findViewById(R.id.game_dialog_next);
                 builder.setView(card);
                 builder.setCancelable(false);
@@ -767,6 +771,12 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                     @Override
                     public void onClick(View view) {
                         next();
+                    }
+                });
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        back();
                     }
                 });
                 next.setOnClickListener(new View.OnClickListener() {
@@ -778,6 +788,13 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 setupDialog();
                 if (!isFinishing()) {
                     gameDialogDialog.show();
+                }
+            }
+
+            private void back() {
+                index--;
+                if (index >= 0) {
+                    setupDialog();
                 }
             }
 
@@ -811,6 +828,11 @@ public class GameActivity extends AppCompatActivity implements Perspective.Callb
                 // TODO List<String> es = d.getElementList();
 
                 card.setCardBackgroundColor(bg);
+                if (index > 0) {
+                    backCard.setVisibility(View.VISIBLE);
+                } else {
+                    backCard.setVisibility(View.GONE);
+                }
                 String separator = System.getProperty("line.separator");
                 if (separator == null || separator.isEmpty()) {
                     separator = "\n";

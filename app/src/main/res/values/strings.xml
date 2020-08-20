@@ -48,6 +48,7 @@ limitations under the License.
     <string name="game_move_format">%d / %d</string>
     <string name="game_launch">Launch</string>
     <string name="game_menu">Game Menu</string>
+    <string name="game_back">Back</string>
     <string name="game_next">Next</string>
     <string name="game_reset">Reset</string>
     <string name="game_retry">Retry</string>
